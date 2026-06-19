@@ -2,7 +2,7 @@
 
 **Jonathan R. Landers**
 
-[GitHub Pages site](https://jonland82.github.io/finite-response-kernels/)
+[Website](https://jonland82.github.io/finite-response-kernels/)
 
 This repository collects draft manuscripts and supporting computational material
 on finite-response kernels, takeoff kernels, and the shape of mediated
