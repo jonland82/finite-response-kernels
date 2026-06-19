@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finite Response Kernels | Jonathan R. Landers</title>
+  <meta name="description" content="Research manuscripts on finite-response kernels, takeoff kernels, recursive redundancy, and inverse takeoff identification.">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f5ef;
+      --paper: #ffffff;
+      --ink: #171717;
+      --muted: #5e646b;
+      --line: #d8d2c4;
+      --line-strong: #9f9583;
+      --rust: #9b3f24;
+      --green: #225c50;
+      --blue: #273f6b;
+      --gold: #b8791f;
+      --shadow: 0 12px 34px rgba(23, 23, 23, 0.11);
+      --radius: 8px;
+      --max: 920px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-color: rgba(155, 63, 36, 0.45);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover {
+      color: var(--rust);
+      text-decoration-color: var(--rust);
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(216, 210, 196, 0.85);
+      background: rgba(247, 245, 239, 0.92);
+      backdrop-filter: blur(16px);
+    }
+
+    .topbar-inner {
+      width: min(var(--max), calc(100% - 112px));
+      margin: 0 auto;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 720;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .mark::before {
+      content: "";
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background:
+        linear-gradient(90deg, transparent 45%, var(--ink) 46%, var(--ink) 54%, transparent 55%),
+        linear-gradient(0deg, transparent 45%, var(--rust) 46%, var(--rust) 54%, transparent 55%);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    nav a {
+      text-decoration: none;
+    }
+
+    .hero {
+      width: min(var(--max), calc(100% - 112px));
+      margin: 0 auto;
+      min-height: 330px;
+      height: min(360px, calc(68svh - 50px));
+      position: relative;
+      color: #fff;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.54), rgba(0, 0, 0, 0.66)),
+        url("entropy_of_finite_response/fig4_entropy_power_plane.png") center / cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+      border: 1px solid var(--line);
+      border-top: 0;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.07) 0 1px, transparent 1px 120px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 120px);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(var(--max), calc(100% - 112px));
+      margin: 0 auto;
+      padding: 34px 0 30px;
+    }
+
+    .eyebrow {
+      margin: 0 0 9px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.14;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 520px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      font-weight: 640;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
+    .hero-line {
+      display: inline;
+    }
+
+    .hero-copy {
+      width: min(100%, 560px);
+      margin: 12px 0 0;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 14px;
+      overflow-wrap: break-word;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 16px;
+      width: min(100%, 520px);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.48);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 720;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      white-space: nowrap;
+    }
+
+    .button:hover {
+      color: #fff;
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    main {
+      overflow: clip;
+    }
+
+    section {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-inner {
+      width: min(var(--max), calc(100% - 112px));
+      margin: 0 auto;
+      padding: 42px 0;
+    }
+
+    .section-title {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(260px, 0.48fr);
+      gap: 30px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      font-weight: 620;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .thread-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.94fr) minmax(360px, 0.88fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .equation-panel {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .equation-panel h3,
+    .paper-card h3,
+    .result h3 {
+      font-size: 1rem;
+      font-size: 15px;
+      font-weight: 760;
+      margin-bottom: 8px;
+    }
+
+    .equation-panel p,
+    .paper-card p,
+    .result p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .math-block {
+      margin: 12px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--rust);
+      background: #fbfaf7;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+    }
+
+    .math-block mjx-container {
+      min-width: max-content;
+      font-size: 92% !important;
+    }
+
+    mjx-container[jax="SVG"] {
+      color: inherit;
+    }
+
+    .figure-frame {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .figure-frame img {
+      width: 100%;
+      aspect-ratio: 1.22 / 1;
+      object-fit: contain;
+      background: #fff;
+      padding: 8px;
+    }
+
+    .figure-frame a {
+      display: block;
+      text-decoration: none;
+    }
+
+    .figure-frame a:hover img {
+      filter: contrast(1.04);
+    }
+
+    .caption {
+      margin: 0;
+      padding: 14px 16px 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .paper-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .paper-card {
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+    }
+
+    .paper-card figure {
+      margin: -16px -16px 0;
+      border-bottom: 1px solid var(--line);
+      height: 96px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .paper-card figure::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.10) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,0.10) 1px, transparent 1px);
+      background-size: 36px 36px;
+      pointer-events: none;
+    }
+
+    .paper-card figure::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 28%, rgba(255,255,255,0.55), transparent 22%),
+        linear-gradient(135deg, var(--band-a), var(--band-b) 52%, var(--band-c));
+    }
+
+    .band-entropy {
+      --band-a: #f7efe1;
+      --band-b: #2b6a65;
+      --band-c: #9b3f24;
+    }
+
+    .band-takeoff {
+      --band-a: #edf3f5;
+      --band-b: #273f6b;
+      --band-c: #b8791f;
+    }
+
+    .band-inverse {
+      --band-a: #f4eee6;
+      --band-b: #5b6470;
+      --band-c: #225c50;
+    }
+
+    .tag {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      padding: 3px 8px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 760;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      margin-top: auto;
+      padding-top: 4px;
+      font-weight: 720;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .result {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+    }
+
+    .result.accent-rust {
+      border-top: 4px solid var(--rust);
+    }
+
+    .result.accent-green {
+      border-top: 4px solid var(--green);
+    }
+
+    .result.accent-blue {
+      border-top: 4px solid var(--blue);
+    }
+
+    .result.accent-gold {
+      border-top: 4px solid var(--gold);
+    }
+
+    .wide-band {
+      background: #181713;
+      color: #f8f4ea;
+    }
+
+    .wide-band .lead,
+    .wide-band p {
+      color: rgba(248, 244, 234, 0.78);
+    }
+
+    .wide-band .equation-panel {
+      color: var(--ink);
+    }
+
+    .wide-band .equation-panel p,
+    .wide-band .equation-panel h3,
+    .wide-band .equation-panel .math-block {
+      color: var(--ink);
+    }
+
+    .wide-band .equation-panel p {
+      color: var(--muted);
+    }
+
+    .wide-band .math-block {
+      border-color: var(--gold);
+      background: #fbfaf7;
+    }
+
+    .wide-band .result {
+      border-color: rgba(248, 244, 234, 0.18);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .artifact-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .artifact-list a {
+      display: block;
+      min-height: 100%;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      text-decoration: none;
+    }
+
+    .artifact-list strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .artifact-list span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      word-break: break-word;
+    }
+
+    footer {
+      padding: 22px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer .section-inner {
+      padding: 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 880px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 0;
+      }
+
+      nav {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .hero {
+        width: calc(100vw - 24px);
+        max-width: calc(100vw - 24px);
+        min-height: 380px;
+        height: 380px;
+      }
+
+      .hero-inner {
+        padding: 30px 0 28px;
+      }
+
+      .section-title,
+      .thread-grid,
+      .paper-grid,
+      .results-grid,
+      .artifact-list {
+        grid-template-columns: 1fr;
+      }
+
+      .section-inner {
+        padding: 34px 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        font-size: 14px;
+      }
+
+      .topbar-inner,
+      .section-inner,
+      .hero-inner {
+        width: calc(100vw - 24px);
+        max-width: calc(100vw - 24px);
+      }
+
+      h1 {
+        font-size: 20px;
+        max-width: 100%;
+      }
+
+      .hero-line {
+        display: block;
+      }
+
+      .hero-copy {
+        font-size: 13px;
+        width: calc(100vw - 24px);
+        max-width: min(calc(100vw - 24px), 34ch);
+      }
+
+      .hero-actions {
+        width: calc(100vw - 24px);
+        max-width: calc(100vw - 24px);
+      }
+
+      .button {
+        width: calc(100vw - 24px);
+        max-width: calc(100vw - 24px);
+      }
+
+      .lead,
+      .equation-panel p,
+      .paper-card p,
+      .result p,
+      .caption {
+        max-width: min(100%, 34ch);
+      }
+
+      .math-block {
+        margin-inline: -2px;
+        padding: 10px;
+      }
+
+      .math-block mjx-container {
+        font-size: 72% !important;
+      }
+
+      .equation-panel,
+      .paper-card,
+      .result {
+        padding: 14px;
+      }
+
+      .paper-card figure {
+        margin: -14px -14px 0;
+      }
+    }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["\\(", "\\)"]],
+        displayMath: [["\\[", "\\]"]]
+      },
+      svg: {
+        fontCache: "global"
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="mark" href="#">Finite Response Kernels</a>
+      <nav aria-label="Primary navigation">
+        <a href="#formalism">Formalism</a>
+        <a href="#manuscripts">Manuscripts</a>
+        <a href="#results">Results</a>
+        <a href="#artifacts">Artifacts</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Finite Response Kernels">
+      <div class="hero-inner">
+        <p class="eyebrow">Jonathan R. Landers</p>
+        <h1>
+          <span class="hero-line">Finite</span>
+          <span class="hero-line">Response</span>
+          <span class="hero-line">Kernels</span>
+        </h1>
+        <p class="hero-copy">
+          Three manuscripts on the shape of response: causal mediation kernels,
+          velocity takeoff in recursive redundancy, and the inverse problem of
+          reading hidden recurrence modes from observed takeoff curves.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="entropy_of_finite_response/entropy_of_finite_response.pdf">Entropy PDF</a>
+          <a class="button" href="velocity_takeoff_revised/velocity_takeoff_revised.pdf">Takeoff PDF</a>
+          <a class="button" href="inverse_takeoff_kernels/inverse_takeoff_kernels.pdf">Inverse PDF</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="formalism">
+      <div class="section-inner">
+        <div class="section-title">
+          <h2>One Kernel View</h2>
+          <p class="lead">
+            The common claim is that a terminal number is not enough. A limiting
+            speed, variance, or exponent gives the endpoint. The kernel records
+            how the response arrives there.
+          </p>
+        </div>
+
+        <div class="thread-grid">
+          <div class="equation-panel">
+            <h3>Mediated physical response</h3>
+            <p>
+              The observed field is the ideal source after it passes through a
+              passive causal mediator.
+            </p>
+            <div class="math-block">
+              \[
+              F_{\mathrm{actual}}(x,t)=
+              \int_{\mathbb R^d}\int_{-\infty}^{t}
+              G(x-x',t-s)F_{\mathrm{ideal}}(x',s)\,ds\,dx'
+              \]
+            </div>
+            <div class="math-block">
+              \[
+              K(t)\ge 0,\qquad K(t)=0\text{ for }t<0,\qquad
+              \int_0^\infty K(t)\,dt=1
+              \]
+            </div>
+            <p>
+              Parallel channels mix. Sequential stages convolve. Hidden stages
+              add spread rather than sharpening an already mediated response.
+            </p>
+          </div>
+
+          <figure class="figure-frame">
+            <a href="entropy_of_finite_response/fig1_kernel_gallery.png" aria-label="Open passive causal kernel gallery full size">
+              <img src="entropy_of_finite_response/fig1_kernel_gallery.png" alt="Gallery of passive causal kernel shapes.">
+            </a>
+            <figcaption class="caption">
+              Passive causal kernels live between the sharp delta boundary and
+              the Gaussian spreading boundary.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="wide-band">
+      <div class="section-inner">
+        <div class="section-title">
+          <h2>Recursive Takeoff</h2>
+          <p class="lead">
+            For recursion trees, finite response becomes the shape of redundant
+            work before memoization identifies repeated subproblems.
+          </p>
+        </div>
+
+        <div class="thread-grid">
+          <figure class="figure-frame">
+            <a href="velocity_takeoff_revised/velocity_takeoff_figures/fig1_separation.png" aria-label="Open takeoff separation figure full size">
+              <img src="velocity_takeoff_revised/velocity_takeoff_figures/fig1_separation.png" alt="Takeoff profiles with different finite behavior.">
+            </a>
+            <figcaption class="caption">
+              Same terminal overlap velocity, different finite takeoff.
+            </figcaption>
+          </figure>
+
+          <div class="equation-panel">
+            <h3>Velocity takeoff kernel</h3>
+            <p>
+              A finite-lag recursion produces a tree-size sequence and a
+              velocity profile:
+            </p>
+            <div class="math-block">
+              \[
+              N_n=1+\sum_{j\in J}a_jN_{n-j},\qquad
+              u_n=\log N_{n+1}-\log N_n
+              \]
+            </div>
+            <div class="math-block">
+              \[
+              F_n=\frac{u_n}{\alpha},\qquad
+              \kappa_n=F_n-F_{n-1},\qquad
+              F_n=(\kappa*H)_n
+              \]
+            </div>
+            <p>
+              The profile \(F_n\) is the normalized step response. The kernel
+              \(\kappa_n\) records immediate, delayed, oscillatory, mixed, or
+              slow-settling redundancy onset.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="manuscripts">
+      <div class="section-inner">
+        <div class="section-title">
+          <h2>The Manuscripts</h2>
+          <p class="lead">
+            Each manuscript treats a different face of the same object: the
+            finite shape of response, not just its endpoint.
+          </p>
+        </div>
+
+        <div class="paper-grid">
+          <article class="paper-card">
+            <figure class="band-entropy" role="img" aria-label="Abstract finite-response gradient band."></figure>
+            <span class="tag">Physical response</span>
+            <h3>The Entropy of Finite Response</h3>
+            <p>
+              Separates the ideal source from the mediating kernel. Passive
+              causal kernels are closed under mixing and composition, but
+              convolution pushes them deeper into finite response. Entropy power
+              makes the irreversibility strict: causal stages cannot attain the
+              Gaussian equality case, and the delta limit remains a singular
+              boundary.
+            </p>
+            <div class="links">
+              <a href="entropy_of_finite_response/entropy_of_finite_response.pdf">PDF</a>
+              <a href="entropy_of_finite_response/entropy_of_finite_response.tex">LaTeX</a>
+              <a href="entropy_of_finite_response/kernels.py">Figures</a>
+            </div>
+          </article>
+
+          <article class="paper-card">
+            <figure class="band-takeoff" role="img" aria-label="Abstract recursive-takeoff gradient band."></figure>
+            <span class="tag">Recursive response</span>
+            <h3>The Shape of Recursive Redundancy</h3>
+            <p>
+              Introduces velocity takeoff kernels for memoized recursion.
+              Standard overlap analysis sees the limiting velocity
+              \(\alpha-\beta\), but not how redundancy becomes visible. The
+              manuscript constructs finite-lag schemas with the same terminal
+              speed and memoized state-growth class but different finite
+              takeoff behavior.
+            </p>
+            <div class="links">
+              <a href="velocity_takeoff_revised/velocity_takeoff_revised.pdf">PDF</a>
+              <a href="velocity_takeoff_revised/velocity_takeoff_revised.html">HTML</a>
+              <a href="velocity_takeoff_revised/velocity_takeoff_revised.tex">LaTeX</a>
+            </div>
+          </article>
+
+          <article class="paper-card">
+            <figure class="band-inverse" role="img" aria-label="Abstract inverse-takeoff gradient band."></figure>
+            <span class="tag">Inverse problem</span>
+            <h3>Inverse Takeoff Kernels</h3>
+            <p>
+              Turns the forward picture around. Given an observed takeoff
+              profile, the draft asks which response modes can be recovered and
+              which source mechanisms remain underdetermined. The organizing
+              principle is that takeoff identifies response modes before it
+              identifies source mechanisms.
+            </p>
+            <div class="links">
+              <a href="inverse_takeoff_kernels/inverse_takeoff_kernels.pdf">PDF</a>
+              <a href="inverse_takeoff_kernels/inverse_takeoff_kernels.tex">LaTeX</a>
+              <a href="inverse_takeoff_kernels/README.md">Notes</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="results">
+      <div class="section-inner">
+        <div class="section-title">
+          <h2>Key Results</h2>
+          <p class="lead">
+            The papers repeatedly separate endpoint quantities from finite
+            response geometry.
+          </p>
+        </div>
+
+        <div class="results-grid">
+          <article class="result accent-rust">
+            <h3>Passive composition preserves causality and adds spread</h3>
+            <p>
+              If \(K_1\) and \(K_2\) are passive causal temporal kernels, then
+              \(K_2*K_1\) is passive causal, with additive mean and variance.
+              The entropy-power refinement is strict for nontrivial causal
+              densities:
+            </p>
+            <div class="math-block">
+              \[
+              N(K_2*K_1)\ge N(K_1)+N(K_2),\qquad
+              N(K)<\sigma^2(K)
+              \]
+            </div>
+          </article>
+
+          <article class="result accent-green">
+            <h3>The takeoff kernel is a real invariant</h3>
+            <p>
+              In the aperiodic finite-lag case, \(\kappa\) has total mass one,
+              exponential settling, and modes controlled by the non-dominant
+              roots of the recurrence denominator \(Q(z)\).
+            </p>
+            <div class="math-block">
+              \[
+              Q(z)=1-\sum_{j\in J}a_jz^j,\qquad
+              \text{mode}\sim(\rho/\zeta)^n
+              \]
+            </div>
+          </article>
+
+          <article class="result accent-blue">
+            <h3>First-order overlap does not determine takeoff</h3>
+            <p>
+              Two schemas can share terminal tree speed \(\alpha=\log 2\),
+              polynomial memoized state count, and limiting overlap velocity,
+              while one reaches terminal redundancy immediately and another has
+              an arbitrarily slow near-periodic transient.
+            </p>
+          </article>
+
+          <article class="result accent-gold">
+            <h3>Inverse takeoff is modal before mechanistic</h3>
+            <p>
+              Noiseless finite-exponential responses can be recovered by
+              Hankel, Prony, matrix-pencil, or minimal-recurrence methods. But
+              a branch-channel split \(a=b+c\) is not identifiable from one
+              aggregate trace without added structure.
+            </p>
+            <div class="math-block">
+              \[
+              \text{takeoff}
+              \longrightarrow
+              \text{modes}
+              \longrightarrow
+              \text{candidate mechanisms}
+              \]
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="artifacts">
+      <div class="section-inner">
+        <div class="section-title">
+          <h2>Artifacts</h2>
+          <p class="lead">
+            The repository keeps source manuscripts, rendered reading copies,
+            figures, and scripts together.
+          </p>
+        </div>
+
+        <ul class="artifact-list">
+          <li>
+            <a href="entropy_of_finite_response/entropy_of_finite_response.pdf">
+              <strong>Entropy of Finite Response</strong>
+              <span>PDF manuscript</span>
+            </a>
+          </li>
+          <li>
+            <a href="velocity_takeoff_revised/velocity_takeoff_revised.pdf">
+              <strong>Shape of Recursive Redundancy</strong>
+              <span>PDF manuscript</span>
+            </a>
+          </li>
+          <li>
+            <a href="inverse_takeoff_kernels/inverse_takeoff_kernels.pdf">
+              <strong>Inverse Takeoff Kernels</strong>
+              <span>PDF manuscript</span>
+            </a>
+          </li>
+          <li>
+            <a href="velocity_takeoff_revised/velocity_takeoff_revised.html">
+              <strong>Takeoff HTML</strong>
+              <span>Standalone HTML export</span>
+            </a>
+          </li>
+          <li>
+            <a href="entropy_of_finite_response/kernels.py">
+              <strong>Finite-response figures</strong>
+              <span>Python figure generator</span>
+            </a>
+          </li>
+          <li>
+            <a href="velocity_takeoff_revised/velocity_takeoff_figures/experiments.py">
+              <strong>Takeoff experiments</strong>
+              <span>Python figure generator</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="section-inner">
+      <span>Jonathan R. Landers</span>
+      <span>Finite-response kernels, takeoff kernels, and recursive redundancy.</span>
+    </div>
+  </footer>
+</body>
+</html>
