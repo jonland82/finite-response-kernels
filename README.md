@@ -3,21 +3,78 @@
 **Jonathan R. Landers**
 
 This repository collects draft manuscripts and supporting computational material
-on finite-response kernels, recursive redundancy, and takeoff behavior in
-mediated systems.
+on finite-response kernels, takeoff kernels, and the shape of mediated
+response.
 
-The common theme is that a limiting rate or asymptotic invariant is often not
-the full story. Finite response has shape: causal mediation kernels spread
-instantaneous sources, and recursive programs expose measurable redundancy
-takeoff before memoization collapses repeated work.
+The shared thread is that a limiting rate or asymptotic invariant is not the
+full response. Finite response has shape. A physical mediator spreads an
+idealized instantaneous source through a causal kernel; a recursive computation
+reveals redundancy through a velocity takeoff curve before memoization collapses
+the recursion tree into a DAG; and an observed takeoff curve can be read
+backward as a system-identification problem. In each case, the kernel is the
+object that records how the response turns on, spreads, settles, or decomposes
+into modes.
+
+## Formal Thread
+
+A mediated physical response is written as a source convolved with a causal
+kernel:
+
+$$
+F_{\mathrm{actual}}(x,t)
+=
+\int_{\mathbb R^d}\int_{-\infty}^{t}
+G(x-x',t-s)F_{\mathrm{ideal}}(x',s)\,ds\,dx'.
+$$
+
+$$
+K(t)\ge 0,\qquad K(t)=0\text{ for }t<0,\qquad
+\int_0^\infty K(t)\,dt=1.
+$$
+
+Sequential stages compose by convolution, while parallel channels mix
+convexly:
+
+$$
+G_{\mathrm{total}}=G_2*G_1,
+\qquad
+G_\lambda=(1-\lambda)G_1+\lambda G_2.
+$$
+
+For recursive redundancy, the same finite-response viewpoint appears in the
+tree-size recurrence
+
+$$
+N_n=1+\sum_{j\in J}a_jN_{n-j},
+\qquad
+u_n=\log N_{n+1}-\log N_n.
+$$
+
+$$
+F_n=\frac{u_n}{\alpha},
+\qquad
+\kappa_n=F_n-F_{n-1}.
+$$
+
+Here $F_n$ is the normalized takeoff profile and $\kappa_n$ is the causal
+takeoff kernel. The inverse manuscript asks how much hidden recurrence
+structure can be recovered from an observed takeoff profile:
+
+$$
+\text{observed takeoff}
+\longrightarrow
+\text{modal decomposition}
+\longrightarrow
+\text{candidate recurrence mechanisms}.
+$$
 
 ## Contents
 
 | Directory | Description |
 | --- | --- |
-| `entropy_of_finite_response/` | Draft note on passive causal kernels, convolution, entropy power, and the geometry of finite physical response. Includes LaTeX source, rendered PDF, figures, and figure-generation code. |
-| `velocity_takeoff_revised/` | Manuscript on velocity takeoff kernels for memoization and recursive redundancy. Includes LaTeX source, rendered PDF/HTML, figures, and experiment scripts. |
-| `inverse_takeoff_kernels/` | Working draft for the inverse problem: identifying response modes and candidate recursive mechanisms from an observed takeoff curve. |
+| `entropy_of_finite_response/` | Develops passive causal kernels as finite-response mediators. It studies closure under convolution and mixing, moment growth, entropy power, and the geometry between the delta-like instantaneous boundary and the Gaussian spreading boundary. |
+| `velocity_takeoff_revised/` | Introduces velocity takeoff kernels for recursive redundancy. It shows that recursive schemas can have the same terminal overlap velocity while exhibiting different finite takeoff shapes, so the kernel carries information that first-order asymptotics miss. |
+| `inverse_takeoff_kernels/` | Poses the inverse problem. Given an observed redundancy takeoff curve, it separates recoverable modal structure from underdetermined source-level mechanisms and frames reconstruction as constrained system identification. |
 
 ## Primary Artifacts
 
