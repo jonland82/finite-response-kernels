@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Shape of Recursive Redundancy</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true,
+        tags: 'none'
+      },
+      chtml: {
+        matchFontHeight: false
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        renderActions: { addMenu: [] }
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <style>
+    :root {
+      --ink: #182331;
+      --muted: #657384;
+      --soft-ink: #405066;
+      --paper: #ffffff;
+      --bg: #f7f7f4;
+      --wash: #f2f7f7;
+      --wash-2: #fbf8f1;
+      --line: #d7dee5;
+      --line-strong: #aebbc8;
+      --blue: #1f527d;
+      --teal: #28766c;
+      --orange: #9b5a33;
+      --green: #336f55;
+      --page: 780px;
+      --page-gutter: 56px;
+      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --shadow: 0 10px 28px rgba(24, 35, 49, 0.06);
+      --shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.82) inset;
+      font-family: var(--sans);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #fbfbf9 0%, #f2f5f6 44%, #ffffff 100%);
+      font-family: var(--serif);
+      font-size: 14px;
+      line-height: 1.6;
+      font-variant-numeric: oldstyle-nums;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    main {
+      width: min(var(--page), calc(100% - var(--page-gutter)));
+      max-width: calc(100vw - var(--page-gutter));
+      margin: 0 auto;
+      overflow-x: clip;
+    }
+
+    header,
+    section,
+    nav,
+    figure,
+    .eq,
+    .note,
+    .cards,
+    .card,
+    .proof-lite,
+    .metric-strip {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .hero {
+      padding: clamp(28px, 5vw, 52px) 0 22px;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    h1 {
+      max-width: 700px;
+      margin: 0;
+      color: #101821;
+      font-family: var(--sans);
+      font-size: clamp(1.55rem, 2.9vw, 2.45rem);
+      line-height: 1.06;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .subtitle {
+      max-width: 700px;
+      margin: 13px 0 0;
+      color: var(--soft-ink);
+      font-family: var(--sans);
+      font-size: clamp(0.92rem, 1.35vw, 1.04rem);
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .byline {
+      margin: 11px 0 0;
+      color: #263545;
+      font-family: var(--sans);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .top-link {
+      display: inline-block;
+      margin-top: 7px;
+      color: var(--blue);
+      font-family: var(--sans);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .top-link:hover {
+      text-decoration: underline;
+    }
+
+    .lede {
+      max-width: 100%;
+      margin-top: 19px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--teal);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdfd 100%);
+      box-shadow: var(--shadow);
+      overflow-wrap: anywhere;
+    }
+
+    .lede strong {
+      color: #102236;
+    }
+
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 0;
+    }
+
+    .metric {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow-soft);
+      overflow-wrap: anywhere;
+    }
+
+    .metric .k {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .metric .v {
+      color: #13202c;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 750;
+    }
+
+    .toc {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      margin: 0 calc(50% - 50vw);
+      padding: 6px max(16px, calc((100vw - var(--page)) / 2));
+      border-bottom: 1px solid var(--line);
+      background: rgba(249, 250, 249, 0.94);
+      backdrop-filter: blur(12px);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+    }
+
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 27px;
+      margin-right: 5px;
+      padding: 4px 8px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: #33475b;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      border-color: var(--line);
+      background: #ffffff;
+    }
+
+    section {
+      padding: clamp(22px, 3.7vw, 40px) 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      max-width: 100%;
+      margin: 0 0 10px;
+      color: #121b26;
+      font-family: var(--sans);
+      font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 18px 0 7px;
+      color: #1b2a38;
+      font-family: var(--sans);
+      font-size: 0.86rem;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    p {
+      max-width: 100%;
+      margin: 0 0 10px;
+      overflow-wrap: anywhere;
+    }
+
+    ul,
+    ol {
+      max-width: 100%;
+      margin: 10px 0 0;
+      padding-left: 1.15rem;
+    }
+
+    li {
+      margin: 0 0 8px;
+    }
+
+    .note,
+    .proof-lite {
+      max-width: 100%;
+      margin: 14px 0;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .note {
+      border-left: 3px solid var(--orange);
+    }
+
+    .proof-lite {
+      border-left: 3px solid var(--blue);
+      background: #f7fbfd;
+    }
+
+    .label {
+      display: block;
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      font-weight: 850;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .eq {
+      max-width: 100%;
+      margin: 12px 0 14px;
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--teal);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0)),
+        var(--wash);
+      text-align: center;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .eq.compact {
+      max-width: 100%;
+    }
+
+    mjx-container {
+      max-width: 100%;
+      overflow-x: visible;
+      overflow-y: visible;
+      padding-bottom: 0;
+    }
+
+    mjx-container[display="true"] {
+      margin: 0 !important;
+      padding: 3px 0;
+      min-width: max-content;
+    }
+
+    .eq mjx-container[display="true"] {
+      width: max-content;
+      max-width: none;
+      min-width: 0;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      overflow: visible;
+    }
+
+    figure {
+      width: min(680px, 100%);
+      margin: 18px auto 6px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(24, 35, 49, 0.055);
+    }
+
+    figure.wide {
+      width: min(760px, 100%);
+    }
+
+    figure.compact-figure {
+      width: min(450px, 100%);
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #ffffff;
+    }
+
+    figcaption {
+      padding: 9px 11px 10px;
+      border-top: 1px solid var(--line);
+      color: #4d5c69;
+      background: #fbfcfc;
+      font-family: var(--sans);
+      font-size: 0.74rem;
+      line-height: 1.45;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      max-width: 100%;
+      margin-top: 12px;
+    }
+
+    .card {
+      padding: 12px 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .card p {
+      margin-bottom: 0;
+      font-family: var(--serif);
+      font-size: 0.84rem;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+      max-width: 100%;
+      margin: 14px 0;
+      color: #253545;
+      font-family: var(--sans);
+      font-weight: 750;
+    }
+
+    .flow span {
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.96);
+      text-align: center;
+    }
+
+    .flow b {
+      color: var(--orange);
+      font-size: 1rem;
+    }
+
+    footer {
+      padding: 28px 0 44px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(100% - 28px, 1040px);
+        max-width: calc(100vw - 28px);
+      }
+
+      body {
+        font-size: 14px;
+        line-height: 1.58;
+      }
+
+      .hero {
+        padding-top: 32px;
+      }
+
+      h1 {
+        font-size: 1.42rem;
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        font-size: 0.88rem;
+      }
+
+      .lede,
+      .note,
+      .proof-lite {
+        padding: 14px;
+      }
+
+      .metric-strip,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .toc {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .eq {
+        padding: 10px 11px;
+        margin-left: -2px;
+        margin-right: -2px;
+      }
+
+      .eq mjx-container[display="true"] {
+        font-size: 90% !important;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .flow b {
+        text-align: center;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .toc {
+        position: static;
+        border: none;
+      }
+
+      .hero,
+      section,
+      footer {
+        break-inside: avoid;
+      }
+
+      figure,
+      .card,
+      .note,
+      .proof-lite,
+      .eq {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main id="top">
+    <header class="hero">
+      <h1>The Shape of Recursive Redundancy</h1>
+      <p class="subtitle">Velocity takeoff kernels for memoization.</p>
+      <p class="byline">Jonathan R. Landers / June 2026</p>
+      <a class="top-link" href="velocity_takeoff_revised.pdf">Full PDF</a>
+      <div class="lede">
+        <span class="label">Core signal</span>
+        <p><strong>Memoization does more than reduce work.</strong> It folds a recursion tree into a DAG, and the redundant work has a visible startup shape before it reaches its asymptotic speed. The paper's invariant is the velocity takeoff kernel: a compact way to see whether redundancy appears immediately, after a delay, through ringing, or along a slow diffusive tail. This exposes finite-response structure that standard first-order complexity summaries usually collapse into the same asymptotic growth rate.</p>
+      </div>
+      <div class="metric-strip">
+        <div class="metric">
+          <span class="k">Terminal speed</span>
+          <span class="v">usual asymptotic overlap velocity</span>
+        </div>
+        <div class="metric">
+          <span class="k">Takeoff kernel</span>
+          <span class="v">finite onset of redundant work</span>
+        </div>
+        <div class="metric">
+          <span class="k">Separation</span>
+          <span class="v">same limit, different startup physics</span>
+        </div>
+      </div>
+    </header>
+  </main>
+
+  <nav class="toc" aria-label="Section navigation">
+    <a href="#overlap">Overlap</a>
+    <a href="#schema">Finite Lag</a>
+    <a href="#kernel">Kernel</a>
+    <a href="#separation">Separation</a>
+    <a href="#entropy">Entropy</a>
+    <a href="#types">Types</a>
+    <a href="#measurement">Measure</a>
+  </nav>
+
+  <main>
+    <section id="overlap">
+      <h2>1. What Memoization Exposes</h2>
+      <p>Start with a recursive computation on input size \(n\). Let \(N_n\) count calls in the naive recursion tree, where repeated subproblems are counted each time they appear. Let \(M_n\) count the distinct subproblem labels left after memoization identifies repeats. The overlap ratio \(\Theta_n\), logarithmic overlap \(S_n\), and overlap velocity \(v_n\) are</p>
+      <div class="eq compact">
+        \[
+          \Theta_n = \frac{N_n}{M_n},
+          \qquad
+          S_n = \log \Theta_n,
+          \qquad
+          v_n = S_{n+1}-S_n .
+        \]
+      </div>
+      <p>The overlap velocity \(v_n\) tracks how quickly memoizable redundancy is being created as \(n\) grows. It splits cleanly into tree velocity minus DAG velocity:</p>
+      <div class="eq compact">
+        \[
+          \begin{aligned}
+            u_n &amp;= \log N_{n+1}-\log N_n,\\
+            w_n &amp;= \log M_{n+1}-\log M_n,\\
+            v_n &amp;= u_n-w_n .
+          \end{aligned}
+        \]
+      </div>
+      <p>If \(\log N_n \sim \alpha n\) and \(\log M_n \sim \beta n\), where \(\alpha\) is the tree growth exponent and \(\beta\) is the memoized-DAG growth exponent, then \(v_n \to \alpha-\beta\). That limiting number is useful, but it misses the finite story: how does redundancy actually turn on?</p>
+      <div class="flow" aria-label="Takeoff question">
+        <span>startup: little visible overlap</span>
+        <b>to</b>
+        <span>terminal overlap speed \(\alpha-\beta\)</span>
+      </div>
+    </section>
+
+    <section id="schema">
+      <h2>2. The Finite-Lag Model</h2>
+      <p>A finite-lag recursive schema has a finite set of positive decrements \(J\), with \(a_j\) calls from size \(n\) to size \(n-j\) for each \(j\in J\). This gives a clean laboratory for studying takeoff: the naive tree size follows</p>
+      <div class="eq">
+        \[
+          N_n = 1+\sum_{j\in J} a_j N_{n-j},
+          \qquad n \ge 1,
+          \qquad N_m=1 \text{ for } m\le 0 .
+        \]
+      </div>
+      <p>The total branching number is \(A=\sum_{j\in J}a_j\). In the redundant case \(A\gt1\), define the characteristic polynomial \(Q\) in the variable \(z\), its positive root \(\rho\), and the terminal tree speed \(\alpha\) by</p>
+      <div class="eq">
+        \[
+          Q(z)=1-\sum_{j\in J}a_jz^j,
+          \qquad
+          \sum_{j\in J}a_j\rho^j=1,
+          \qquad
+          \alpha=-\log\rho .
+        \]
+      </div>
+      <p>The root \(\rho\in(0,1)\) sets the terminal tree speed \(\alpha\). The raw recursion kernel \(K_j=a_j/A\) says where branches land; the takeoff kernel asks a different question: how the observed velocity approaches \(\alpha\).</p>
+    </section>
+
+    <section id="kernel">
+      <h2>3. The Takeoff Kernel</h2>
+      <p>Normalize the tree velocity by its terminal value. The result is a finite-response profile \(F_n\), and the kernel \(\kappa\) is the causal finite difference that drives it.</p>
+      <div class="eq compact">
+        \[
+          F_n=\frac{u_n}{\alpha},
+          \qquad
+          F_{-1}=0,
+          \qquad
+          \kappa_n=F_n-F_{n-1}.
+        \]
+      </div>
+      <p>Equivalently, the profile is the step response of the kernel. Here \(H^{\mathrm{step}}\) is the discrete step function, equal to \(1\) for nonnegative indices and \(0\) for negative indices:</p>
+      <div class="eq compact">
+        \[
+          F_n=(\kappa * H^{\mathrm{step}})_n=\sum_{t=0}^{n}\kappa_t .
+        \]
+      </div>
+      <div class="proof-lite">
+        <span class="label">Regularity, without the proof machinery</span>
+        <p>For an aperiodic finite-lag recurrence, \(u_n\to\alpha\). The kernel has total mass one, and for some constants \(C\gt0\) and \(0\lt\lambda\lt1\), its tail decays exponentially:</p>
+        <div class="eq compact">
+          \[
+            \sum_{n=0}^{\infty}\kappa_n=1,
+            \qquad
+            |F_n-1|\le C\lambda^n,
+            \qquad
+            |\kappa_n|\le C\lambda^n .
+          \]
+        </div>
+        <p>The modes come from non-dominant singularities \(\zeta\) of the tree-size generating function, including non-dominant roots of \(Q\) and affine boundary contributions such as \(z=1\). Correction terms scale like \((\rho/\zeta)^n\). Positive real modes give smoothing; negative or complex modes give alternating or oscillatory takeoff.</p>
+      </div>
+      <p>The modal radius \(\lambda_\star\) records the slowest visible transient among those non-dominant singularities \(\zeta\):</p>
+      <div class="eq compact">
+        \[
+          \lambda_\star
+          =
+          \max_{\zeta\ne\rho}
+          \left|\frac{\rho}{\zeta}\right|.
+        \]
+      </div>
+      <p>When \(\lambda_\star\) is small, velocity settles fast. When \(\lambda_\star\) is near one, the recursion can spend a long finite window behaving unlike its asymptotic limit.</p>
+    </section>
+
+    <section id="separation">
+      <h2>4. Same Limit, Different Takeoff</h2>
+      <p>The main theorem says the kernel is not merely decorative. Two schemas can share terminal tree speed, polynomial memoized state growth, and limiting overlap velocity, yet still take off in sharply different ways.</p>
+      <div class="note">
+        <span class="label">Main separation</span>
+        <p>There are finite-lag schemas with \(\alpha=\log 2\), \(M_n=O(n)\), and limiting overlap velocity \(\log 2\), but with different takeoff classes. Here \(O(n)\) means at most linear growth up to constants, and \(\delta\gt0\) is an arbitrary tolerance. Immediate binary recursion settles fast; a delayed aperiodic family can have modal radius greater than \(1-\delta\).</p>
+      </div>
+      <h3>Fast reference schema</h3>
+      <div class="eq compact">
+        \[
+          N_n=1+2N_{n-1},
+          \qquad
+          \rho=\frac{1}{2},
+          \qquad
+          \alpha=\log 2 .
+        \]
+      </div>
+      <p>This is immediate binary branching. Its modal radius is \(1/2\), so the finite response locks onto its terminal behavior quickly.</p>
+      <h3>Slow near-periodic family</h3>
+      <p>For an integer lag parameter \(L\ge2\), use the following aperiodic delayed schema and its polynomial \(Q_L\):</p>
+      <div class="eq">
+        \[
+          \begin{aligned}
+            N_n &amp;= 1+(2^L-1)N_{n-L}+2N_{n-L-1},\\
+            Q_L(z) &amp;= 1-(2^L-1)z^L-2z^{L+1},\\
+            (2^L-1)2^{-L}+2\cdot2^{-(L+1)} &amp;= 1 .
+          \end{aligned}
+        \]
+      </div>
+      <p>The dominant root is still \(\rho=1/2\), so the terminal speed remains \(\log2\). But as \(L\) grows, a non-dominant root \(\zeta_L\) moves close to the dominant circle, forcing the modal radius toward one.</p>
+      <div class="eq compact">
+        \[
+          \left|\zeta_L-\frac{1}{2}e^{2\pi i/L}\right|\to0,
+          \qquad
+          \frac{\rho}{|\zeta_L|}\to1 .
+        \]
+      </div>
+      <figure class="wide">
+        <img src="velocity_takeoff_figures/fig1_separation.png" alt="Immediate and delayed recurrence takeoff profiles with different modal radii.">
+        <figcaption><strong>Separation in one picture.</strong> The terminal overlap velocity is the same, but the finite response is not: immediate takeoff versus long near-periodic ringing.</figcaption>
+      </figure>
+    </section>
+
+    <section id="entropy">
+      <h2>5. Terminal Speed as Entropy per Decrement</h2>
+      <p>The terminal speed also has a compact information-theoretic form. For a probability distribution \(p=(p_j)_{j\in J}\) over decrements \(J\), define entropy \(H(p)\), mismatch from the branch kernel \(K\), and mean decrement \(\mu(p)\):</p>
+      <div class="eq">
+        \[
+          H(p)=-\sum_{j\in J}p_j\log p_j,
+          \qquad
+          D(p\|K)=\sum_{j\in J}p_j\log\frac{p_j}{K_j},
+          \qquad
+          \mu(p)=\sum_{j\in J}jp_j .
+        \]
+      </div>
+      <p>Then the terminal speed is the following maximum over all such distributions \(p\), with \(p^\star\) denoting the maximizing distribution:</p>
+      <div class="eq">
+        \[
+          \alpha
+          =
+          \max_p
+          \frac{\log A-D(p\|K)}{\mu(p)},
+          \qquad
+          p_j^\star=a_j e^{-\alpha j}.
+        \]
+      </div>
+      <p>Read this as branching entropy per unit input size after paying a mismatch penalty. The takeoff kernel adds what this terminal formula cannot: the route by which the terminal speed becomes visible.</p>
+    </section>
+
+    <section id="types">
+      <h2>6. Takeoff Types</h2>
+      <p>The kernel gives a vocabulary for recursive redundancy. These are the practical signatures to look for in traces.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>No takeoff</h3>
+          <p>One recursive call, \(A=1\). The tree is path-like: there is stack depth, but no positive exponential overlap velocity.</p>
+        </div>
+        <div class="card">
+          <h3>Immediate takeoff</h3>
+          <p>Binary one-step recursion has \(\alpha=\log2\). Redundancy appears almost immediately, up to boundary effects.</p>
+        </div>
+        <div class="card">
+          <h3>Delayed takeoff</h3>
+          <p>Binary lag \(L\) has \(\alpha=(\log2)/L\). In the original coordinate, recursive mass must pay the lag before it returns.</p>
+        </div>
+        <div class="card">
+          <h3>Leading ringing</h3>
+          <p>Near-periodic delayed branching creates complex modes close to the dominant circle, producing long damped oscillations.</p>
+        </div>
+        <div class="card">
+          <h3>Mixed-stage smoothing</h3>
+          <p>Parallel fast and slow channels do not simply add. Their roots interact, producing a fast rise followed by a slower settling tail.</p>
+        </div>
+        <div class="card">
+          <h3>Diffusive smoothing</h3>
+          <p>Grid dynamic programs can have algebraic \(1/n\)-scale tails instead of exponential finite-lag settling.</p>
+        </div>
+      </div>
+      <h3>Fibonacci is a boundary-convention lesson</h3>
+      <p>Naive Fibonacci has \(J=\{1,2\}\), \(a_1=a_2=1\), and terminal speed \(\alpha=\log\varphi\), where \(\varphi=(1+\sqrt5)/2\) is the golden ratio. Under node counting, the affine \(+1\) contributes a monotone \(z=1\) correction; under leaf counting, the alternating mode moves into clearer view.</p>
+      <div class="eq compact">
+        \[
+          e^{-\alpha}+e^{-2\alpha}=1,
+          \qquad
+          \alpha=\log\varphi,
+          \qquad
+          \left(\frac{\rho}{\zeta}\right)^n=(-\varphi^{-2})^n .
+        \]
+      </div>
+      <figure class="wide">
+        <img src="velocity_takeoff_figures/fig2_fibonacci.png" alt="Fibonacci node counting and leaf counting takeoff kernels.">
+        <figcaption><strong>Fibonacci takeoff.</strong> The tail modes come from the same recurrence, but the visible kernel prefix changes when the counting convention changes.</figcaption>
+      </figure>
+      <h3>Finite-lag versus grid-DP tails</h3>
+      <p>For diagonal lattice paths, let \(P_{n,n}\) be the number of paths to the grid point \((n,n)\). Then \(P_{n,n}=\binom{2n}{n}\), so velocity approaches its limit with algebraic correction rather than exponential correction:</p>
+      <div class="eq compact">
+        \[
+          \log P_{n,n}
+          =
+          2n\log2-\frac{1}{2}\log n+O(1).
+        \]
+      </div>
+      <figure class="compact-figure">
+        <img src="velocity_takeoff_figures/fig3_decay_class.png" alt="Comparison of exponential finite-lag settling with algebraic grid-DP settling.">
+        <figcaption><strong>Decay class matters.</strong> Finite-lag recurrences settle exponentially; diagonal grid-DP counts carry a slower algebraic tail.</figcaption>
+      </figure>
+    </section>
+
+    <section id="measurement">
+      <h2>7. How to Measure It</h2>
+      <p>For a recursive implementation, record the naive call count \(N_n\) and the distinct memoized label count \(M_n\). Then compute</p>
+      <div class="eq compact">
+        \[
+          \begin{aligned}
+            u_n &amp;= \log N_{n+1}-\log N_n,\\
+            w_n &amp;= \log M_{n+1}-\log M_n,\\
+            v_n &amp;= u_n-w_n .
+          \end{aligned}
+        \]
+      </div>
+      <p>If \(u_n\) has terminal value \(\alpha\), form \(F_n=u_n/\alpha\) and \(\kappa_n=F_n-F_{n-1}\). Plotting the kernel reveals the response class: immediate, delayed, oscillatory, mixed, or diffusive.</p>
+      <p>When the DAG velocity \(w_n\) also has a positive terminal value \(\beta\), define its normalized profile by \(G_n=w_n/\beta\). Then the overlap velocity decomposes as</p>
+      <div class="eq compact">
+        \[
+          v_n=\alpha F_n-\beta G_n,
+          \qquad
+          v_n-(\alpha-\beta)
+          =
+          \alpha(F_n-1)-\beta(G_n-1).
+        \]
+      </div>
+      <p>When \(M_n\) is polynomial, \(\beta=0\), so overlap takeoff inherits tree takeoff. When the DAG itself grows exponentially, observed overlap becomes a difference between two response curves.</p>
+      <div class="note">
+        <span class="label">Practical read</span>
+        <p>For tolerance \(\varepsilon\gt0\), let \(T_\varepsilon\) be the first index after which \(|F_n-1|\le\varepsilon\) remains true. If the input range lies below \(T_\varepsilon\), asymptotic overlap exists but is not yet what the computation sees. If the range extends well beyond \(T_\varepsilon\), memoization is exposing persistent redundancy rather than boundary effects alone.</p>
+      </div>
+    </section>
+
+    <section id="close">
+      <h2>Conclusion</h2>
+      <p>The limiting overlap velocity \(\alpha-\beta\) is the terminal reading of a richer finite-response object. The takeoff kernel records when memoizable redundancy becomes visible, how it settles, and whether it smooths, delays, rings, mixes stages, or diffuses.</p>
+      <p>The main separation is the point: first-order overlap invariants do not determine takeoff. The exponential tree growth, memoized state count, and limiting overlap velocity can all agree, while the startup response remains distinct.</p>
+      <p>That makes recursive redundancy feel less like a single cost number and more like a response curve. Once the curve is visible, memoization is not just a trick for saving calls; it becomes a lens on the hidden shape of repeated computation.</p>
+    </section>
+
+    <footer>
+      Concise HTML companion to <a href="velocity_takeoff_revised.pdf">velocity_takeoff_revised.pdf</a>. Full derivations, proof details, and bibliography remain in the PDF and TeX source.
+    </footer>
+  </main>
+</body>
+</html>

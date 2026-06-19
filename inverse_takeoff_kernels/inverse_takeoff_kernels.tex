@@ -1,0 +1,1124 @@
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[margin=0.72in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{times}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{graphicx}
+
+\setlist{nosep,leftmargin=*}
+\setlength{\columnsep}{0.22in}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0pt}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{remark}{Remark}
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\figurebox}[1]{%
+\fbox{\begin{minipage}{0.92\columnwidth}\small #1\end{minipage}}}
+
+\title{\vspace{-1.0em}Inverse Takeoff Kernels:\\
+System Identification for Recursive Redundancy}
+\author{Jonathan R. Landers}
+\date{Working draft, June 2026}
+
+\begin{document}
+\maketitle
+\vspace{-1.4em}
+
+\begin{abstract}
+Velocity takeoff kernels describe how redundant work becomes visible in a
+recursive computation before memoization collapses the recursion tree into a
+directed acyclic graph of distinct subproblems. This paper develops the inverse
+question. Given an observed redundancy takeoff curve, what can be inferred
+about the recursive mechanisms that produced it? The answer is deliberately
+two-stage. First, under a finite-exponential response model, the observed
+takeoff profile admits a modal expansion whose poles and amplitudes can be
+recovered exactly from noiseless samples by Hankel, Prony, matrix-pencil, or
+minimal-recurrence methods, and approximately from noisy traces by regularized
+system identification. A dominance theorem then explains when recovered modes
+become visible in the composite response: the largest-radius mode controls the
+tail, while pairwise crossover estimates locate the handoff between short-lived
+and slow-settling components. Second, those response modes constrain but do not
+generally identify literal branch sources. A combined recurrence may be split
+into fast and slow channels in many observationally equivalent ways. The
+resulting principle is that takeoff identifies response modes before it
+identifies source mechanisms. Source-level reconstruction becomes meaningful
+only after adding structure such as bounded lag, nonnegative integer branch
+counts, sparsity, separated supports, or multiple instrumented traces.
+\end{abstract}
+
+\section{Introduction}
+
+The forward theory of takeoff kernels starts with a recursive schema and asks
+what redundancy response it generates. In a finite-lag model,
+\[
+        N_n = 1+\sum_{j\in J} a_j N_{n-j},
+\]
+the tree velocity
+\[
+        u_n=\log N_{n+1}-\log N_n
+\]
+approaches a terminal speed \(\alpha\). The normalized profile
+\[
+        F_n=\frac{u_n}{\alpha}
+\]
+is a step response, and the takeoff kernel
+\[
+        \kappa_n=F_n-F_{n-1}, \qquad F_{-1}=0,
+\]
+records the finite shape of redundancy onset. The subdominant roots of the
+recurrence determine whether the response is immediate, delayed, monotone,
+oscillatory, mixed, or slowly settling.
+
+That forward picture suggests a sharper empirical question. If a recursive
+program is instrumented and its redundant work is observed, can the response be
+read backward? A trace of \(N_n\) is not just a cost curve. After normalization,
+it is a finite response shape. It may contain a fast initial component, a slow
+tail, a small alternating ripple, or a near-periodic settling mode. The inverse
+problem asks how much of that structure can be recovered from the curve itself:
+\[
+        \begin{gathered}
+        \text{observed takeoff}
+        \longrightarrow
+        \text{modal decomposition}
+        \\
+        \longrightarrow
+        \text{candidate recurrence mechanisms}.
+        \end{gathered}
+\]
+The analogy is system identification, but the object being identified is not a
+physical plant. It is the redundant response of a recursion tree before the
+memoized quotient removes repeated labels. The observed profile is therefore
+closer to a measured impulse or step response than to a conventional runtime
+bound.
+
+The main caution is identifiability. A composite recurrence may have two
+channels,
+\[
+        a_j=b_j+c_j,
+\]
+where \(b_j\) is a fast channel and \(c_j\) is a slow channel. The observed tree
+sequence depends on the combined coefficients \(a_j\), not on the chosen split.
+Thus a takeoff trace can identify response modes more directly than it can
+identify literal source branches. This is the paper's organizing distinction:
+modal structure is the primary observable; source structure is a constrained
+interpretation layered on top of it.
+
+\paragraph{Proposed contributions.}
+The paper develops six pieces.
+\begin{enumerate}
+    \item Define inverse takeoff as a recovery problem for observed redundancy
+    velocity profiles.
+    \item Prove an exact modal recovery theorem in the noiseless
+    finite-exponential case.
+    \item Characterize when recovered modes become apparent in the composite
+    response through tail dominance and crossover estimates.
+    \item Prove a nonidentifiability result for latent branch-channel
+    decompositions.
+    \item Develop constrained reconstruction criteria for plausible recursive
+    mechanisms.
+    \item Demonstrate the method on synthetic and real recursive traces.
+\end{enumerate}
+
+\begin{figure}[t]
+\centering
+\figurebox{
+\textbf{Planned Figure 1: inverse takeoff pipeline.}
+Show the measured curve \(N_n\), the normalized residual
+\(Y_n=F_n-1\), the Hankel singular spectrum used to choose modal order,
+the recovered modes \(\theta_r\), and the final constrained recurrence
+candidates. The point of the figure is to separate response identification
+from source interpretation.
+}
+\caption{Conceptual pipeline for inverse takeoff.}
+\label{fig:pipeline-placeholder}
+\end{figure}
+
+\section{Observed Takeoff Data}
+
+Let \(N_n\) be the number of calls in the naive recursion tree and \(M_n\) the
+number of distinct subproblem labels under memoization. Define
+\[
+        u_n=\log N_{n+1}-\log N_n,
+        \qquad
+        w_n=\log M_{n+1}-\log M_n,
+\]
+and
+\[
+        v_n=u_n-w_n.
+\]
+The sequence \(u_n\) is the tree-side velocity; it records how quickly
+recursive multiplicity is being created. The sequence \(w_n\) is the
+state-space velocity; it records how quickly the memoized DAG itself is
+growing. The overlap velocity \(v_n\) is their difference. This distinction is
+important in the inverse setting because two different response curves can
+produce a visually simple difference.
+
+When \(u_n\to\alpha>0\), the tree takeoff profile is
+\[
+        F_n=\frac{u_n}{\alpha}.
+\]
+When \(w_n\to\beta>0\), the DAG profile is
+\[
+        G_n=\frac{w_n}{\beta}.
+\]
+The overlap velocity obeys
+\[
+        v_n-(\alpha-\beta)
+        =
+        \alpha(F_n-1)-\beta(G_n-1).
+\]
+Thus, if only \(v_n\) is observed, tree and DAG modes may cancel or mask one
+another. The inverse problem is best posed using \(N_n\) and \(M_n\) separately
+when those traces are available.
+
+The cleanest data product is therefore
+\[
+        \mathcal{D}_T
+        =
+        \{(N_n,M_n):0\le n\le T\}.
+\]
+From \(\mathcal{D}_T\), one computes \(u_n,w_n,v_n\), estimates terminal
+speeds \(\alpha,\beta\), and then forms normalized residuals. If only the tree
+trace is available, the main residual is
+\[
+        Y_n=F_n-1.
+\]
+If only overlap velocity is available, the measured residual is instead
+\[
+        Z_n
+        =
+        v_n-(\widehat{\alpha}-\widehat{\beta}),
+\]
+which should not be interpreted as a pure tree mode unless \(w_n\) is known to
+settle faster or be negligible.
+
+In measured data, write
+\[
+        \widehat Y_n = Y_n+\eps_n,
+        \qquad n=n_0,\ldots,n_1,
+\]
+where \(\eps_n\) includes measurement noise, terminal-speed estimation error,
+boundary effects, and model misspecification. The finite prefix is often
+contaminated by base-case conventions, so the inverse procedure should allow a
+warmup cutoff \(n_0\). The tail, meanwhile, may be too short to expose a slow
+mode. A credible inverse analysis must therefore report the chosen observation
+window, not only the fitted parameters.
+
+\paragraph{Estimating terminal speed.}
+For a tree trace, a simple estimator is a tail average
+\[
+        \widehat{\alpha}
+        =
+        \frac{1}{|\mathcal{T}|}\sum_{n\in\mathcal{T}}u_n
+\]
+over a stable tail window \(\mathcal{T}\). A more robust version fits
+\[
+        \log N_n
+        =
+        c+\alpha n+\delta_n
+\]
+on the tail and then studies the residual velocity. The inverse method should
+be run under several plausible tail windows; a mode that disappears under small
+window shifts is better treated as a numerical artifact than as a structural
+claim.
+
+\begin{figure}[t]
+\centering
+\figurebox{
+\textbf{Planned Figure 2: data normalization.}
+Panel (a): raw \(N_n\) on a log scale. Panel (b): tree velocity \(u_n\)
+with the fitted terminal speed \(\widehat{\alpha}\). Panel (c): residual
+\(Y_n=\widehat F_n-1\) after a warmup cutoff. Panel (d): sensitivity of the
+residual to the chosen tail window.
+}
+\caption{From call counts to an inverse-takeoff residual.}
+\label{fig:normalization-placeholder}
+\end{figure}
+
+\section{Three Inverse Problems}
+
+\begin{problem}[Modal inverse takeoff]
+Given samples \(Y_0,\ldots,Y_T\), recover a small modal model
+\[
+        F_n-1
+        \approx
+        \sum_{r=1}^{m} c_r\theta_r^n.
+\]
+For complex conjugate modes this can be written as a sum of damped sinusoids,
+\[
+        A_r r_r^n\cos(\omega_r n+\phi_r).
+\]
+The target is not merely interpolation. The fitted modes should predict
+unobserved tail values, explain the observed settling envelope, and remain
+stable under modest changes of the observation window.
+\end{problem}
+
+\begin{problem}[Combined recurrence reconstruction]
+Given \(N_0,\ldots,N_T\), recover a bounded-lag recurrence
+\[
+        N_n
+        \approx
+        1+\sum_{j=1}^{L}a_jN_{n-j},
+        \qquad
+        a_j\ge 0,
+\]
+preferably with \(a_j\in\ZZ_{\ge0}\) when the model represents branch counts.
+This problem asks for a combined mechanism. It does not yet ask which branch or
+subroutine supplied each lag.
+\end{problem}
+
+\begin{problem}[Latent channel decomposition]
+Given recovered combined coefficients \(a_j\), recover a decomposition
+\[
+        a_j=b_j+c_j
+\]
+into fast, slow, or otherwise interpretable channels.
+\end{problem}
+
+These problems are ordered by identifiability. Modal inverse takeoff is the
+best-posed. Combined recurrence reconstruction is plausible under bounded-lag
+and positivity assumptions. Latent channel decomposition is not identifiable in
+general and requires additional structure.
+
+The ordering also suggests how results should be reported. The first output is
+a modal table
+\[
+        (\theta_r,c_r)
+        =
+        (r_re^{i\omega_r},c_r),
+        \qquad r=1,\ldots,m,
+\]
+with damping \(r_r\), frequency \(\omega_r\), phase, and uncertainty. The
+second output is a small set of candidate recurrences \(a\), each with a
+forward-simulated takeoff curve. The final output, if attempted, is a source
+story such as ``one local branch and one delayed branch.'' Only the first of
+these is directly identified by a single trace.
+
+\section{Exact Modal Recovery}
+
+Suppose the takeoff tail has the finite-exponential form
+\[
+        y_n:=F_n-1=\sum_{r=1}^{m}c_r\theta_r^n,
+\]
+with distinct nonzero modes \(\theta_r\) and nonzero amplitudes \(c_r\).
+Define the Hankel matrix
+\[
+        H^{(s)}_{ij}=y_{s+i+j},
+        \qquad 0\le i,j\le q-1.
+\]
+Let \(V_q\) be the \(q\times m\) Vandermonde matrix
+\[
+        (V_q)_{ir}=\theta_r^i,
+        \qquad 0\le i\le q-1,\quad 1\le r\le m.
+\]
+Then
+\[
+        H^{(s)}
+        =
+        V_q
+        \operatorname{diag}(c_1\theta_1^s,\ldots,c_m\theta_m^s)
+        V_q^{T}.
+\]
+Consequently, for \(q\ge m\), the infinite noiseless Hankel matrix has rank
+\(m\). This is the algebraic signature of a finite modal response: the data
+live on an \(m\)-dimensional recurrence model even though the observed trace may
+look like a composite curve.
+
+\begin{theorem}[Noiseless modal recovery]
+Assume
+\[
+        y_n=\sum_{r=1}^{m}c_r\theta_r^n
+\]
+with distinct nonzero \(\theta_r\) and nonzero \(c_r\). Then the \(2m\)
+consecutive samples \(y_0,\ldots,y_{2m-1}\) determine the monic annihilating
+polynomial
+\[
+        p(t)=t^m+p_{m-1}t^{m-1}+\cdots+p_0
+        =
+        \prod_{r=1}^{m}(t-\theta_r),
+\]
+uniquely. The modes \(\theta_r\) are the roots of \(p\), and the amplitudes
+\(c_r\) are recovered uniquely by a Vandermonde system.
+\end{theorem}
+
+\begin{proof}
+The sequence satisfies
+\[
+        y_{n+m}+p_{m-1}y_{n+m-1}+\cdots+p_0y_n=0
+\]
+for every \(n\), because each \(\theta_r\) is a root of \(p\). For
+\(n=0,\ldots,m-1\), this gives the Hankel system
+\[
+        \begin{bmatrix}
+        y_0 & y_1 & \cdots & y_{m-1}\\
+        y_1 & y_2 & \cdots & y_m\\
+        \vdots & \vdots & \ddots & \vdots\\
+        y_{m-1} & y_m & \cdots & y_{2m-2}
+        \end{bmatrix}
+        \begin{bmatrix}
+        p_0\\ p_1\\ \vdots\\ p_{m-1}
+        \end{bmatrix}
+        =
+        -
+        \begin{bmatrix}
+        y_m\\ y_{m+1}\\ \vdots\\ y_{2m-1}
+        \end{bmatrix}.
+\]
+The coefficient matrix is \(V_m\operatorname{diag}(c_r)V_m^T\), hence is
+nonsingular because the \(\theta_r\) are distinct and the \(c_r\) are nonzero.
+Thus the polynomial coefficients are determined. Once \(p\) is known, its roots
+give the modes. The first \(m\) equations
+\[
+        y_n=\sum_{r=1}^{m}c_r\theta_r^n,
+        \qquad 0\le n<m,
+\]
+form a Vandermonde system for the amplitudes.
+\end{proof}
+
+This theorem is classical Prony theory in the notation of takeoff kernels. In
+practice one uses a numerically stable variant: matrix pencil, ESPRIT,
+Hankel-SVD, or prediction-error fitting.
+
+\begin{corollary}[Minimal recurrence]
+Under the hypotheses of the theorem, \(y_n\) satisfies a unique minimal linear
+recurrence of order \(m\),
+\[
+        y_{n+m}
+        =
+        -\sum_{\ell=0}^{m-1}p_\ell y_{n+\ell},
+\]
+and no recurrence of smaller order generates the same infinite sequence.
+\end{corollary}
+
+\begin{proof}
+The recurrence follows from the annihilating polynomial. If a smaller
+recurrence existed, its characteristic polynomial would annihilate every
+\(\theta_r\), but a nonzero polynomial of degree less than \(m\) cannot have
+the \(m\) distinct roots \(\theta_1,\ldots,\theta_m\).
+\end{proof}
+
+\begin{proposition}[Tail dominance and modal visibility]
+Let
+\[
+        y_n=\sum_{r=1}^{m}c_r\theta_r^n,
+\]
+where the modes \(\theta_r\) are distinct and the amplitudes \(c_r\) are
+nonzero. Suppose the modes are ordered so that
+\[
+        |\theta_1|>\lambda,
+        \qquad
+        \lambda=\max_{r\ge2}|\theta_r|.
+\]
+Then the largest-radius mode is asymptotically visible:
+\[
+        y_n
+        =
+        c_1\theta_1^n
+        \left(
+        1+O\left(\left(\frac{\lambda}{|\theta_1|}\right)^n\right)
+        \right).
+\]
+More generally, for two modes \(r\) and \(s\) with
+\(|\theta_r|>|\theta_s|\), mode \(r\) dominates mode \(s\) by a factor
+\(\eta>1\) once
+\[
+        n
+        \ge
+        \frac{\log(\eta |c_s|/|c_r|)}
+             {\log(|\theta_r|/|\theta_s|)}.
+\]
+When equality is used with \(\eta=1\), this gives the formal crossover index
+\[
+        n_{r,s}
+        =
+        \frac{\log(|c_s|/|c_r|)}
+             {\log(|\theta_r|/|\theta_s|)}.
+\]
+\end{proposition}
+
+\begin{proof}
+Factor out the largest-radius term:
+\[
+        y_n
+        =
+        c_1\theta_1^n
+        \left(
+        1+\sum_{r=2}^{m}
+        \frac{c_r}{c_1}\left(\frac{\theta_r}{\theta_1}\right)^n
+        \right).
+\]
+The parenthesized correction is
+\[
+        1+O\left(\left(\frac{\lambda}{|\theta_1|}\right)^n\right),
+\]
+because \(|\theta_r/\theta_1|\le \lambda/|\theta_1|<1\). For the pairwise
+visibility estimate, solve
+\[
+        |c_r|\,|\theta_r|^n
+        \ge
+        \eta |c_s|\,|\theta_s|^n
+\]
+for \(n\). This gives the displayed threshold.
+\end{proof}
+
+\begin{remark}
+The proposition is an asymptotic and pairwise visibility statement. In a finite
+window, a mode can still be hidden by boundary effects, noise, nearby modes,
+or cancellation among several comparable components. This is why the numerical
+procedure should report Hankel singular values, window sensitivity, and
+holdout prediction error rather than only a list of fitted modes.
+\end{remark}
+
+\paragraph{Kernel visibility.}
+The same mode contributes to the takeoff kernel by finite difference:
+\[
+        \kappa_n
+        =
+        F_n-F_{n-1}
+        \quad\leadsto\quad
+        c_r(\theta_r-1)\theta_r^{n-1}.
+\]
+Thus very slow modes with \(\theta_r\approx1\) may be subtle in the kernel
+while still controlling the long settling of the profile \(F_n\).
+
+\paragraph{Oscillatory modes.}
+If a conjugate pair has
+\[
+        \theta,\overline{\theta}=re^{\pm i\omega},
+\]
+then its real contribution can be written
+\[
+        C r^n\cos(\omega n+\phi).
+\]
+Thus the fitted parameters have direct qualitative meaning: \(r\) is the
+settling rate, \(\omega\) is the ringing frequency, and \(\phi\) is the phase
+set by the boundary convention and early response. This is why the same modal
+language covers monotone smoothing, alternating overshoot, and near-periodic
+takeoff.
+
+\begin{figure}[t]
+\centering
+\figurebox{
+\textbf{Planned Figure 3: modal visibility.}
+Plot two or three components \(|c_r||\theta_r|^n\) and their sum. Mark the
+crossover index \(n_{r,s}\) where a weaker but slower-decaying component
+overtakes a stronger startup component. A second panel should show the same
+effect in the differenced kernel \(\kappa_n\), where modes near
+\(\theta=1\) are attenuated by \(\theta-1\).
+}
+\caption{When response modes become visible in a composite takeoff curve.}
+\label{fig:visibility-placeholder}
+\end{figure}
+
+\paragraph{From modes to recurrence roots.}
+For a finite-lag recurrence with denominator
+\[
+        Q(z)=1-\sum_{j=1}^{L}a_jz^j,
+\]
+let \(\rho=e^{-\alpha}\) be the dominant positive root. A non-dominant
+singularity \(\zeta_r\) contributes a mode
+\[
+        \theta_r=\frac{\rho}{\zeta_r}.
+\]
+Thus modal recovery gives candidate singularities
+\[
+        \widehat{\zeta}_r=\frac{\widehat{\rho}}{\widehat{\theta}_r}.
+\]
+If enough roots are recovered and the bounded-lag model is correct, these
+roots constrain \(Q\), and therefore the combined coefficients \(a_j\).
+
+One reconstruction route is root-based. Fix a maximum lag \(L\) and write
+\[
+        Q_L(z)=1-\sum_{j=1}^{L}a_jz^j.
+\]
+The ideal constraints are
+\[
+        Q_L(\rho)=0,
+        \qquad
+        Q_L(\zeta_r)=0
+        \quad \text{for recovered singularities } \zeta_r.
+\]
+With noisy modes, replace them by a weighted residual:
+\[
+        \min_{a\in\RR^L}
+        \left|1-\sum_{j=1}^{L}a_j\widehat\rho^{\,j}\right|^2
+        +
+        \sum_r \omega_r
+        \left|1-\sum_{j=1}^{L}a_j\widehat\zeta_r^{\,j}\right|^2.
+\]
+The weights \(\omega_r\) should be smaller for unstable or weakly recovered
+modes. The solution is only a candidate denominator; it must still be checked
+against the original sequence and against structural constraints such as
+\(a_j\ge0\) or \(a_j\in\ZZ_{\ge0}\).
+
+A second route avoids root reconstruction and fits the recurrence directly:
+\[
+        a^{(L)}
+        =
+        \argmin_{a_1,\ldots,a_L}
+        \sum_{n=L}^{T}
+        \left(
+            N_n-1-\sum_{j=1}^{L}a_jN_{n-j}
+        \right)^2.
+\]
+This direct fit is usually more stable numerically. The modal model then acts
+as an explanation and diagnostic for the fitted recurrence: its roots should
+produce the same observed damping, ringing, and crossover behavior.
+
+\paragraph{Repeated roots and polynomial factors.}
+If \(Q\) has repeated roots, the modal expansion contains terms
+\[
+        n^\ell \theta^n.
+\]
+The first version of the follow-up should state the simple-root theory first,
+then add repeated roots as a standard extension.
+
+\section{Nonidentifiability of Sources}
+
+\begin{proposition}[Branch-channel decomposition is not identifiable]
+The latent split \(a_j=b_j+c_j\) cannot be recovered from the tree sequence
+\((N_n)\) without additional assumptions. Any two splits with the same
+combined coefficients \(a_j\) generate the same recurrence, the same tree
+sequence, and the same takeoff kernel.
+\end{proposition}
+
+\begin{proof}
+The recurrence depends on \(b_j\) and \(c_j\) only through their sum:
+\[
+        N_n
+        =
+        1+\sum_j (b_j+c_j)N_{n-j}
+        =
+        1+\sum_j a_jN_{n-j}.
+\]
+Therefore all splits with the same \(a_j\) are observationally equivalent from
+the perspective of \(N_n\), \(u_n\), \(F_n\), and \(\kappa_n\).
+\end{proof}
+
+Equivalently, a single trace identifies at most an equivalence class
+\[
+        [(b,c)]
+        =
+        \{(b',c'):\ b'_j+c'_j=a_j\ \text{for all }j\}.
+\]
+Every element of this class has the same response. The labels ``fast'' and
+``slow'' become meaningful only when they are tied to information not present
+in the single aggregate trace: separated lag supports, known code paths,
+interventions that disable one channel, or multiple measurements in which the
+channels are perturbed differently.
+
+A simple example is
+\[
+        a_1=2,\qquad a_4=2.
+\]
+The split
+\[
+        b_1=2,\ b_4=0,
+        \qquad
+        c_1=0,\ c_4=2
+\]
+and the split
+\[
+        b_1=1,\ b_4=1,
+        \qquad
+        c_1=1,\ c_4=1
+\]
+produce the same combined recurrence. One interpretation is a fast channel plus
+a slow channel; the other is two identical mixed channels. A single composite
+takeoff trace cannot choose between them.
+
+\begin{remark}
+This is not a defect of the framework. It is the useful warning. Takeoff
+identifies response modes before it identifies source mechanisms.
+\end{remark}
+
+\begin{figure}[t]
+\centering
+\figurebox{
+\textbf{Planned Figure 4: nonidentifiability.}
+Show two different channel diagrams with the same combined coefficients
+\(a_1=2,a_4=2\). Below them, plot the identical \(F_n\) and \(\kappa_n\).
+The figure should make clear that response equivalence is exact, not a
+numerical accident.
+}
+\caption{Different source stories can induce the same takeoff response.}
+\label{fig:nonident-placeholder}
+\end{figure}
+
+\section{Constrained Structural Recovery}
+
+To make source reconstruction meaningful, impose structure. Natural
+constraints include:
+\begin{enumerate}
+    \item bounded lag: \(a_j=0\) for \(j>L\);
+    \item nonnegative branch counts: \(a_j\ge0\);
+    \item integer branch counts: \(a_j\in\ZZ_{\ge0}\);
+    \item sparsity: only a few lags are active;
+    \item separated supports for fast and slow channels;
+    \item multiple traces from controlled perturbations of the same program.
+\end{enumerate}
+
+For a fixed maximum lag \(L\), let \(\mathcal{A}_L\) be the feasible class. For
+example,
+\[
+        \mathcal{A}_L^{+}
+        =
+        \{a\in\RR^L:\ a_j\ge0\},
+        \qquad
+        \mathcal{A}_L^{\ZZ}
+        =
+        \{a\in\ZZ_{\ge0}^{L}\}.
+\]
+A direct combined-recurrence fit is then
+\[
+        \widehat a^{(L)}
+        =
+        \argmin_{a\in\mathcal{A}_L}
+        \sum_{n=L}^{T}
+        \left(
+            N_n-1-\sum_{j=1}^{L}a_jN_{n-j}
+        \right)^2
+        +\lambda\|a\|_1,
+\]
+where \(\lambda\|a\|_1\) encourages sparse active lags. A model-selection score
+can then penalize lag length and support size:
+\[
+        \begin{aligned}
+        \mathrm{Score}(L,a)
+        &=
+        \log\left(\frac{1}{T-L+1}
+        \sum_{n=L}^{T}R_n(a)^2\right)\\
+        &\quad
+        +\tau |\supp(a)|+\gamma L,
+        \end{aligned}
+\]
+where
+\[
+        R_n(a)=N_n-1-\sum_{j=1}^{L}a_jN_{n-j}.
+\]
+For branch-count reconstruction, replace the nonnegative constraint by
+\[
+        a_j\in\ZZ_{\ge0}
+\]
+and solve a small mixed-integer least-squares problem or use nonnegative least
+squares followed by integer polishing.
+
+If only the normalized profile is available, reconstruct a scale-free tree
+proxy by
+\[
+        \log \widetilde N_{n+1}
+        =
+        \log \widetilde N_n+\widehat{\alpha}\widehat F_n.
+\]
+The multiplicative scale of \(\widetilde N_n\) is arbitrary, but the velocity
+profile is preserved. This is weaker than observing \(N_n\) directly and should
+be treated as a diagnostic rather than a definitive reconstruction.
+
+\paragraph{Forward validation.}
+Every candidate \(\widehat a\) should be pushed back through the forward map.
+Generate \(\widehat N_n\) from
+\[
+        \widehat N_n
+        =
+        1+\sum_{j=1}^{L}\widehat a_j\widehat N_{n-j}
+\]
+using the same boundary convention as the data, and compare the induced
+\(\widehat F_n\), \(\widehat\kappa_n\), and modal roots against the observed
+ones. A recurrence that fits \(N_n\) but produces the wrong takeoff shape is a
+poor explanation, even if its one-step residual is small.
+
+\paragraph{Channel recovery with separated supports.}
+Assume two channels
+\[
+        a=b+c,
+\]
+with
+\[
+        \begin{aligned}
+        \supp(b)&\subseteq \{1,\ldots,L_f\},\\
+        \supp(c)&\subseteq \{L_s,\ldots,L\},\\
+        L_f&<L_s.
+        \end{aligned}
+\]
+Then a fast/slow interpretation becomes more stable: early lags must be
+assigned to \(b\), late lags to \(c\), and only the gap region remains
+ambiguous. This is a plausible assumption for algorithms where one mechanism
+recurs locally and another returns after a large delayed dependency.
+
+With multiple traces, the constraint can be stronger. Suppose experiments
+\(e=1,\ldots,E\) change the channel weights but preserve supports:
+\[
+        a^{(e)}=s_e b+t_e c.
+\]
+If the scalars \(s_e,t_e\) are known or separately estimable and the design
+matrix \((s_e,t_e)\) has rank two, then the combined coefficients across
+experiments can separate \(b\) and \(c\). This is the inverse-takeoff analogue
+of adding interventions or sensors: source recovery requires more than one
+aggregate view.
+
+\section{Algorithms}
+
+\paragraph{Algorithm 1: modal inverse takeoff.}
+\begin{enumerate}
+    \item Measure \(N_n\) and, if relevant, \(M_n\).
+    \item Estimate \(\alpha\) from a stable tail window of \(u_n\).
+    \item Form \(Y_n=\widehat F_n-1\), optionally after discarding a warmup
+    prefix.
+    \item Choose model order \(m\) from Hankel singular values, information
+    criteria, or holdout prediction error.
+    \item Estimate modes using Prony, matrix pencil, ESPRIT, or Hankel-SVD.
+    \item Convert complex conjugate pairs to damping, frequency, and phase:
+    \[
+            \theta=re^{i\omega}
+            \quad\leadsto\quad
+            C r^n\cos(\omega n+\phi).
+    \]
+    \item Validate by forward-predicting \(F_n\), \(\kappa_n\), and the
+    settling envelope.
+\end{enumerate}
+The modal report should include the table
+\[
+        \left\{
+        (|\theta_r|,\arg\theta_r,c_r,n_{r,s})
+        \right\},
+\]
+where crossover entries \(n_{r,s}\) are reported only for pairs whose
+amplitudes are large enough to be visible in the observation window. This
+prevents the method from over-reading tiny fitted poles.
+
+\paragraph{Algorithm 2: constrained recurrence search.}
+\begin{enumerate}
+    \item Pick a maximum lag \(L_{\max}\).
+    \item For each \(L\le L_{\max}\), fit \(a_1,\ldots,a_L\) under
+    nonnegative or integer constraints.
+    \item Simulate the recovered recurrence and compare its takeoff profile to
+    the observed profile.
+    \item Penalize large \(L\), dense supports, negative implied modes, and
+    unstable dominant roots.
+    \item Report a small set of candidate recurrences rather than a single
+    overconfident source mechanism.
+\end{enumerate}
+
+\paragraph{Algorithm 3: channel interpretation.}
+\begin{enumerate}
+    \item Start from a recovered combined recurrence \(\widehat a\).
+    \item Declare the external assumptions: separated supports, known code
+    paths, intervention labels, or multiple traces.
+    \item Solve for channel coefficients only inside the assumed class.
+    \item Report the equivalence class left unresolved by the assumptions.
+\end{enumerate}
+This third step is intentionally conservative. It is where explanatory stories
+enter, so it should be the most explicit about assumptions.
+
+\section{Examples and Experiments}
+
+The first experiments should be deliberately simple. Their purpose is not to
+beat existing algorithms for recurrence solving. Their purpose is to test
+whether inverse takeoff recovers the right qualitative structure from finite
+traces: immediate response, delay, monotone settling, oscillation, mixed-stage
+response, and failure on non-exponential tails.
+
+Each synthetic experiment should report:
+\[
+        \widehat m,\qquad
+        \{(\widehat\theta_r,\widehat c_r)\}_{r=1}^{\widehat m},
+        \qquad
+        \widehat a,
+\]
+along with the residuals
+\[
+        \sum_n |Y_n-\widehat Y_n|^2,
+        \qquad
+        \sum_n |F_n-\widehat F_n|^2,
+        \qquad
+        \sum_n |\kappa_n-\widehat\kappa_n|^2.
+\]
+The first residual tests modal fit; the second and third test whether the
+shape of redundancy onset is reproduced.
+
+\paragraph{Fibonacci.}
+The recurrence
+\[
+        N_n=1+N_{n-1}+N_{n-2}
+\]
+has a monotone leading correction under node counting and a more visible
+alternating component under leaf counting. This tests sensitivity to boundary
+and counting convention.
+
+\paragraph{Delayed binary recursion.}
+The recurrence
+\[
+        N_n=1+2N_{n-L}
+\]
+has dead time in the original coordinate and immediate takeoff in the coarse
+coordinate \(m=n/L\). This tests whether the inverse method recognizes delay.
+
+\paragraph{Mixed fast/slow channels.}
+Use
+\[
+        N_n=1+b_1N_{n-1}+c_LN_{n-L}.
+\]
+The intended response is a fast initial rise followed by a slow settling tail.
+This is the central synthetic case for the follow-up.
+
+\paragraph{Near-periodic slow family.}
+Use the family
+\[
+        N_n=1+(2^L-1)N_{n-L}+2N_{n-L-1}.
+\]
+The dominant speed is \(\log 2\), but non-dominant roots approach the dominant
+circle and create a long ringing response. This tests modal resolution when
+roots are close to the unit circle in normalized coordinates.
+
+\paragraph{Grid dynamic programs as a negative control.}
+Diagonal lattice paths satisfy
+\[
+        P_{n,n}=\binom{2n}{n}
+\]
+and have algebraic rather than exponential settling. A finite-exponential
+inverse model should either fail gracefully or require too many modes. This
+separates finite-lag recurrence takeoff from diffusive takeoff.
+
+\begin{figure}[t]
+\centering
+\figurebox{
+\textbf{Planned Figure 5: synthetic benchmark grid.}
+Rows: Fibonacci, delayed binary, mixed fast/slow, near-periodic slow family,
+and lattice-path negative control. Columns: \(F_n\), \(\kappa_n\), Hankel
+singular spectrum, recovered poles in the complex plane, and forward
+simulation of the best candidate recurrence.
+}
+\caption{Synthetic inverse-takeoff benchmark layout.}
+\label{fig:synthetic-placeholder}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\figurebox{
+\textbf{Planned Table 1: reconstruction metrics.}
+For each benchmark, report true active lags, recovered active lags, modal
+order, pole error, holdout error, and whether the source decomposition is
+identified, underidentified, or deliberately not attempted.
+}
+\caption{Experimental analysis table reserved for the completed study.}
+\label{fig:metrics-placeholder}
+\end{figure}
+
+\paragraph{Real recursive traces.}
+Instrument recursive programs to record:
+\[
+        N_n,\qquad M_n,\qquad u_n,\qquad w_n,\qquad v_n.
+\]
+Candidate examples include memoized search, context-free parsing recurrences,
+edit-distance-style dynamic programs, and recursive enumeration tasks with
+changing branching factors.
+
+For real traces, the paper should be careful about interpretation. The right
+claim is not that the recovered modes reveal the source code uniquely. The
+claim is that a measured recursive workload has a reproducible response shape.
+The analysis should therefore compare runs across input families, random seeds,
+and boundary conventions. A mode that persists across these choices is a
+stronger empirical object than a mode visible in only one fitted window.
+
+\section{Evaluation Criteria}
+
+The follow-up should avoid claiming that a recovered modal model is the true
+program mechanism. Report several levels of evidence:
+\begin{enumerate}
+    \item modal residual:
+    \[
+            \sum_n |Y_n-\widehat Y_n|^2;
+    \]
+    \item Hankel-rank stability under window shifts;
+    \item pole stability under bootstrap or subsampling;
+    \item recurrence residual on \(N_n\);
+    \item holdout prediction error for later \(n\);
+    \item stability of inferred support \(\supp(a)\);
+    \item sensitivity to warmup cutoff and base-case convention.
+\end{enumerate}
+
+Failure modes should be part of the story: short windows, nearly colliding
+modes, noisy counts, algebraic tails, hidden DAG cancellation, and multiple
+structural decompositions with the same combined coefficients.
+
+A useful reporting convention is to classify each run at three levels:
+\[
+        \begin{gathered}
+        \text{modal fit}
+        \Rightarrow
+        \text{combined recurrence}\\
+        \Rightarrow
+        \text{source interpretation}.
+        \end{gathered}
+\]
+The modal fit is accepted when it predicts held-out \(Y_n\) and has stable
+Hankel rank. The combined recurrence is accepted when it reproduces both
+\(N_n\) and the takeoff shape. The source interpretation is accepted only when
+the stated assumptions make the decomposition identifiable. This three-level
+reporting keeps a successful signal fit from being mistaken for a recovered
+program mechanism.
+
+\section{Related Literature Map}
+
+\paragraph{Analytic combinatorics and recurrence asymptotics.}
+The forward theory is the standard rational-generating-function story:
+singularities of the generating function determine exponential growth and
+subdominant correction modes. This is the basis for translating finite-lag
+recurrences into takeoff modes.
+
+\paragraph{Prony, matrix pencil, and ESPRIT.}
+These methods recover sums of exponentials and damped sinusoids from samples.
+They are the closest technical literature for the exact and noisy modal inverse
+takeoff problem.
+
+\paragraph{Berlekamp-Massey, Pade approximation, and minimal recurrences.}
+For exact linearly recurrent sequences, one can recover a shortest recurrence
+or rational generating function from finite samples. This is the algebraic
+version of the inverse recurrence problem.
+
+\paragraph{System identification.}
+Prediction-error methods, subspace identification, Ho-Kalman realization, and
+Hankel-SVD methods provide the engineering language: infer a small dynamical
+system from an observed impulse or step response.
+
+\paragraph{Blind source separation.}
+This literature is relevant mostly as a caution. A single composite trace does
+not determine independent latent sources without additional assumptions, such
+as multiple sensors, independence, non-Gaussianity, interventions, or structural
+constraints.
+
+\paragraph{Sparse inverse problems.}
+Sparsity and regularization give a practical path from many possible
+recurrences to a small set of interpretable candidates.
+
+\section{Claim Map for the Complete Version}
+
+The complete paper should separate proved algebraic claims from empirical and
+algorithmic claims.
+
+\paragraph{Exact algebraic claims.}
+The finite-exponential model gives exact modal recovery from \(2m\) samples,
+Hankel rank \(m\), a minimal recurrence of order \(m\), tail dominance of the
+largest-radius mode, and pairwise crossover estimates. These are the stable
+mathematical core of the paper.
+
+\paragraph{Structural claims.}
+Recovered modes determine candidate recurrence roots by
+\[
+        \widehat\zeta_r=\widehat\rho/\widehat\theta_r,
+\]
+and bounded-lag recurrence candidates can be fit either from these roots or
+directly from \(N_n\). The structural claims should be phrased as constrained
+reconstruction, not as unique source recovery.
+
+\paragraph{Negative claims.}
+Branch-channel splits \(a=b+c\) are not identifiable from one aggregate trace.
+This result should remain explicit because it protects the inverse theory from
+overinterpretation.
+
+\paragraph{Empirical claims.}
+The experiments should show that synthetic recurrences are recovered in the
+right regime, that algebraic or diffusive tails trigger failure modes, and that
+real recursive traces have reproducible response shapes. Perturbation bounds
+for noisy modal recovery can be quoted from matrix-pencil or
+subspace-identification literature rather than reproved.
+
+\section{Conclusion}
+
+The inverse takeoff problem is best framed as a measured-response problem, not
+as a promise to recover hidden branches uniquely. In the finite-lag setting,
+the observed redundancy response can often be decomposed into modes:
+\[
+        F_n-1\approx\sum_r c_r\theta_r^n.
+\]
+Those modes explain damping, ringing, delay, and settling. They also constrain
+possible recurrence mechanisms. The mode with largest radius becomes visible in
+the tail, and pairwise crossover estimates describe when slower-decaying modes
+overtake stronger short-lived components.
+
+The subtle point is that this success stops one step short of source recovery.
+The same combined recurrence can support several incompatible stories about
+fast and slow channels. That ambiguity is not an embarrassment; it is the line
+between what the trace says and what an analyst adds. The trace says which
+response modes are present. Extra assumptions say which mechanisms may have
+produced them.
+
+The remaining work is empirical as much as algebraic. The algebraic core gives
+Hankel rank, exact modal recovery, minimal recurrence, visibility thresholds,
+and nonidentifiability. The experimental core must show when these statements
+survive finite windows, noisy counts, boundary conventions, and real recursive
+programs. If that evidence is supplied, inverse takeoff kernels become a
+practical diagnostic: a way to read recursive redundancy as a response signal
+before trying to name its sources. The guiding principle is therefore:
+\[
+        \boxed{
+        \begin{gathered}
+        \text{Takeoff identifies response modes}\\
+        \text{before it identifies source mechanisms.}
+        \end{gathered}}
+\]
+
+\begin{thebibliography}{9}
+
+\bibitem{bellman1957}
+R. Bellman.
+\newblock \emph{Dynamic Programming}.
+\newblock Princeton University Press, 1957.
+
+\bibitem{flajolet2009}
+P. Flajolet and R. Sedgewick.
+\newblock \emph{Analytic Combinatorics}.
+\newblock Cambridge University Press, 2009.
+
+\bibitem{hua1990}
+Y. Hua and T. K. Sarkar.
+\newblock Matrix pencil method for estimating parameters of exponentially
+damped/undamped sinusoids in noise.
+\newblock \emph{IEEE Transactions on Acoustics, Speech, and Signal Processing},
+38(5):814--824, 1990.
+
+\bibitem{ljung1999}
+L. Ljung.
+\newblock \emph{System Identification: Theory for the User}.
+\newblock Prentice Hall, second edition, 1999.
+
+\bibitem{potts2010}
+D. Potts and M. Tasche.
+\newblock Parameter estimation for nonincreasing exponential sums by
+Prony-like methods.
+\newblock \emph{Linear Algebra and its Applications}, 439(4):1024--1039, 2013.
+
+\bibitem{prony1795}
+G. de Prony.
+\newblock Essai experimental et analytique.
+\newblock \emph{Journal de l'Ecole Polytechnique}, 1(2):24--76, 1795.
+
+\bibitem{vanoverschee1996}
+P. Van Overschee and B. De Moor.
+\newblock \emph{Subspace Identification for Linear Systems}.
+\newblock Kluwer Academic Publishers, 1996.
+
+\bibitem{hyvarinen2000}
+A. Hyvarinen and E. Oja.
+\newblock Independent component analysis: algorithms and applications.
+\newblock \emph{Neural Networks}, 13(4--5):411--430, 2000.
+
+\end{thebibliography}
+
+\end{document}
