@@ -4,13 +4,14 @@
 
 [Website](https://jonland82.github.io/finite-response-kernels/)
 
-This repository collects draft manuscripts and supporting computational material
-on finite-response kernels, takeoff kernels, and the shape of mediated
-response.
+This repository presents a small research program on finite-response kernels:
+a cohesive set of manuscripts and computational notes about takeoff kernels,
+mediated response, and the information carried by the finite shape of response
+rather than only its limiting rate.
 
-It also includes a small side exploration on smoothness in classical motion:
-how discontinuities, impulsive jerk, and ballistic or diffusive mediation sit
-near the same finite-response picture.
+A related side exploration looks at smoothness in classical motion, tracing how
+discontinuities, impulsive jerk, and ballistic or diffusive mediation sit as a
+nearby twig of the same finite-response picture.
 
 The shared thread is that a limiting rate or asymptotic invariant is not the
 full response. Finite response has shape. A physical mediator spreads an
@@ -26,53 +27,27 @@ into modes.
 A mediated physical response is written as a source convolved with a causal
 kernel:
 
-$$
-F_{\mathrm{actual}}(x,t)
-=
-\int_{\mathbb R^d}\int_{-\infty}^{t}
-G(x-x',t-s)F_{\mathrm{ideal}}(x',s)\,ds\,dx'.
-$$
+$$F_{\mathrm{actual}}(x,t)=\int_{\mathbb{R}^d}\int_{-\infty}^{t}G(x-x',t-s)F_{\mathrm{ideal}}(x',s)\,ds\,dx'.$$
 
-$$
-K(t)\ge 0,\qquad K(t)=0\text{ for }t<0,\qquad
-\int_0^\infty K(t)\,dt=1.
-$$
+$$K(t)\ge 0,\qquad K(t)=0\text{ for }t<0,\qquad \int_0^\infty K(t)\,dt=1.$$
 
 Sequential stages compose by convolution, while parallel channels mix
 convexly:
 
-$$
-G_{\mathrm{total}}=G_2*G_1,
-\qquad
-G_\lambda=(1-\lambda)G_1+\lambda G_2.
-$$
+$$G_{\mathrm{total}}=G_2*G_1,\qquad G_\lambda=(1-\lambda)G_1+\lambda G_2.$$
 
 For recursive redundancy, the same finite-response viewpoint appears in the
 tree-size recurrence
 
-$$
-N_n=1+\sum_{j\in J}a_jN_{n-j},
-\qquad
-u_n=\log N_{n+1}-\log N_n.
-$$
+$$N_n=1+\sum_{j\in J}a_jN_{n-j},\qquad u_n=\log N_{n+1}-\log N_n.$$
 
-$$
-F_n=\frac{u_n}{\alpha},
-\qquad
-\kappa_n=F_n-F_{n-1}.
-$$
+$$F_n=\frac{u_n}{\alpha},\qquad \kappa_n=F_n-F_{n-1}.$$
 
 Here $F_n$ is the normalized takeoff profile and $\kappa_n$ is the causal
 takeoff kernel. The inverse manuscript asks how much hidden recurrence
 structure can be recovered from an observed takeoff profile:
 
-$$
-\text{observed takeoff}
-\longrightarrow
-\text{modal decomposition}
-\longrightarrow
-\text{candidate recurrence mechanisms}.
-$$
+$$\text{observed takeoff}\longrightarrow\text{modal decomposition}\longrightarrow\text{candidate recurrence mechanisms}.$$
 
 ## Contents
 
