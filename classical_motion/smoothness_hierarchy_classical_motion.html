@@ -1,0 +1,527 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>On the Smoothness Hierarchy of Time Differentiation in Classical Motion — J. Landers</title>
+
+  <style>
+    :root{
+      --bg: #f7f5ef;
+      --paper: #ffffff;
+      --ink: #171717;
+      --muted: #5e646b;
+      --rule: #d8d2c4;
+      --rust: #9b3f24;
+      --green: #225c50;
+      --blue: #273f6b;
+      --gold: #b8791f;
+      --shadow: 0 12px 34px rgba(23,23,23,.11);
+      --radius: 8px;
+    }
+
+    *{
+      box-sizing: border-box;
+    }
+
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.5;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    .wrap{
+      max-width: 920px;
+      margin: 28px auto;
+      padding: 0 56px;
+    }
+
+    @media (max-width: 640px){
+      .wrap{
+        width: calc(100vw - 24px);
+        max-width: calc(100vw - 24px);
+        margin: 12px auto;
+        padding: 0;
+      }
+    }
+
+    .paper{
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    .header{
+      padding: 24px 28px 18px;
+      background:
+        linear-gradient(rgba(0,0,0,.20), rgba(0,0,0,.20)),
+        radial-gradient(circle at 18% 20%, rgba(255,255,255,.18), transparent 22%),
+        linear-gradient(135deg, #9b3f24, #2b6a65 56%, #f7efe1);
+      border-bottom: 1px solid var(--rule);
+      color: #fff;
+    }
+
+    .title{
+      margin: 0 0 6px 0;
+      max-width: 720px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      line-height: 1.18;
+      letter-spacing: 0;
+      font-weight: 640;
+      overflow-wrap: anywhere;
+    }
+
+    .meta{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      align-items: baseline;
+      color: rgba(255,255,255,.9);
+      font-size: 12px;
+    }
+
+    .meta .author{
+      color: #fff;
+      font-weight: 650;
+    }
+
+    .meta .pill{
+      border: 1px solid rgba(255,255,255,.65);
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.12);
+      font-size: 12px;
+    }
+
+    .content{
+      padding: 28px;
+      max-width: 100%;
+    }
+
+    h2{
+      margin: 20px 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      letter-spacing: 0;
+      font-weight: 620;
+    }
+
+    h3{
+      margin: 16px 0 8px;
+      font-size: 15px;
+      letter-spacing: 0;
+      font-weight: 750;
+      color: var(--ink);
+    }
+
+    .rule{
+      height: 1px;
+      background: var(--rule);
+      margin: 12px 0 14px 0;
+    }
+
+    p{ margin: 0 0 10px 0; }
+
+    blockquote{
+      margin: 12px 0 12px 0;
+      padding: 10px 14px;
+      border-left: 3px solid var(--rust);
+      background: #fbfaf7;
+      border-radius: var(--radius);
+      color: var(--ink);
+    }
+    blockquote p{ margin: 0; }
+
+    .math{
+      margin: 12px 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--rust);
+      background: #fbfaf7;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+    }
+
+    mjx-container[jax="SVG"]{
+      color: var(--ink);
+      font-size: 92% !important;
+    }
+
+    /* Keep equations from overflowing on narrow screens */
+    .content { overflow-wrap: break-word; }
+    mjx-container {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .math mjx-container {
+      display: block !important;
+    }
+
+    @media (max-width: 640px){
+      .header,
+      .content{
+        padding: 22px 20px;
+      }
+
+      .title{
+        max-width: 20ch;
+        font-size: 17px;
+      }
+
+      p,
+      blockquote{
+        max-width: min(100%, 36ch);
+        overflow-wrap: normal;
+        word-break: normal;
+      }
+
+      .math{
+        margin-inline: -2px;
+        padding: 10px;
+      }
+
+      mjx-container[jax="SVG"]{
+        font-size: 78% !important;
+      }
+    }
+
+    /* ===== Print ===== */
+    @page{
+      size: letter;
+      margin: 0.8in;
+    }
+    @media print{
+      body{
+        background: #fff;
+      }
+      .wrap{
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .paper{
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+      }
+      .header{
+        background: none;
+        padding: 0 0 10px 0;
+        border-bottom: 1px solid #cbd5e1;
+      }
+      .content{
+        padding: 14px 0 0 0;
+      }
+      .meta .pill{
+        border-color: #cbd5e1;
+        background: #fff;
+      }
+      a{ color: inherit; text-decoration: none; }
+    }
+  </style>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["\\(", "\\)"]],
+        displayMath: [["\\[", "\\]"]]
+      },
+      svg: {
+        fontCache: "global"
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <article class="paper" role="document" aria-label="Brief expository exploration">
+      <header class="header">
+        <h1 class="title">On the Smoothness Hierarchy of Time Differentiation in Classical Motion</h1>
+        <div class="meta">
+          <span class="author">J. Landers</span>
+          <span class="pill">Brief expository exploration</span>
+        </div>
+      </header>
+
+      <section class="content">
+        <h2>1. Context and Claim</h2>
+
+        <p>
+          Classical mechanics begins with a path \(x : \mathbb{R} \to \mathbb{R}^n\). Differentiate once
+          and one sees velocity; differentiate twice and one sees acceleration; differentiate again and the
+          sharpness of the model starts to show. Textbook forces are often allowed to switch on
+          instantaneously, which means acceleration is allowed to jump.
+        </p>
+
+        <p>
+          This short exploration follows that jump one derivative upward. An instantaneous change is not just a
+          dramatic onset in the lower-order variable; it is a singular object in the next derivative. The hierarchy
+        </p>
+
+        <div class="math">
+          \[
+            x,\ \dot x,\ \ddot x,\ \dddot x,\ \ldots
+          \]
+        </div>
+
+        <p>
+          is therefore more than notation. It is a ladder of regularity: assumptions made higher up constrain
+          what can happen below. In distributional language, an instantaneous onset of acceleration appears as
+        </p>
+
+        <div class="math">
+          \[
+            \dddot x(t)=\Delta a\,\delta(t-t_0),
+          \]
+        </div>
+
+        <p>
+          where \(\Delta a\) is the jump in acceleration at time \(t_0\).
+        </p>
+        <p>
+          Writing the onset this way is not an insistence that nature contains infinite spikes. It is a way to keep honest books:
+          ideal discontinuities are shorthand for unresolved mediation. Ballistic mediation concentrates influence
+          on sharp arrival-time surfaces; diffusive mediation aggregates many small delays into smooth kernels.
+          Both recover \(\delta\)-like behavior only as limiting cases.
+        </p>
+        <p>The central claim is:</p>
+
+        <blockquote>
+          <p><strong>Instantaneous onset of acceleration is equivalent to the presence of a distributional impulse in jerk.</strong><br />
+          Conversely, excluding impulsive jerk forbids discontinuous acceleration.</p>
+        </blockquote>
+
+        <p>
+          The result is a small but useful lens: smoothness assumptions are not just mathematical tidiness.
+          They encode locality, causality, and finite response.
+        </p>
+
+        <div class="rule"></div>
+
+        <h2>2. Mathematical Formulation and Interpretation</h2>
+
+        <p>
+          Let \(x(t)\) denote the position of a particle of mass \(m&gt;0\), and consider Newton’s second law
+        </p>
+
+        <div class="math">
+          \[
+            m\ddot x(t)=F(t),
+          \]
+        </div>
+
+        <p>
+          interpreted in the sense of distributions. Let \(H(t)\) denote the Heaviside step function and
+          \(\delta(t)=\dot H(t)\) the Dirac delta distribution.
+        </p>
+        <p>
+          In practice, these distributions appear as limits of causal response kernels. Wave propagation gives a
+          retarded response supported on a wavefront, a \(\delta\) at the arrival time. Diffusion gives Gaussian
+          profiles. The same ideal impulse sits at the boundary of both stories.
+        </p>
+        <p>
+          If a constant force is idealized as switching on instantaneously,
+        </p>
+
+        <div class="math">
+          \[
+            F(t)=F_0 H(t),
+          \]
+        </div>
+
+        <p>then</p>
+
+        <div class="math">
+          \[
+            a(t)=\ddot x(t)=\frac{F_0}{m}H(t),
+          \]
+          \[
+            j(t)=\dddot x(t)=\frac{F_0}{m}\delta(t).
+          \]
+        </div>
+
+        <p>
+          Thus, the jump in acceleration at \(t=0\) is precisely encoded as an impulsive jerk. More generally, if
+          \(a(t)\) has a jump discontinuity of magnitude \(\Delta a\) at time \(t_0\), then its distributional derivative
+          contains the term \(\Delta a\,\delta(t-t_0)\). Discontinuous acceleration and impulsive jerk are therefore
+          mathematically equivalent statements.
+        </p>
+
+        <p>
+          Imposing regularity at the level of jerk eliminates this singularity. If \(j=\dot a\) is locally integrable
+          (or bounded), then \(a\) is absolutely continuous and cannot jump:
+        </p>
+
+        <div class="math">
+          \[
+            a(t)=a(t_0)+\int_{t_0}^t j(s)\,ds.
+          \]
+        </div>
+
+        <p>
+          The same implication propagates upward: finite snap forbids jumps in jerk, and so on.
+        </p>
+
+        <p>
+          A physically meaningful regularization arises by modeling force as the output of a causal dynamical system.
+          For example, let
+        </p>
+
+        <div class="math">
+          \[
+            \tau \dot F(t)+F(t)=F_0 H(t),
+          \]
+        </div>
+
+        <p>with response time \(\tau&gt;0\). Then</p>
+
+        <div class="math">
+          \[
+            a(t)=\frac{F_0}{m}\bigl(1-e^{-t/\tau}\bigr)H(t),
+          \]
+          \[
+            j(t)=\frac{F_0}{m\tau}e^{-t/\tau}H(t),
+          \]
+        </div>
+
+        <p>
+          which are finite and smooth for all \(t&gt;0\). The impulsive-jerk model is recovered only in the singular limit
+          \(\tau\to 0\), where \(j\) converges to \((F_0/m)\delta(t)\) in the distributional sense.
+        </p>
+
+        <p>
+          This formulation makes the bookkeeping explicit: instantaneous acceleration is not a primitive physical
+          feature, but a singular limit in which the hierarchy of time differentiation has been truncated.
+        </p>
+
+        <div class="rule"></div>
+
+        <h2>3. Geometry of Mediation: Ballistic and Diffusive Limits</h2>
+
+        <p>
+          The hierarchy becomes more intuitive when the onset is treated as the trace of a mediator with a
+          transport geometry. In the ideal limits below, the kernel shape is not chosen for convenience; it is
+          forced by the propagation law and symmetry.
+        </p>
+
+        <h3>3.1 Ballistic mediation (wave propagation) and a Dirac arrival time</h3>
+
+        <p>
+          Consider an idealized scalar signal \(\phi(x,t)\) propagating at speed \(c\) in \(\mathbb{R}^3\), driven by a point
+          impulse at the origin. The retarded Green’s function \(G\) satisfies
+        </p>
+
+        <div class="math">
+          \[
+            (\partial_t^2 - c^2\nabla^2)\,G(x,t)=\delta(t)\,\delta^{(3)}(x),
+          \]
+          \[
+            G(x,t)=0\ \text{for}\ t<0.
+          \]
+        </div>
+
+        <p>
+          By finite propagation speed, influence from the origin can reach radius \(r=\|x\|\) only when the wavefront arrives,
+          \(t=r/c\). Spherical symmetry and conservation of flux through spheres force the \(1/r\) scaling. Thus the retarded
+          response is supported on the arrival-time surface and takes the form
+        </p>
+
+        <div class="math">
+          \[
+            G_{\mathrm{ret}}(r,t)=\frac{1}{4\pi r}\,\delta\!\left(t-\frac{r}{c}\right)H(t).
+          \]
+        </div>
+
+        <p>
+          In this ballistic limit the \(\delta\) is geometric. It records a sharp wavefront carrying the impulse to
+          a fixed arrival time. Bandwidth, dispersion, and finite source rise time smooth the spike; the delta is
+          what remains when those scales are sent to zero.
+        </p>
+
+        <h3>3.2 Diffusive mediation (many scatterings) and a Gaussian kernel</h3>
+
+        <p>
+          Now assume transport occurs through many small, independent scatterings. In one dimension, let
+          \(X_N=\sum_{k=1}^N\xi_k\) with \(\xi_k\in\{+\ell,-\ell\}\) equally likely, representing a random walk with step
+          length \(\ell\). Its characteristic function is
+        </p>
+
+        <div class="math">
+          \[
+            \varphi_{X_N}(k)=
+          \]
+          \[
+            \bigl(\mathbb{E}\,e^{ik\xi_1}\bigr)^N=\bigl(\cos(k\ell)\bigr)^N.
+          \]
+        </div>
+
+        <p>
+          For small \(\ell\) and large \(N\) with \(N\ell^2\) fixed, \(\cos(k\ell)\approx 1-\tfrac12 k^2\ell^2\), hence
+        </p>
+
+        <div class="math">
+          \[
+            \bigl(\cos(k\ell)\bigr)^N \approx
+          \]
+          \[
+            \left(1-\tfrac12 k^2\ell^2\right)^N \longrightarrow
+            \exp\!\left(-\tfrac12 k^2 N\ell^2\right),
+          \]
+        </div>
+
+        <p>
+          which is the characteristic function of a Gaussian. Writing \(t=N\Delta t\) and \(D=\ell^2/(2\Delta t)\), the limiting
+          density is the heat kernel
+        </p>
+
+        <div class="math">
+          \[
+            p(x,t)=\frac{1}{\sqrt{4\pi Dt}}\exp\!\left(-\frac{x^2}{4Dt}\right).
+          \]
+        </div>
+
+        <p>
+          Thus, in diffusive regimes the transport geometry selects a Gaussian shape. In time-domain switching,
+          analogous profiles appear when an onset aggregates many small independent micro-delays. The
+          distributional \(\delta\) returns only as a fast-transition limit.
+        </p>
+
+        <div class="rule"></div>
+
+        <h2>4. Conclusion</h2>
+
+        <p>
+          The hierarchy \(x,\dot x,\ddot x,\dddot x,\ldots\) is a regularity ladder. Jumps at one level become
+          impulsive terms one derivative higher, and excluding those impulses is exactly a smoothness assumption.
+          The \(\delta\) terms in idealized instantaneous models are not strange objects hiding in nature; they are
+          compact encodings of mediation occurring below the scale being resolved.
+        </p>
+
+        <p>
+          The useful punchline is that different mediation geometries select different kernel families before the
+          singular limit is taken. Ballistic propagation concentrates influence on arrival surfaces; diffusive
+          propagation spreads it into Gaussian kernels. Acceleration turning on instantly is therefore shorthand
+          for a modeling choice about transport and scale separation, and the distributional formulation makes the
+          choice visible.
+        </p>
+
+</section>
+    </article>
+  </div>
+</body>
+</html>

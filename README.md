@@ -2,9 +2,15 @@
 
 **Jonathan R. Landers**
 
+[GitHub Pages site](https://jonland82.github.io/finite-response-kernels/)
+
 This repository collects draft manuscripts and supporting computational material
 on finite-response kernels, takeoff kernels, and the shape of mediated
 response.
+
+It also includes a small side exploration on smoothness in classical motion:
+how discontinuities, impulsive jerk, and ballistic or diffusive mediation sit
+near the same finite-response picture.
 
 The shared thread is that a limiting rate or asymptotic invariant is not the
 full response. Finite response has shape. A physical mediator spreads an
@@ -75,6 +81,7 @@ $$
 | `entropy_of_finite_response/` | Develops passive causal kernels as finite-response mediators. It studies closure under convolution and mixing, moment growth, entropy power, and the geometry between the delta-like instantaneous boundary and the Gaussian spreading boundary. |
 | `velocity_takeoff_revised/` | Introduces velocity takeoff kernels for recursive redundancy. It shows that recursive schemas can have the same terminal overlap velocity while exhibiting different finite takeoff shapes, so the kernel carries information that first-order asymptotics miss. |
 | `inverse_takeoff_kernels/` | Poses the inverse problem. Given an observed redundancy takeoff curve, it separates recoverable modal structure from underdetermined source-level mechanisms and frames reconstruction as constrained system identification. |
+| `classical_motion/` | Side note on the smoothness hierarchy of time differentiation in classical motion, with impulsive jerk, finite response, and ballistic/diffusive mediation as the connecting branch. |
 
 ## Primary Artifacts
 
@@ -85,9 +92,10 @@ $$
 - `velocity_takeoff_revised/velocity_takeoff_revised.html`
 - `inverse_takeoff_kernels/inverse_takeoff_kernels.tex`
 - `inverse_takeoff_kernels/inverse_takeoff_kernels.pdf`
+- `classical_motion/smoothness_hierarchy_classical_motion.html`
 
 The `.tex` files are the source of record for the manuscripts. PDFs and the
-HTML export are included for convenient reading.
+HTML exports are included for convenient reading.
 
 ## Building the Manuscripts
 
