@@ -118,8 +118,8 @@ pdflatex -interaction=nonstopmode -halt-on-error modal_self_improvement_dynamics
 
 ## Repository checkpoint
 
-- Intended branch: `master`, tracking `origin/master`.
-- Intended commit message: `Add modal self-improvement dynamics study`.
+- Published branch: `master`, tracking `origin/master`.
+- Study commit: `fe31c2d` (`Add modal self-improvement dynamics study`).
 - Publication scope: the `modal_self_improvement_dynamics/` folder only.
 - Deliberately excluded: `self_improvement_takeoff_kernels/`, root `README.md`, and root `index.html`.
 - On restart, verify with `git status -sb` and `git log -1 --oneline` before editing.
