@@ -1,0 +1,150 @@
+{
+  "trajectory_counts": {
+    "published": 12,
+    "reproduction": 18,
+    "synthetic_1pct": 400,
+    "synthetic_exact": 2
+  },
+  "split_fractions": [
+    0.5,
+    0.6,
+    0.7,
+    0.75,
+    0.8
+  ],
+  "models": [
+    "persistence",
+    "local_linear",
+    "power_law",
+    "rank_1",
+    "rank_2"
+  ],
+  "comparisons": {
+    "published": {
+      "case_count": 60,
+      "winner_counts": {
+        "persistence": 0,
+        "local_linear": 4,
+        "power_law": 27,
+        "rank_1": 13,
+        "rank_2": 16
+      },
+      "rank2_beats_rank1": 36,
+      "rank1_beats_persistence": 52,
+      "rank2_beats_persistence": 60,
+      "power_law_beats_rank1": 42,
+      "local_linear_beats_rank1": 21,
+      "power_law_beats_both_modal": 30,
+      "best_modal_beats_persistence": 60
+    },
+    "reproduction": {
+      "case_count": 90,
+      "winner_counts": {
+        "persistence": 52,
+        "local_linear": 10,
+        "power_law": 13,
+        "rank_1": 8,
+        "rank_2": 7
+      },
+      "rank2_beats_rank1": 48,
+      "rank1_beats_persistence": 22,
+      "rank2_beats_persistence": 16,
+      "power_law_beats_rank1": 44,
+      "local_linear_beats_rank1": 30,
+      "power_law_beats_both_modal": 29,
+      "best_modal_beats_persistence": 27
+    },
+    "synthetic_1pct": {
+      "case_count": 2000,
+      "winner_counts": {
+        "persistence": 232,
+        "local_linear": 225,
+        "power_law": 451,
+        "rank_1": 326,
+        "rank_2": 766
+      },
+      "rank2_beats_rank1": 1499,
+      "rank1_beats_persistence": 854,
+      "rank2_beats_persistence": 1511,
+      "power_law_beats_rank1": 1313,
+      "local_linear_beats_rank1": 880,
+      "power_law_beats_both_modal": 573,
+      "best_modal_beats_persistence": 1644
+    },
+    "synthetic_exact": {
+      "case_count": 10,
+      "winner_counts": {
+        "persistence": 5,
+        "local_linear": 0,
+        "power_law": 0,
+        "rank_1": 0,
+        "rank_2": 5
+      },
+      "rank2_beats_rank1": 6,
+      "rank1_beats_persistence": 2,
+      "rank2_beats_persistence": 6,
+      "power_law_beats_rank1": 5,
+      "local_linear_beats_rank1": 5,
+      "power_law_beats_both_modal": 0,
+      "best_modal_beats_persistence": 7
+    }
+  },
+  "synthetic_modal_order_accuracy": {
+    "method": "naive lower held-out MSE, with numerical ties favoring rank one",
+    "overall": 0.6505,
+    "by_truth": {
+      "rank_1": 0.401,
+      "rank_2": 0.9
+    },
+    "by_train_count": {
+      "10": 0.6425,
+      "12": 0.685,
+      "14": 0.67,
+      "15": 0.6175,
+      "16": 0.6375
+    }
+  },
+  "synthetic_calibrated_rank2_detection": {
+    "method": "split-specific 95th percentile of log(MSE_rank1/MSE_rank2) under the heterogeneous rank-one synthetic null",
+    "by_train_count": {
+      "10": {
+        "log_mse_ratio_threshold": 2.0543653359810468,
+        "false_positive_rate": 0.05,
+        "rank2_detection_power": 0.43
+      },
+      "12": {
+        "log_mse_ratio_threshold": 1.9041446332674816,
+        "false_positive_rate": 0.05,
+        "rank2_detection_power": 0.545
+      },
+      "14": {
+        "log_mse_ratio_threshold": 1.8235217844824652,
+        "false_positive_rate": 0.05,
+        "rank2_detection_power": 0.625
+      },
+      "15": {
+        "log_mse_ratio_threshold": 2.021200837528816,
+        "false_positive_rate": 0.05,
+        "rank2_detection_power": 0.58
+      },
+      "16": {
+        "log_mse_ratio_threshold": 2.2473527932433726,
+        "false_positive_rate": 0.05,
+        "rank2_detection_power": 0.545
+      }
+    }
+  },
+  "winner_stability": {
+    "published": {
+      "series_count": 12,
+      "mean_consensus_fraction": 0.5333333333333333,
+      "fully_stable_winner_count": 0
+    },
+    "reproduction": {
+      "series_count": 18,
+      "mean_consensus_fraction": 0.6333333333333333,
+      "fully_stable_winner_count": 2
+    }
+  },
+  "qualification": "All fits use training prefixes only. Error normalization uses the training range; model wins use unnormalized MSE within each case."
+}

@@ -1,0 +1,31 @@
+{
+  "config": {
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "dataset_id": "openai/gsm8k",
+    "dataset_config": "main",
+    "train_size": 4,
+    "eval_size": 2,
+    "candidate_count": 2,
+    "verification_threshold": 0.5,
+    "solver_temperature": 1.0,
+    "verifier_temperature": 0.1,
+    "max_new_tokens": 24,
+    "max_sequence_length": 192,
+    "epochs": 1,
+    "checkpoints_per_epoch": 2,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 1,
+    "learning_rate": 1e-05,
+    "weight_decay": 0.01,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.5,
+    "seed": 20260718
+  },
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce GTX 1650",
+  "torch": "2.6.0+cu124",
+  "python": "3.10.0",
+  "platform": "Windows-10-10.0.22631-SP0",
+  "pid": 27452
+}

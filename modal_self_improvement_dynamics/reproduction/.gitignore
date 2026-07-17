@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+runs/*/final_adapter/
+runs/*/analysis_stdout.txt
+runs/*_stdout.txt

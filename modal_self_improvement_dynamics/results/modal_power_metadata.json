@@ -1,0 +1,28 @@
+{
+  "checkpoint_counts": [
+    8,
+    10,
+    12,
+    15,
+    20,
+    30,
+    40,
+    60
+  ],
+  "noise_levels": [
+    0.0,
+    0.001,
+    0.0025,
+    0.005,
+    0.01,
+    0.02,
+    0.05
+  ],
+  "replicates": 2000,
+  "false_positive_level": 0.05,
+  "target_power": 0.8,
+  "seed": 20260716,
+  "fast_mode": 0.45,
+  "slow_mode": 0.94,
+  "fast_weight": 0.75
+}

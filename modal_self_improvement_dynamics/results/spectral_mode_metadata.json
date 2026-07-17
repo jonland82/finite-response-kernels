@@ -1,0 +1,245 @@
+{
+  "method": {
+    "observable": "first differences, which remove the unknown endpoint",
+    "differencing_cost": "a response amplitude a_j becomes a_j*(theta_j-1), so slow modes are attenuated while observation noise is amplified",
+    "rank_statistic": "fraction of squared Hankel singular values beyond candidate order R",
+    "selection_rule": "smallest R in 1..3 not rejected at a calibrated 5% level; otherwise 4+",
+    "primary_assumed_noise_fraction": 0.01,
+    "noise_sensitivity_levels": [
+      0.005,
+      0.01,
+      0.02,
+      0.03
+    ],
+    "matrix_pencil_validity": "all requested poles real and strictly inside (0,1)",
+    "bootstrap_stability": "at least 80% valid pencils and maximum 10th--90th pole width at most 0.10"
+  },
+  "calibration": {
+    "replicates_per_order": 400,
+    "noiseless_21_checkpoint_validation": {
+      "1": {
+        "recovered_fraction": 1.0,
+        "maximum_pole_error": 3.3306690738754696e-16
+      },
+      "2": {
+        "recovered_fraction": 1.0,
+        "maximum_pole_error": 1.27675647831893e-15
+      },
+      "3": {
+        "recovered_fraction": 1.0,
+        "maximum_pole_error": 1.3766765505351941e-14
+      },
+      "4": {
+        "recovered_fraction": 1.0,
+        "maximum_pole_error": 1.8446355554146976e-13
+      }
+    },
+    "rolling_exact_order_selection_fraction_at_1pct": {
+      "1": 0.95,
+      "2": 0.0115,
+      "3": 0.0055,
+      "4": 0.0
+    },
+    "rolling_rank_one_rejection_fraction_at_1pct_by_truth": {
+      "1": 0.05,
+      "2": 0.0395,
+      "3": 0.022,
+      "4": 0.0005
+    },
+    "rolling_rank_two_rejection_fraction_at_1pct_by_truth": {
+      "1": 0.046,
+      "2": 0.028,
+      "3": 0.0185,
+      "4": 0.0
+    },
+    "full_21_checkpoint_matrix_pencil_recovery": {
+      "1": {
+        "real_stable_pole_fraction": 1.0,
+        "all_poles_within_0_05_fraction": 1.0
+      },
+      "2": {
+        "real_stable_pole_fraction": 0.4075,
+        "all_poles_within_0_05_fraction": 0.125
+      },
+      "3": {
+        "real_stable_pole_fraction": 0.005,
+        "all_poles_within_0_05_fraction": 0.0
+      },
+      "4": {
+        "real_stable_pole_fraction": 0.0,
+        "all_poles_within_0_05_fraction": 0.0
+      }
+    },
+    "false_positive_rates": [
+      0.05
+    ]
+  },
+  "real_data": {
+    "published": {
+      "trajectory_count": 12,
+      "rolling_case_count": 60,
+      "selected_order_counts_at_1pct": {
+        "1": 60,
+        "2": 0,
+        "3": 0,
+        "4+": 0
+      },
+      "rank_one_rejected_cases_at_1pct": 0,
+      "rank_two_rejected_cases_at_1pct": 0,
+      "fully_stable_order_trajectories": 12,
+      "bootstrap_stable_pole_trajectories": 12,
+      "stable_order_and_pole_trajectories": 12,
+      "full_series_selected_order_counts": {
+        "1": 12,
+        "2": 0,
+        "3": 0,
+        "4+": 0
+      }
+    },
+    "reproduction": {
+      "trajectory_count": 18,
+      "rolling_case_count": 90,
+      "selected_order_counts_at_1pct": {
+        "1": 2,
+        "2": 3,
+        "3": 11,
+        "4+": 74
+      },
+      "rank_one_rejected_cases_at_1pct": 88,
+      "rank_two_rejected_cases_at_1pct": 85,
+      "fully_stable_order_trajectories": 12,
+      "bootstrap_stable_pole_trajectories": 0,
+      "stable_order_and_pole_trajectories": 0,
+      "full_series_selected_order_counts": {
+        "1": 0,
+        "2": 0,
+        "3": 2,
+        "4+": 16
+      }
+    }
+  },
+  "published_conditional_dominant_poles": {
+    "median_by_role": {
+      "gap": 0.740316,
+      "solver": 0.790122,
+      "verifier": 0.888968
+    },
+    "panels_with_gap_below_solver_below_verifier": 4,
+    "panels_with_pairwise_nonoverlapping_bootstrap_80pct_intervals": 4,
+    "panel_count": 4,
+    "qualification": "These are perturbation-stable one-pole summaries, not evidence that each curve truly has only one pole. Their separation rejects the exact shared-single-mode restriction more directly than it identifies a larger common mode count."
+  },
+  "noise_sensitivity": {
+    "published": {
+      "0.005": {
+        "rank_one_rejected_fraction": 0.0,
+        "rank_two_rejected_fraction": 0.0,
+        "selected_order_counts": {
+          "1": 60,
+          "2": 0,
+          "3": 0,
+          "4+": 0
+        }
+      },
+      "0.01": {
+        "rank_one_rejected_fraction": 0.0,
+        "rank_two_rejected_fraction": 0.0,
+        "selected_order_counts": {
+          "1": 60,
+          "2": 0,
+          "3": 0,
+          "4+": 0
+        }
+      },
+      "0.02": {
+        "rank_one_rejected_fraction": 0.0,
+        "rank_two_rejected_fraction": 0.0,
+        "selected_order_counts": {
+          "1": 60,
+          "2": 0,
+          "3": 0,
+          "4+": 0
+        }
+      },
+      "0.03": {
+        "rank_one_rejected_fraction": 0.0,
+        "rank_two_rejected_fraction": 0.0,
+        "selected_order_counts": {
+          "1": 60,
+          "2": 0,
+          "3": 0,
+          "4+": 0
+        }
+      }
+    },
+    "reproduction": {
+      "0.005": {
+        "rank_one_rejected_fraction": 1.0,
+        "rank_two_rejected_fraction": 0.9888888888888889,
+        "selected_order_counts": {
+          "1": 0,
+          "2": 1,
+          "3": 9,
+          "4+": 80
+        }
+      },
+      "0.01": {
+        "rank_one_rejected_fraction": 0.9777777777777777,
+        "rank_two_rejected_fraction": 0.9444444444444444,
+        "selected_order_counts": {
+          "1": 2,
+          "2": 3,
+          "3": 11,
+          "4+": 74
+        }
+      },
+      "0.02": {
+        "rank_one_rejected_fraction": 0.8888888888888888,
+        "rank_two_rejected_fraction": 0.8333333333333334,
+        "selected_order_counts": {
+          "1": 10,
+          "2": 5,
+          "3": 8,
+          "4+": 67
+        }
+      },
+      "0.03": {
+        "rank_one_rejected_fraction": 0.8777777777777778,
+        "rank_two_rejected_fraction": 0.8,
+        "selected_order_counts": {
+          "1": 11,
+          "2": 7,
+          "3": 15,
+          "4+": 57
+        }
+      }
+    }
+  },
+  "forecast_context": {
+    "published": {
+      "case_count": 60,
+      "winner_counts": {
+        "persistence": 0,
+        "local_linear": 4,
+        "power_law": 27,
+        "rank_1": 13,
+        "rank_2": 16
+      },
+      "power_law_beats_both_modal": 30
+    },
+    "reproduction": {
+      "case_count": 90,
+      "winner_counts": {
+        "persistence": 52,
+        "local_linear": 10,
+        "power_law": 13,
+        "rank_1": 8,
+        "rank_2": 7
+      },
+      "power_law_beats_both_modal": 29
+    }
+  },
+  "bootstrap_replicates_per_real_trajectory": 200,
+  "seed": 20260722,
+  "qualification": "Mode counts are effective orders conditional on a finite-exponential model and the assumed response-scale noise. In this calibration the endpoint-free rank test has almost no power against heterogeneous ranks above one, so accepting rank one on the published curves is not evidence for rank one. Failure to recover stable poles is nonidentifiability, not evidence that the corresponding modes do not exist."
+}

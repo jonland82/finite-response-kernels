@@ -1,0 +1,1342 @@
+{
+  "summary": {
+    "seed_count": 3,
+    "seeds": [
+      20260718,
+      20260719,
+      20260720
+    ],
+    "pseudolabel_accuracy": [
+      0.625,
+      0.625,
+      0.625
+    ],
+    "solver_accuracy_baseline": [
+      0.5,
+      0.5,
+      0.75
+    ],
+    "solver_accuracy_final": [
+      0.875,
+      0.5,
+      0.75
+    ],
+    "verifier_accuracy_baseline": [
+      0.875,
+      0.625,
+      0.875
+    ],
+    "verifier_accuracy_final": [
+      0.75,
+      0.625,
+      0.875
+    ],
+    "series": {
+      "solver_uncertainty": {
+        "rank2_wins": 2,
+        "mse_factors_rank1_over_rank2": [
+          12.913521227490255,
+          4.556707211575263,
+          0.9274703411145133
+        ],
+        "median_mse_factor_rank1_over_rank2": 4.556707211575263,
+        "best_modal_beats_persistence": 0,
+        "mse_factors_best_modal_over_persistence": [
+          12.667801828195971,
+          5.8349255808330245,
+          2.3244741707576213
+        ],
+        "median_mse_factor_best_modal_over_persistence": 5.8349255808330245
+      },
+      "verifier_uncertainty": {
+        "rank2_wins": 0,
+        "mse_factors_rank1_over_rank2": [
+          0.39862033101563715,
+          0.5141923152658784,
+          0.9175277558221865
+        ],
+        "median_mse_factor_rank1_over_rank2": 0.5141923152658784,
+        "best_modal_beats_persistence": 1,
+        "mse_factors_best_modal_over_persistence": [
+          113.2152584903198,
+          0.8111477150060028,
+          6.769473711299617
+        ],
+        "median_mse_factor_best_modal_over_persistence": 6.769473711299617
+      },
+      "uncertainty_gap": {
+        "rank2_wins": 2,
+        "mse_factors_rank1_over_rank2": [
+          0.7381613165997836,
+          1.2554040773904493,
+          1.1621792487993667
+        ],
+        "median_mse_factor_rank1_over_rank2": 1.1621792487993667,
+        "best_modal_beats_persistence": 0,
+        "mse_factors_best_modal_over_persistence": [
+          77.74494170327006,
+          1.0957859183448717,
+          4.745147262954732
+        ],
+        "median_mse_factor_best_modal_over_persistence": 4.745147262954732
+      },
+      "solver_normalized_uncertainty": {
+        "rank2_wins": 1,
+        "mse_factors_rank1_over_rank2": [
+          1.4658264164663726,
+          0.7670103888495873,
+          0.51581966947638
+        ],
+        "median_mse_factor_rank1_over_rank2": 0.7670103888495873,
+        "best_modal_beats_persistence": 1,
+        "mse_factors_best_modal_over_persistence": [
+          1.1070496996075094,
+          0.7605103365506137,
+          3.66744997084953
+        ],
+        "median_mse_factor_best_modal_over_persistence": 1.1070496996075094
+      },
+      "verifier_normalized_uncertainty": {
+        "rank2_wins": 2,
+        "mse_factors_rank1_over_rank2": [
+          11.96169136677346,
+          1.280457936197849,
+          0.9373376550729638
+        ],
+        "median_mse_factor_rank1_over_rank2": 1.280457936197849,
+        "best_modal_beats_persistence": 1,
+        "mse_factors_best_modal_over_persistence": [
+          14.66994025989202,
+          1.1233508907012406,
+          0.6272898746200135
+        ],
+        "median_mse_factor_best_modal_over_persistence": 1.1233508907012406
+      },
+      "normalized_uncertainty_gap": {
+        "rank2_wins": 2,
+        "mse_factors_rank1_over_rank2": [
+          1.985761683616526,
+          1.3791786910800186,
+          0.45838080869841885
+        ],
+        "median_mse_factor_rank1_over_rank2": 1.3791786910800186,
+        "best_modal_beats_persistence": 2,
+        "mse_factors_best_modal_over_persistence": [
+          0.4390302667048268,
+          1.05315698657295,
+          0.6412442265693461
+        ],
+        "median_mse_factor_best_modal_over_persistence": 0.6412442265693461
+      }
+    },
+    "shared_mode": {
+      "total_nll": {
+        "separate_modes_win": 0,
+        "mse_factors_shared_over_separate": [
+          0.9374791000128254,
+          0.9571117925736373,
+          0.8349238838760669
+        ],
+        "median_mse_factor_shared_over_separate": 0.9374791000128254,
+        "qualification": "descriptive: each gap is algebraically determined by its solver and verifier series"
+      },
+      "per_token_nll": {
+        "separate_modes_win": 2,
+        "mse_factors_shared_over_separate": [
+          1.000090371428236,
+          0.7319014833621087,
+          1.4360007335809761
+        ],
+        "median_mse_factor_shared_over_separate": 1.000090371428236,
+        "qualification": "descriptive: each gap is algebraically determined by its solver and verifier series"
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 20260718,
+      "trajectory": "runs\\arithmetic_seed_20260718\\trajectory.csv",
+      "checkpoint_count": 21,
+      "train_count": 15,
+      "pseudolabels": {
+        "count": 16,
+        "accuracy": 0.625,
+        "fallback_fraction": 0.3125
+      },
+      "baseline": {
+        "solver_accuracy": 0.5,
+        "verifier_accuracy": 0.875,
+        "solver_normalized_uncertainty": 0.4912228648317978,
+        "verifier_normalized_uncertainty": 0.2506378855323419,
+        "normalized_uncertainty_gap": 0.24058497929945588
+      },
+      "final": {
+        "solver_accuracy": 0.875,
+        "verifier_accuracy": 0.75,
+        "solver_normalized_uncertainty": 0.21755611128173769,
+        "verifier_normalized_uncertainty": 0.23221568996086717,
+        "normalized_uncertainty_gap": -0.014659578679129481
+      },
+      "series": {
+        "solver_uncertainty": {
+          "persistence": {
+            "last_training_value": 4.642466074321419,
+            "heldout_mse": 0.03944824384833274,
+            "forecast": [
+              4.642466074321419,
+              4.642466074321419,
+              4.642466074321419,
+              4.642466074321419,
+              4.642466074321419,
+              4.642466074321419
+            ]
+          },
+          "rank_1": {
+            "endpoint": 2.212011908242799,
+            "modes_per_epoch": [
+              0.45
+            ],
+            "amplitudes": [
+              4.384077456091793
+            ],
+            "train_sse": 30.706008170173504,
+            "train_r_squared": 0.43016455315930313,
+            "heldout_mse": 6.45317757056452,
+            "forecast": [
+              2.2230012599214577,
+              2.2193837894574386,
+              2.2169571164981954,
+              2.215329254789387,
+              2.2142372519577274,
+              2.2135047141887636
+            ]
+          },
+          "rank_2": {
+            "endpoint": 9.846100968219014,
+            "modes_per_epoch": [
+              0.7,
+              0.85
+            ],
+            "amplitudes": [
+              23.367572552076176,
+              -25.972645756167466
+            ],
+            "train_sse": 22.040031213402415,
+            "train_r_squared": 0.5909858759475115,
+            "heldout_mse": 0.4997225355410426,
+            "forecast": [
+              3.779776809515568,
+              4.115895145625176,
+              4.448212630013465,
+              4.77336191059058,
+              5.088836918428964,
+              5.392827893338276
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": 2.5582749196042327,
+          "best_modal_order": 2,
+          "mse_factor_best_modal_over_persistence": 12.667801828195971
+        },
+        "verifier_uncertainty": {
+          "persistence": {
+            "last_training_value": 2.0967031503096223,
+            "heldout_mse": 0.0009224039429796611,
+            "forecast": [
+              2.0967031503096223,
+              2.0967031503096223,
+              2.0967031503096223,
+              2.0967031503096223,
+              2.0967031503096223,
+              2.0967031503096223
+            ]
+          },
+          "rank_1": {
+            "endpoint": 1.7439916105303936,
+            "modes_per_epoch": [
+              0.2
+            ],
+            "amplitudes": [
+              8.189613876192707
+            ],
+            "train_sse": 10.071269419467967,
+            "train_r_squared": 0.8729595382445883,
+            "heldout_mse": 0.10443020083704574,
+            "forecast": [
+              1.7440384906157353,
+              1.7440125759419167,
+              1.744000986547462,
+              1.7439958036126983,
+              1.7439934857338073,
+              1.7439924491468546
+            ]
+          },
+          "rank_2": {
+            "endpoint": 1.5465477085459916,
+            "modes_per_epoch": [
+              0.05,
+              0.5
+            ],
+            "amplitudes": [
+              5.415906482370641,
+              3.1811124295292323
+            ],
+            "train_sse": 8.300775525361132,
+            "train_r_squared": 0.8952928065223374,
+            "heldout_mse": 0.2619791132353175,
+            "forecast": [
+              1.5641210389502125,
+              1.5589739291853988,
+              1.555334373322348,
+              1.5527608187704938,
+              1.550941040912882,
+              1.5496542636534827
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": -0.919745866443894,
+          "best_modal_order": 1,
+          "mse_factor_best_modal_over_persistence": 113.2152584903198
+        },
+        "uncertainty_gap": {
+          "persistence": {
+            "last_training_value": 2.5457629240117967,
+            "heldout_mse": 0.04588146867807997,
+            "forecast": [
+              2.5457629240117967,
+              2.5457629240117967,
+              2.5457629240117967,
+              2.5457629240117967,
+              2.5457629240117967,
+              2.5457629240117967
+            ]
+          },
+          "rank_1": {
+            "endpoint": 0.8034259328639997,
+            "modes_per_epoch": [
+              0.05
+            ],
+            "amplitudes": [
+              -5.094181092377049
+            ],
+            "train_sse": 20.118977875935776,
+            "train_r_squared": 0.5485516537664934,
+            "heldout_mse": 3.567052107637816,
+            "forecast": [
+              0.8034259319740829,
+              0.8034259326650082,
+              0.8034259328195038,
+              0.8034259328540501,
+              0.8034259328617749,
+              0.8034259328635022
+            ]
+          },
+          "rank_2": {
+            "endpoint": 0.49283773854242946,
+            "modes_per_epoch": [
+              0.05,
+              0.1
+            ],
+            "amplitudes": [
+              -33.95514936183769,
+              28.60353128989364
+            ],
+            "train_sse": 12.383386844213135,
+            "train_r_squared": 0.7221300432823425,
+            "heldout_mse": 4.8323476554811124,
+            "forecast": [
+              0.49283863713378895,
+              0.49283802325136933,
+              0.4928378286981514,
+              0.49283776707964205,
+              0.49283774757283094,
+              0.4928377413994666
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": -0.3035928920895737,
+          "best_modal_order": 1,
+          "mse_factor_best_modal_over_persistence": 77.74494170327006
+        },
+        "solver_normalized_uncertainty": {
+          "persistence": {
+            "last_training_value": 0.2051442638039589,
+            "heldout_mse": 0.0012194023135670862,
+            "forecast": [
+              0.2051442638039589,
+              0.2051442638039589,
+              0.2051442638039589,
+              0.2051442638039589,
+              0.2051442638039589,
+              0.2051442638039589
+            ]
+          },
+          "rank_1": {
+            "endpoint": 0.18680966624137052,
+            "modes_per_epoch": [
+              0.6
+            ],
+            "amplitudes": [
+              0.39624937061995724
+            ],
+            "train_sse": 0.07017044100806835,
+            "train_r_squared": 0.735535501119793,
+            "heldout_mse": 0.001978776195422296,
+            "forecast": [
+              0.1954018382621325,
+              0.1934651340702026,
+              0.1919649694538277,
+              0.19080294693866978,
+              0.18990284816884484,
+              0.18920563465975007
+            ]
+          },
+          "rank_2": {
+            "endpoint": 0.2024714695724267,
+            "modes_per_epoch": [
+              0.2,
+              0.3
+            ],
+            "amplitudes": [
+              -2.188441233374646,
+              2.462409963205046
+            ],
+            "train_sse": 0.037751030743403025,
+            "train_r_squared": 0.8577206116373501,
+            "heldout_mse": 0.001349938964936252,
+            "forecast": [
+              0.20275390671727903,
+              0.20262742588055516,
+              0.2025574534527432,
+              0.202518816705821,
+              0.20249751528389381,
+              0.20248578576063614
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": 0.3824191902240888,
+          "best_modal_order": 2,
+          "mse_factor_best_modal_over_persistence": 1.1070496996075094
+        },
+        "verifier_normalized_uncertainty": {
+          "persistence": {
+            "last_training_value": 0.23424092400819063,
+            "heldout_mse": 9.449466911574532e-06,
+            "forecast": [
+              0.23424092400819063,
+              0.23424092400819063,
+              0.23424092400819063,
+              0.23424092400819063,
+              0.23424092400819063,
+              0.23424092400819063
+            ]
+          },
+          "rank_1": {
+            "endpoint": 0.19055445034174867,
+            "modes_per_epoch": [
+              0.05
+            ],
+            "amplitudes": [
+              0.055964800742810385
+            ],
+            "train_sse": 0.008921847810948291,
+            "train_r_squared": 0.24851905860200385,
+            "heldout_mse": 0.0016581669190825915,
+            "forecast": [
+              0.19055445035152532,
+              0.19055445034393478,
+              0.1905544503422375,
+              0.19055445034185797,
+              0.19055445034177312,
+              0.19055445034175414
+            ]
+          },
+          "rank_2": {
+            "endpoint": 0.32402017691010687,
+            "modes_per_epoch": [
+              0.05,
+              0.95
+            ],
+            "amplitudes": [
+              0.08965896664212039,
+              -0.16217659717084765
+            ],
+            "train_sse": 0.006575561667499397,
+            "train_r_squared": 0.4461450837516798,
+            "heldout_mse": 0.00013862311509529467,
+            "forecast": [
+              0.2136338650432601,
+              0.21642890887353292,
+              0.21915318062250594,
+              0.22180847227220954,
+              0.22439653043618116,
+              0.22691905750394678
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": 2.481709157150961,
+          "best_modal_order": 2,
+          "mse_factor_best_modal_over_persistence": 14.66994025989202
+        },
+        "normalized_uncertainty_gap": {
+          "persistence": {
+            "last_training_value": -0.02909666020423174,
+            "heldout_mse": 0.0013683764601745035,
+            "forecast": [
+              -0.02909666020423174,
+              -0.02909666020423174,
+              -0.02909666020423174,
+              -0.02909666020423174,
+              -0.02909666020423174,
+              -0.02909666020423174
+            ]
+          },
+          "rank_1": {
+            "endpoint": -0.04824811423922608,
+            "modes_per_epoch": [
+              0.7
+            ],
+            "amplitudes": [
+              0.4061678275529373
+            ],
+            "train_sse": 0.10642819616160648,
+            "train_r_squared": 0.6408691969562177,
+            "heldout_mse": 0.0011929635723407158,
+            "forecast": [
+              -0.02026211485851304,
+              -0.024833347254776084,
+              -0.02865791467272695,
+              -0.03185777735011108,
+              -0.03453497454267669,
+              -0.03677487841684558
+            ]
+          },
+          "rank_2": {
+            "endpoint": 0.002100228683819692,
+            "modes_per_epoch": [
+              0.2,
+              0.3
+            ],
+            "amplitudes": [
+              -2.6685154783300806,
+              2.8892419775356326
+            ],
+            "train_sse": 0.05450063705178443,
+            "train_r_squared": 0.8160933074437855,
+            "heldout_mse": 0.0006007586822634581,
+            "forecast": [
+              0.0024310466171122065,
+              0.0022829604503412796,
+              0.002201001611201637,
+              0.0021557313537386206,
+              0.0021307660715131132,
+              0.0021170161127878613
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": 0.6860025602444717,
+          "best_modal_order": 2,
+          "mse_factor_best_modal_over_persistence": 0.4390302667048268
+        }
+      },
+      "shared_mode": {
+        "total_nll": {
+          "mode_per_epoch": 0.4,
+          "shared_rank1_heldout_mse": 0.12402681927780379,
+          "separate_rank1_heldout_mse": 0.13229822326290375,
+          "factor_shared_over_separate": 0.9374791000128254
+        },
+        "per_token_nll": {
+          "mode_per_epoch": 0.7,
+          "shared_rank1_heldout_mse": 0.0600216852203337,
+          "separate_rank1_heldout_mse": 0.060016261465066716,
+          "factor_shared_over_separate": 1.000090371428236
+        }
+      }
+    },
+    {
+      "seed": 20260719,
+      "trajectory": "runs\\arithmetic_seed_20260719\\trajectory.csv",
+      "checkpoint_count": 21,
+      "train_count": 15,
+      "pseudolabels": {
+        "count": 16,
+        "accuracy": 0.625,
+        "fallback_fraction": 0.625
+      },
+      "baseline": {
+        "solver_accuracy": 0.5,
+        "verifier_accuracy": 0.625,
+        "solver_normalized_uncertainty": 0.381811395753175,
+        "verifier_normalized_uncertainty": 0.32738874526694417,
+        "normalized_uncertainty_gap": 0.05442265048623085
+      },
+      "final": {
+        "solver_accuracy": 0.5,
+        "verifier_accuracy": 0.625,
+        "solver_normalized_uncertainty": 0.28035250771790743,
+        "verifier_normalized_uncertainty": 0.23928968701511621,
+        "normalized_uncertainty_gap": 0.041062820702791214
+      },
+      "series": {
+        "solver_uncertainty": {
+          "persistence": {
+            "last_training_value": 2.245536359027028,
+            "heldout_mse": 0.004364392722247186,
+            "forecast": [
+              2.245536359027028,
+              2.245536359027028,
+              2.245536359027028,
+              2.245536359027028,
+              2.245536359027028,
+              2.245536359027028
+            ]
+          },
+          "rank_1": {
+            "endpoint": 1.8331926357269954,
+            "modes_per_epoch": [
+              0.45
+            ],
+            "amplitudes": [
+              10.10778210626694
+            ],
+            "train_sse": 31.079905610466085,
+            "train_r_squared": 0.7985682578664809,
+            "heldout_mse": 0.1160406808907704,
+            "forecast": [
+              1.8585293167892047,
+              1.8501889980807948,
+              1.8445941422049896,
+              1.840840998786205,
+              1.838323313642093,
+              1.8366343991036398
+            ]
+          },
+          "rank_2": {
+            "endpoint": 2.027390842718021,
+            "modes_per_epoch": [
+              0.05,
+              0.2
+            ],
+            "amplitudes": [
+              -24.797657433467897,
+              32.97699173273101
+            ],
+            "train_sse": 16.093169874699072,
+            "train_r_squared": 0.8956986779515934,
+            "heldout_mse": 0.02546590673984742,
+            "forecast": [
+              2.027579609701781,
+              2.0274752628481987,
+              2.027428596764569,
+              2.0274077268893556,
+              2.0273983935598205,
+              2.027394219559553
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": 1.5166002599598305,
+          "best_modal_order": 2,
+          "mse_factor_best_modal_over_persistence": 5.8349255808330245
+        },
+        "verifier_uncertainty": {
+          "persistence": {
+            "last_training_value": 9.765359161421657,
+            "heldout_mse": 9.296428229229091,
+            "forecast": [
+              9.765359161421657,
+              9.765359161421657,
+              9.765359161421657,
+              9.765359161421657,
+              9.765359161421657,
+              9.765359161421657
+            ]
+          },
+          "rank_1": {
+            "endpoint": 8.654658851905133,
+            "modes_per_epoch": [
+              0.1
+            ],
+            "amplitudes": [
+              1.7955654811865784
+            ],
+            "train_sse": 38.317436407216064,
+            "train_r_squared": 0.07535156284622702,
+            "heldout_mse": 7.5407765158564795,
+            "forecast": [
+              8.6546589086859,
+              8.654658869860787,
+              8.65465885758321,
+              8.654658853700699,
+              8.65465885247294,
+              8.654658852084689
+            ]
+          },
+          "rank_2": {
+            "endpoint": 11.745453331145821,
+            "modes_per_epoch": [
+              0.5,
+              0.7
+            ],
+            "amplitudes": [
+              17.575166459336693,
+              -18.14091464237436
+            ],
+            "train_sse": 20.235730567815608,
+            "train_r_squared": 0.5116861043273806,
+            "heldout_mse": 14.665284353690303,
+            "forecast": [
+              10.592588033206933,
+              10.768318696414863,
+              10.919029623551289,
+              11.047728488037793,
+              11.157247736310993,
+              11.250180641572024
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": -0.6651579292914338,
+          "best_modal_order": 1,
+          "mse_factor_best_modal_over_persistence": 0.8111477150060028
+        },
+        "uncertainty_gap": {
+          "persistence": {
+            "last_training_value": -7.5198228023946285,
+            "heldout_mse": 9.014403742607211,
+            "forecast": [
+              -7.5198228023946285,
+              -7.5198228023946285,
+              -7.5198228023946285,
+              -7.5198228023946285,
+              -7.5198228023946285,
+              -7.5198228023946285
+            ]
+          },
+          "rank_1": {
+            "endpoint": -8.850372946939284,
+            "modes_per_epoch": [
+              0.7
+            ],
+            "amplitudes": [
+              10.251385995728805
+            ],
+            "train_sse": 14.241863400442242,
+            "train_r_squared": 0.8946808419644123,
+            "heldout_mse": 12.40070155624936,
+            "forecast": [
+              -8.14402630236039,
+              -8.25940094454365,
+              -8.355930295734058,
+              -8.436692545262341,
+              -8.504263091095625,
+              -8.560796665765423
+            ]
+          },
+          "rank_2": {
+            "endpoint": -7.837556837710725,
+            "modes_per_epoch": [
+              0.3,
+              0.45
+            ],
+            "amplitudes": [
+              -23.359950572358525,
+              31.31362617484777
+            ],
+            "train_sse": 10.264515797049683,
+            "train_r_squared": 0.9240934889633408,
+            "heldout_mse": 9.877856683424293,
+            "forecast": [
+              -7.761862725244847,
+              -7.786435229011255,
+              -7.803074754609862,
+              -7.814322216842405,
+              -7.821913980567972,
+              -7.827032289233914
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": 0.2274574947775313,
+          "best_modal_order": 2,
+          "mse_factor_best_modal_over_persistence": 1.0957859183448717
+        },
+        "solver_normalized_uncertainty": {
+          "persistence": {
+            "last_training_value": 0.3136241678148508,
+            "heldout_mse": 0.00022425919878875746,
+            "forecast": [
+              0.3136241678148508,
+              0.3136241678148508,
+              0.3136241678148508,
+              0.3136241678148508,
+              0.3136241678148508,
+              0.3136241678148508
+            ]
+          },
+          "rank_1": {
+            "endpoint": 0.3107271869744724,
+            "modes_per_epoch": [
+              0.5
+            ],
+            "amplitudes": [
+              0.08468034973499403
+            ],
+            "train_sse": 0.0016950692948609625,
+            "train_r_squared": 0.8389480617601002,
+            "heldout_mse": 0.00017055143874616943,
+            "forecast": [
+              0.31119498423643227,
+              0.3110579695906247,
+              0.3109610856054523,
+              0.3108925782825485,
+              0.3108441362899623,
+              0.31080988262851045
+            ]
+          },
+          "rank_2": {
+            "endpoint": 0.313537904780398,
+            "modes_per_epoch": [
+              0.1,
+              0.2
+            ],
+            "amplitudes": [
+              -0.3613392848257333,
+              0.4277533402528738
+            ],
+            "train_sse": 0.0007952387800727045,
+            "train_r_squared": 0.9244427662736067,
+            "heldout_mse": 0.00022235870755441358,
+            "forecast": [
+              0.3135403419568453,
+              0.3135389962155562,
+              0.3135383933583426,
+              0.3135381234287689,
+              0.3135380026102524,
+              0.3135379485462061
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": -0.26525493291640934,
+          "best_modal_order": 1,
+          "mse_factor_best_modal_over_persistence": 0.7605103365506137
+        },
+        "verifier_normalized_uncertainty": {
+          "persistence": {
+            "last_training_value": 0.4315119031816721,
+            "heldout_mse": 0.006163005417209263,
+            "forecast": [
+              0.4315119031816721,
+              0.4315119031816721,
+              0.4315119031816721,
+              0.4315119031816721,
+              0.4315119031816721,
+              0.4315119031816721
+            ]
+          },
+          "rank_1": {
+            "endpoint": 0.48005391930780456,
+            "modes_per_epoch": [
+              0.8
+            ],
+            "amplitudes": [
+              -0.16111262917198735
+            ],
+            "train_sse": 0.006243292119482824,
+            "train_r_squared": 0.7846049330049858,
+            "heldout_mse": 0.008864888951726513,
+            "forecast": [
+              0.4498332215568281,
+              0.4530237055083412,
+              0.45587736110702337,
+              0.4584297482682339,
+              0.46071267274717964,
+              0.46275458247614804
+            ]
+          },
+          "rank_2": {
+            "endpoint": 0.4421657199394705,
+            "modes_per_epoch": [
+              0.4,
+              0.5
+            ],
+            "amplitudes": [
+              0.4077588427926919,
+              -0.5241774482248531
+            ],
+            "train_sse": 0.005734243070544043,
+            "train_r_squared": 0.802167246589153,
+            "heldout_mse": 0.00692321762481972,
+            "forecast": [
+              0.4396925471696492,
+              0.44038538061755483,
+              0.4408868809657726,
+              0.4412488273949914,
+              0.4415093994171066,
+              0.44169658451382243
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": 0.24721777660440927,
+          "best_modal_order": 2,
+          "mse_factor_best_modal_over_persistence": 1.1233508907012406
+        },
+        "normalized_uncertainty_gap": {
+          "persistence": {
+            "last_training_value": -0.11788773536682129,
+            "heldout_mse": 0.004244696137809831,
+            "forecast": [
+              -0.11788773536682129,
+              -0.11788773536682129,
+              -0.11788773536682129,
+              -0.11788773536682129,
+              -0.11788773536682129,
+              -0.11788773536682129
+            ]
+          },
+          "rank_1": {
+            "endpoint": -0.15304360460162955,
+            "modes_per_epoch": [
+              0.7
+            ],
+            "amplitudes": [
+              0.22509065969625566
+            ],
+            "train_sse": 0.010265811911702866,
+            "train_r_squared": 0.8503391735753435,
+            "heldout_mse": 0.006165385799864973,
+            "forecast": [
+              -0.13753428398208176,
+              -0.14006757600055322,
+              -0.1421870801679461,
+              -0.14396038458087612,
+              -0.14544403749805113,
+              -0.14668535058710214
+            ]
+          },
+          "rank_2": {
+            "endpoint": -0.12265574564028178,
+            "modes_per_epoch": [
+              0.1,
+              0.45
+            ],
+            "amplitudes": [
+              -0.18701390776428645,
+              0.36326629831543406
+            ],
+            "train_sse": 0.007884657197379075,
+            "train_r_squared": 0.8850529970367313,
+            "heldout_mse": 0.004470331393414694,
+            "forecast": [
+              -0.1217451697624185,
+              -0.12204491067478464,
+              -0.12224598442537865,
+              -0.12238086925125939,
+              -0.1224713528865889,
+              -0.12253205119976683
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": 0.3214881706050953,
+          "best_modal_order": 2,
+          "mse_factor_best_modal_over_persistence": 1.05315698657295
+        }
+      },
+      "shared_mode": {
+        "total_nll": {
+          "mode_per_epoch": 0.6,
+          "shared_rank1_heldout_mse": 0.20611735207381665,
+          "separate_rank1_heldout_mse": 0.2153534766503858,
+          "factor_shared_over_separate": 0.9571117925736373
+        },
+        "per_token_nll": {
+          "mode_per_epoch": 0.6,
+          "shared_rank1_heldout_mse": 0.2181907986251643,
+          "separate_rank1_heldout_mse": 0.2981149834850294,
+          "factor_shared_over_separate": 0.7319014833621087
+        }
+      }
+    },
+    {
+      "seed": 20260720,
+      "trajectory": "runs\\arithmetic_seed_20260720\\trajectory.csv",
+      "checkpoint_count": 21,
+      "train_count": 15,
+      "pseudolabels": {
+        "count": 16,
+        "accuracy": 0.625,
+        "fallback_fraction": 0.4375
+      },
+      "baseline": {
+        "solver_accuracy": 0.75,
+        "verifier_accuracy": 0.875,
+        "solver_normalized_uncertainty": 0.16963711963035166,
+        "verifier_normalized_uncertainty": 0.11129580461420119,
+        "normalized_uncertainty_gap": 0.058341315016150475
+      },
+      "final": {
+        "solver_accuracy": 0.75,
+        "verifier_accuracy": 0.875,
+        "solver_normalized_uncertainty": 0.2739547656965442,
+        "verifier_normalized_uncertainty": 0.2452381540206261,
+        "normalized_uncertainty_gap": 0.028716611675918102
+      },
+      "series": {
+        "solver_uncertainty": {
+          "persistence": {
+            "last_training_value": 4.13860756077338,
+            "heldout_mse": 1.028941119781244,
+            "forecast": [
+              4.13860756077338,
+              4.13860756077338,
+              4.13860756077338,
+              4.13860756077338,
+              4.13860756077338,
+              4.13860756077338
+            ]
+          },
+          "rank_1": {
+            "endpoint": 9.687741895496451,
+            "modes_per_epoch": [
+              0.97
+            ],
+            "amplitudes": [
+              -6.419565955409565
+            ],
+            "train_sse": 16.133242541308903,
+            "train_r_squared": 0.11855364450104233,
+            "heldout_mse": 2.3917470561619276,
+            "forecast": [
+              4.579238666718984,
+              4.6564497074718965,
+              4.732493763582308,
+              4.807388473112633,
+              4.881151207539733,
+              4.953799075784148
+            ]
+          },
+          "rank_2": {
+            "endpoint": 5.481588853208155,
+            "modes_per_epoch": [
+              0.6,
+              0.8
+            ],
+            "amplitudes": [
+              2.673165116034868,
+              -4.5811366272778375
+            ],
+            "train_sse": 15.905872591259197,
+            "train_r_squared": 0.1309760954316681,
+            "heldout_mse": 2.578785487941141,
+            "forecast": [
+              4.680246496853042,
+              4.757900574989978,
+              4.828922119670609,
+              4.893658448834544,
+              4.952499757306045,
+              5.005856660629826
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": -0.07529446224685524,
+          "best_modal_order": 1,
+          "mse_factor_best_modal_over_persistence": 2.3244741707576213
+        },
+        "verifier_uncertainty": {
+          "persistence": {
+            "last_training_value": 3.648711979505606,
+            "heldout_mse": 0.4182041634288744,
+            "forecast": [
+              3.648711979505606,
+              3.648711979505606,
+              3.648711979505606,
+              3.648711979505606,
+              3.648711979505606,
+              3.648711979505606
+            ]
+          },
+          "rank_1": {
+            "endpoint": 4.913466234387134,
+            "modes_per_epoch": [
+              0.6
+            ],
+            "amplitudes": [
+              -2.684048919876257
+            ],
+            "train_sse": 23.74060069806427,
+            "train_r_squared": 0.27387566041753286,
+            "heldout_mse": 2.8310220902878207,
+            "forecast": [
+              4.8552659904457105,
+              4.868384519281065,
+              4.87854608802228,
+              4.886417205323493,
+              4.892514146568222,
+              4.89723681694895
+            ]
+          },
+          "rank_2": {
+            "endpoint": 4.966911128986171,
+            "modes_per_epoch": [
+              0.3,
+              0.4
+            ],
+            "amplitudes": [
+              13.9191130618938,
+              -15.902908583432549
+            ],
+            "train_sse": 22.102349974191497,
+            "train_r_squared": 0.3239828055598043,
+            "heldout_mse": 3.085489318795563,
+            "forecast": [
+              4.952099622012512,
+              4.957402231824924,
+              4.960819793423795,
+              4.963016246820873,
+              4.964424574929347,
+              4.965325779129811
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": -0.08607244793366624,
+          "best_modal_order": 1,
+          "mse_factor_best_modal_over_persistence": 6.769473711299617
+        },
+        "uncertainty_gap": {
+          "persistence": {
+            "last_training_value": 0.4898955812677741,
+            "heldout_mse": 0.14064814562909064,
+            "forecast": [
+              0.4898955812677741,
+              0.4898955812677741,
+              0.4898955812677741,
+              0.4898955812677741,
+              0.4898955812677741,
+              0.4898955812677741
+            ]
+          },
+          "rank_1": {
+            "endpoint": -0.6046491822245763,
+            "modes_per_epoch": [
+              0.5
+            ],
+            "amplitudes": [
+              1.646300240489081
+            ],
+            "train_sse": 34.19753502244289,
+            "train_r_squared": 0.08891470790529143,
+            "heldout_mse": 0.7756339716825021,
+            "forecast": [
+              -0.5955545723502101,
+              -0.5982183219101659,
+              -0.6001018772873932,
+              -0.601433752067371,
+              -0.6023755297559847,
+              -0.6030414671459737
+            ]
+          },
+          "rank_2": {
+            "endpoint": 5.523704727431624,
+            "modes_per_epoch": [
+              0.7,
+              0.9
+            ],
+            "amplitudes": [
+              8.832992955992687,
+              -12.840908342200398
+            ],
+            "train_sse": 31.57286260535334,
+            "train_r_squared": 0.15884081322860244,
+            "heldout_mse": 0.6673961632715427,
+            "forecast": [
+              0.3057290290328083,
+              0.5053192057558875,
+              0.7058034496584482,
+              0.9053168646720617,
+              1.1023873729857954,
+              1.2958670256720388
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": 0.15029690539652815,
+          "best_modal_order": 2,
+          "mse_factor_best_modal_over_persistence": 4.745147262954732
+        },
+        "solver_normalized_uncertainty": {
+          "persistence": {
+            "last_training_value": 0.26762012008111924,
+            "heldout_mse": 0.0003279805045713607,
+            "forecast": [
+              0.26762012008111924,
+              0.26762012008111924,
+              0.26762012008111924,
+              0.26762012008111924,
+              0.26762012008111924,
+              0.26762012008111924
+            ]
+          },
+          "rank_1": {
+            "endpoint": 0.4558509041237887,
+            "modes_per_epoch": [
+              0.92
+            ],
+            "amplitudes": [
+              -0.3428413412798949
+            ],
+            "train_sse": 0.03284187910943548,
+            "train_r_squared": 0.4992329080312091,
+            "heldout_mse": 0.0012028520919331184,
+            "forecast": [
+              0.27240758883912386,
+              0.2798982572871508,
+              0.28708305406189705,
+              0.29397446903408186,
+              0.3005844820668484,
+              0.30692458384125837
+            ]
+          },
+          "rank_2": {
+            "endpoint": 0.3347102815759432,
+            "modes_per_epoch": [
+              0.5,
+              0.7
+            ],
+            "amplitudes": [
+              0.5393492337580219,
+              -0.6872826633465987
+            ],
+            "train_sse": 0.02163286160463429,
+            "train_r_squared": 0.670145999849208,
+            "heldout_mse": 0.002331923660750751,
+            "forecast": [
+              0.29033426465838186,
+              0.2971966366708791,
+              0.30305116738893456,
+              0.3080293635535249,
+              0.31225095047267926,
+              0.31582295566581364
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": -0.6619980523402799,
+          "best_modal_order": 1,
+          "mse_factor_best_modal_over_persistence": 3.66744997084953
+        },
+        "verifier_normalized_uncertainty": {
+          "persistence": {
+            "last_training_value": 0.15992666489910334,
+            "heldout_mse": 0.0024288960164325444,
+            "forecast": [
+              0.15992666489910334,
+              0.15992666489910334,
+              0.15992666489910334,
+              0.15992666489910334,
+              0.15992666489910334,
+              0.15992666489910334
+            ]
+          },
+          "rank_1": {
+            "endpoint": 0.2302296925963273,
+            "modes_per_epoch": [
+              0.85
+            ],
+            "amplitudes": [
+              -0.1337192883642821
+            ],
+            "train_sse": 0.009390280470745416,
+            "train_r_squared": 0.5542579449702976,
+            "heldout_mse": 0.0015236218776136484,
+            "forecast": [
+              0.19070795780452826,
+              0.1937924535020943,
+              0.19663621802329811,
+              0.19925803936622924,
+              0.2016752392092525,
+              0.20390378735074394
+            ]
+          },
+          "rank_2": {
+            "endpoint": 0.18984885251600803,
+            "modes_per_epoch": [
+              0.45,
+              0.5
+            ],
+            "amplitudes": [
+              0.976207850035835,
+              -1.048311746168407
+            ],
+            "train_sse": 0.008251397747952027,
+            "train_r_squared": 0.6083189420701478,
+            "heldout_mse": 0.0016254781501273518,
+            "forecast": [
+              0.18650470585540727,
+              0.1873953904981042,
+              0.1880544285716622,
+              0.1885400462200278,
+              0.1888965827675147,
+              0.18915751548885518
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": -0.06471170405438256,
+          "best_modal_order": 1,
+          "mse_factor_best_modal_over_persistence": 0.6272898746200135
+        },
+        "normalized_uncertainty_gap": {
+          "persistence": {
+            "last_training_value": 0.1076934551820159,
+            "heldout_mse": 0.0023847640762439575,
+            "forecast": [
+              0.1076934551820159,
+              0.1076934551820159,
+              0.1076934551820159,
+              0.1076934551820159,
+              0.1076934551820159,
+              0.1076934551820159
+            ]
+          },
+          "rank_1": {
+            "endpoint": 0.19069922618827018,
+            "modes_per_epoch": [
+              0.94
+            ],
+            "amplitudes": [
+              -0.1782827081286659
+            ],
+            "train_sse": 0.012699444070671938,
+            "train_r_squared": 0.30612281930700125,
+            "heldout_mse": 0.001529216195622059,
+            "forecast": [
+              0.07860890220786071,
+              0.0820236250340499,
+              0.0853343216466853,
+              0.08854416110330311,
+              0.0916562159191804,
+              0.09467346500840115
+            ]
+          },
+          "rank_2": {
+            "endpoint": 0.14446441160077447,
+            "modes_per_epoch": [
+              0.6,
+              0.7
+            ],
+            "amplitudes": [
+              0.7854392793466025,
+              -0.8575447913905767
+            ],
+            "train_sse": 0.005057467893963198,
+            "train_r_squared": 0.7236680956914625,
+            "heldout_mse": 0.003336126134869912,
+            "forecast": [
+              0.1024086564683137,
+              0.10822102469743285,
+              0.11332225616410246,
+              0.11777480438781632,
+              0.12164302668873438,
+              0.12499014472333235
+            ]
+          },
+          "log_mse_ratio_rank1_over_rank2": -0.7800549802984977,
+          "best_modal_order": 1,
+          "mse_factor_best_modal_over_persistence": 0.6412442265693461
+        }
+      },
+      "shared_mode": {
+        "total_nll": {
+          "mode_per_epoch": 0.6,
+          "shared_rank1_heldout_mse": 0.07782817532615101,
+          "separate_rank1_heldout_mse": 0.0932158928845575,
+          "factor_shared_over_separate": 0.8349238838760669
+        },
+        "per_token_nll": {
+          "mode_per_epoch": 0.995,
+          "shared_rank1_heldout_mse": 0.12083527548028955,
+          "separate_rank1_heldout_mse": 0.08414708478522807,
+          "factor_shared_over_separate": 1.4360007335809761
+        }
+      }
+    }
+  ]
+}

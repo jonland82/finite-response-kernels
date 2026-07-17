@@ -1,0 +1,23 @@
+{
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "dataset_id": "synthetic_arithmetic",
+  "dataset_config": "generated_v1",
+  "train_size": 1,
+  "eval_size": 8,
+  "candidate_count": 4,
+  "verification_threshold": 0.5,
+  "solver_temperature": 1.0,
+  "verifier_temperature": 0.1,
+  "max_new_tokens": 48,
+  "max_sequence_length": 192,
+  "epochs": 0,
+  "checkpoints_per_epoch": 2,
+  "batch_size": 1,
+  "gradient_accumulation_steps": 1,
+  "learning_rate": 0.00001,
+  "weight_decay": 0.01,
+  "lora_rank": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.5,
+  "seed": 20260718
+}

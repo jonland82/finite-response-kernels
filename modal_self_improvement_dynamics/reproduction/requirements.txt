@@ -1,0 +1,6 @@
+transformers==4.49.0
+datasets==3.3.2
+peft==0.14.0
+accelerate==1.4.0
+matplotlib==3.10.1
+numpy==2.1.3

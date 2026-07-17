@@ -1,0 +1,2 @@
+seed,global_step,epoch,training_loss,elapsed_seconds,solver_uncertainty,verifier_uncertainty,uncertainty_gap,solver_accuracy,verifier_accuracy,accuracy_gap,mean_selected_verifier_score,fallback_fraction,candidate_accuracy,verifier_judgment_accuracy,verifier_brier_score,mean_score_correct_candidates,mean_score_incorrect_candidates
+20260718,0,0.0,,59.38499855995178,1.9503449836047366,10.020452055265196,-8.070107071660459,0.625,0.75,0.125,0.7289320695364819,0.25,0.625,0.46875,0.37772113014253306,0.41449298166140586,0.2880005170853996

@@ -1,0 +1,924 @@
+{
+  "source": {
+    "paper": "Sun et al., arXiv:2507.00075v4",
+    "figure_file": "fig/fit/dataset_exponential_fit_train_Phi_4.pdf",
+    "input_svg": "C:\\Users\\jonla\\AppData\\Local\\Temp\\sun_phi4_train_fit.svg",
+    "input_svg_sha256": "af8f03cf846f0929fce22ad74ef6a49d04842c7319f3d70fb1169f144eebd36a",
+    "status": "exploratory vector-figure extraction; not raw seed-level data"
+  },
+  "checkpoint_spacing_epochs": 0.5,
+  "train_count": 15,
+  "heldout_count": 5,
+  "bootstrap_replicates": 2000,
+  "seed": 20260718,
+  "fits": {
+    "math_qe__solver": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.19536493504102098,
+          "modes_per_half_epoch": [
+            0.8
+          ],
+          "modes_per_epoch": [
+            0.6400000000000001
+          ],
+          "amplitudes": [
+            0.7615990957072111
+          ],
+          "train_sse": 0.001472297066870798,
+          "heldout_mse": 0.0014302110534318451,
+          "forecast": [
+            0.2221613210069015,
+            0.2168020438137254,
+            0.2125146220591845,
+            0.2090846846555518,
+            0.20634073473264564
+          ]
+        },
+        "rank_2": {
+          "endpoint": 0.13677156701096563,
+          "modes_per_half_epoch": [
+            0.5,
+            0.85
+          ],
+          "modes_per_epoch": [
+            0.25,
+            0.7224999999999999
+          ],
+          "amplitudes": [
+            0.09993338746575597,
+            0.7154561196879351
+          ],
+          "train_sse": 0.00019322830760026832,
+          "heldout_mse": 5.628846900279675e-05,
+          "forecast": [
+            0.19927272737247614,
+            0.1898964859145138,
+            0.18192721437711368,
+            0.17515360042125755,
+            0.16939616198424678
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": 3.235087601439991,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.013962560323412915,
+        "critical_value_5_percent": 0.5927866999043944,
+        "one_sided_p_value": 0.0004997501249375312,
+        "prefer_rank2_at_5_percent": true,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": true
+      }
+    },
+    "math_qe__verifier": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.04119367098738848,
+          "modes_per_half_epoch": [
+            0.9
+          ],
+          "modes_per_epoch": [
+            0.81
+          ],
+          "amplitudes": [
+            0.3465392434989291
+          ],
+          "train_sse": 3.869558842295451e-05,
+          "heldout_mse": 9.99794123350249e-07,
+          "forecast": [
+            0.11254302814660626,
+            0.10540809243068447,
+            0.09898665028635488,
+            0.09320735235645825,
+            0.08800598421955128
+          ]
+        },
+        "rank_2": {
+          "endpoint": 0.04983641544789261,
+          "modes_per_half_epoch": [
+            0.85,
+            0.9
+          ],
+          "modes_per_epoch": [
+            0.7224999999999999,
+            0.81
+          ],
+          "amplitudes": [
+            0.04302567278583247,
+            0.29724845886606555
+          ],
+          "train_sse": 1.8308761592145117e-05,
+          "heldout_mse": 6.285637472555252e-06,
+          "forecast": [
+            0.11479571120472894,
+            0.10811185792666969,
+            0.10212457853177272,
+            0.09675998734841833,
+            0.09195222151464431
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": -1.8384731615171235,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.0015748503545683229,
+        "critical_value_5_percent": 0.5708045847999651,
+        "one_sided_p_value": 0.8555722138930535,
+        "prefer_rank2_at_5_percent": false,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": false
+      }
+    },
+    "math_qe__gap": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.05236444333863298,
+          "modes_per_half_epoch": [
+            0.8
+          ],
+          "modes_per_epoch": [
+            0.6400000000000001
+          ],
+          "amplitudes": [
+            0.4797908675260184
+          ],
+          "train_sse": 0.0010888192534905805,
+          "heldout_mse": 1.4507946355404162e-05,
+          "forecast": [
+            0.06924558374649192,
+            0.06586935566492014,
+            0.0631683731996627,
+            0.061007587227456764,
+            0.059278958449692006
+          ]
+        },
+        "rank_2": {
+          "endpoint": 0.05761936279967206,
+          "modes_per_half_epoch": [
+            0.1,
+            0.8
+          ],
+          "modes_per_epoch": [
+            0.010000000000000002,
+            0.6400000000000001
+          ],
+          "amplitudes": [
+            0.044606410458672585,
+            0.4531771878780308
+          ],
+          "train_sse": 0.00010891156111636491,
+          "heldout_mse": 5.183112775549333e-06,
+          "forecast": [
+            0.07356411760014328,
+            0.070375166640049,
+            0.06782400587197361,
+            0.0657830772575133,
+            0.06415033436594506
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": 1.0292907259917274,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.00818197099470392,
+        "critical_value_5_percent": 0.5863364085714724,
+        "one_sided_p_value": 0.018490754622688656,
+        "prefer_rank2_at_5_percent": true,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": false
+      }
+    },
+    "gsm8k_qe__solver": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.19887828948659658,
+          "modes_per_half_epoch": [
+            0.8
+          ],
+          "modes_per_epoch": [
+            0.6400000000000001
+          ],
+          "amplitudes": [
+            0.7454524249931418
+          ],
+          "train_sse": 0.0006020626164930931,
+          "heldout_mse": 0.0004992841609392127,
+          "forecast": [
+            0.22510656498207743,
+            0.21986090988298126,
+            0.21566438580370434,
+            0.21230716654028278,
+            0.20962139112954553
+          ]
+        },
+        "rank_2": {
+          "endpoint": 0.1823604128149091,
+          "modes_per_half_epoch": [
+            0.7,
+            0.85
+          ],
+          "modes_per_epoch": [
+            0.48999999999999994,
+            0.7224999999999999
+          ],
+          "amplitudes": [
+            0.3131598771510018,
+            0.4610186972368535
+          ],
+          "train_sse": 0.00019113873432008432,
+          "heldout_mse": 0.00034178022139342895,
+          "forecast": [
+            0.22411908688233137,
+            0.21763227390533496,
+            0.2121853864349529,
+            0.20760236457717363,
+            0.20373957874249304
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": 0.37900749148489743,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.011649564997588874,
+        "critical_value_5_percent": 0.534225140094383,
+        "one_sided_p_value": 0.0769615192403798,
+        "prefer_rank2_at_5_percent": false,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": false
+      }
+    },
+    "gsm8k_qe__verifier": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.041351689107541216,
+          "modes_per_half_epoch": [
+            0.9
+          ],
+          "modes_per_epoch": [
+            0.81
+          ],
+          "amplitudes": [
+            0.3788248014866976
+          ],
+          "train_sse": 6.766678733249876e-05,
+          "heldout_mse": 2.257958839138489e-06,
+          "forecast": [
+            0.11934835635116808,
+            0.11154868962680539,
+            0.104528989574879,
+            0.09821125952814522,
+            0.09252530248608482
+          ]
+        },
+        "rank_2": {
+          "endpoint": 0.042112453502414327,
+          "modes_per_half_epoch": [
+            0.85,
+            0.9
+          ],
+          "modes_per_epoch": [
+            0.7224999999999999,
+            0.81
+          ],
+          "amplitudes": [
+            0.0037872692025666677,
+            0.37448605537249713
+          ],
+          "train_sse": 6.750882750661269e-05,
+          "heldout_mse": 2.393726979908965e-06,
+          "forecast": [
+            0.11954664534043363,
+            0.11178668445944588,
+            0.10480520092113478,
+            0.09852397480304598,
+            0.09287266400319856
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": -0.058390320468275594,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.002154558292953565,
+        "critical_value_5_percent": 0.5736958296971696,
+        "one_sided_p_value": 0.3278360819590205,
+        "prefer_rank2_at_5_percent": false,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": false
+      }
+    },
+    "gsm8k_qe__gap": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.0785456022467985,
+          "modes_per_half_epoch": [
+            0.7
+          ],
+          "modes_per_epoch": [
+            0.48999999999999994
+          ],
+          "amplitudes": [
+            0.4436993909650333
+          ],
+          "train_sse": 0.0001385252603551823,
+          "heldout_mse": 9.081649914577532e-05,
+          "forecast": [
+            0.08065209239732925,
+            0.08002014535217002,
+            0.07957778242055857,
+            0.07926812836843054,
+            0.07905137053194093
+          ]
+        },
+        "rank_2": {
+          "endpoint": 0.07566047750900746,
+          "modes_per_half_epoch": [
+            0.7,
+            0.8
+          ],
+          "modes_per_epoch": [
+            0.48999999999999994,
+            0.6400000000000001
+          ],
+          "amplitudes": [
+            0.41653246510990605,
+            0.02765364999341824
+          ],
+          "train_sse": 0.00010894043793119312,
+          "heldout_mse": 5.702420841699244e-05,
+          "forecast": [
+            0.07861096731898769,
+            0.0778231180070919,
+            0.07725216396254518,
+            0.07683692851038677,
+            0.07653380959709528
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": 0.4653650910063941,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.005300968018799699,
+        "critical_value_5_percent": 0.4370190395320531,
+        "one_sided_p_value": 0.04297851074462768,
+        "prefer_rank2_at_5_percent": true,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": false
+      }
+    },
+    "math_tf__solver": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.1794513869038286,
+          "modes_per_half_epoch": [
+            0.8
+          ],
+          "modes_per_epoch": [
+            0.6400000000000001
+          ],
+          "amplitudes": [
+            0.7688328305464649
+          ],
+          "train_sse": 0.0009077831166846018,
+          "heldout_mse": 0.0010105469422505267,
+          "forecast": [
+            0.2065022872878854,
+            0.201092107211074,
+            0.19676396314962494,
+            0.1933014479004657,
+            0.19053143570113826
+          ]
+        },
+        "rank_2": {
+          "endpoint": 0.04395440814757262,
+          "modes_per_half_epoch": [
+            0.7,
+            0.92
+          ],
+          "modes_per_epoch": [
+            0.48999999999999994,
+            0.8464
+          ],
+          "amplitudes": [
+            0.42537777595220416,
+            0.48537529525949763
+          ],
+          "train_sse": 0.00010497444667700861,
+          "heldout_mse": 1.4005036763156691e-05,
+          "forecast": [
+            0.184935602336472,
+            0.17321281522697496,
+            0.16256113855855323,
+            0.15285489725422607,
+            0.14399046611567973
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": 4.2788299564619,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.015309519880933554,
+        "critical_value_5_percent": 0.49019311438036867,
+        "one_sided_p_value": 0.0004997501249375312,
+        "prefer_rank2_at_5_percent": true,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": true
+      }
+    },
+    "math_tf__verifier": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.030036273698053707,
+          "modes_per_half_epoch": [
+            0.9
+          ],
+          "modes_per_epoch": [
+            0.81
+          ],
+          "amplitudes": [
+            0.32278941281614715
+          ],
+          "train_sse": 0.00014503700499446381,
+          "heldout_mse": 9.040527419212885e-06,
+          "forecast": [
+            0.09649575133093727,
+            0.0898498035676489,
+            0.0838684505806894,
+            0.07848523289242583,
+            0.07364033697298862
+          ]
+        },
+        "rank_2": {
+          "endpoint": -0.10287881119472642,
+          "modes_per_half_epoch": [
+            0.85,
+            0.98
+          ],
+          "modes_per_epoch": [
+            0.7224999999999999,
+            0.9603999999999999
+          ],
+          "amplitudes": [
+            0.21246864748991295,
+            0.2497257638804542
+          ],
+          "train_sse": 2.463282714137982e-05,
+          "heldout_mse": 1.3497500961296939e-06,
+          "forecast": [
+            0.10012095492687907,
+            0.09364815534239948,
+            0.08766673238891662,
+            0.08211257043791445,
+            0.07693097938783175
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": 1.9017980535686008,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.003143915266900989,
+        "critical_value_5_percent": 0.7133399206427796,
+        "one_sided_p_value": 0.0009995002498750624,
+        "prefer_rank2_at_5_percent": true,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": true
+      }
+    },
+    "math_tf__gap": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.047870143074944776,
+          "modes_per_half_epoch": [
+            0.8
+          ],
+          "modes_per_epoch": [
+            0.6400000000000001
+          ],
+          "amplitudes": [
+            0.5051529664054548
+          ],
+          "train_sse": 0.0018729944548993016,
+          "heldout_mse": 1.9606026302153135e-05,
+          "forecast": [
+            0.06564363300673157,
+            0.06208893502037421,
+            0.059245176631288324,
+            0.05697016992001962,
+            0.055150164551004646
+          ]
+        },
+        "rank_2": {
+          "endpoint": 0.041521830991783304,
+          "modes_per_half_epoch": [
+            0.6,
+            0.85
+          ],
+          "modes_per_epoch": [
+            0.36,
+            0.7224999999999999
+          ],
+          "amplitudes": [
+            0.21053172066363973,
+            0.3297073644687898
+          ],
+          "train_sse": 5.903972191723117e-05,
+          "heldout_mse": 1.4683849632003656e-06,
+          "forecast": [
+            0.07042214920071921,
+            0.06606235425592057,
+            0.06236642743822503,
+            0.0592308289744138,
+            0.05656913387891224
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": 2.591673850417683,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.010675105050376107,
+        "critical_value_5_percent": 0.533166563119635,
+        "one_sided_p_value": 0.0004997501249375312,
+        "prefer_rank2_at_5_percent": true,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": true
+      }
+    },
+    "gsm8k_tf__solver": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.1817569278390284,
+          "modes_per_half_epoch": [
+            0.8
+          ],
+          "modes_per_epoch": [
+            0.6400000000000001
+          ],
+          "amplitudes": [
+            0.7558207826385284
+          ],
+          "train_sse": 0.000888823799224614,
+          "heldout_mse": 0.00023936996165577177,
+          "forecast": [
+            0.2083500074878546,
+            0.20303139155808936,
+            0.19877649881427717,
+            0.1953725846192274,
+            0.1926494532631876
+          ]
+        },
+        "rank_2": {
+          "endpoint": 0.0744001830594293,
+          "modes_per_half_epoch": [
+            0.7,
+            0.92
+          ],
+          "modes_per_epoch": [
+            0.48999999999999994,
+            0.8464
+          ],
+          "amplitudes": [
+            0.46174170173082774,
+            0.4175025125834563
+          ],
+          "train_sse": 0.00013328234109843962,
+          "heldout_mse": 6.140453346470768e-05,
+          "forecast": [
+            0.19612221573553387,
+            0.1859021807526975,
+            0.1766444302791124,
+            0.1682285770408512,
+            0.16055688609985688
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": 1.3605266444305422,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.009848252144321524,
+        "critical_value_5_percent": 0.5068440038155599,
+        "one_sided_p_value": 0.004497751124437781,
+        "prefer_rank2_at_5_percent": true,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": true
+      }
+    },
+    "gsm8k_tf__verifier": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.07819199007576795,
+          "modes_per_half_epoch": [
+            0.85
+          ],
+          "modes_per_epoch": [
+            0.7224999999999999
+          ],
+          "amplitudes": [
+            0.2630789052165873
+          ],
+          "train_sse": 0.00011944107725181397,
+          "heldout_mse": 0.00011221290446492382,
+          "forecast": [
+            0.10117304240297514,
+            0.09772588455389405,
+            0.09479580038217514,
+            0.09230522883621406,
+            0.09018824302214715
+          ]
+        },
+        "rank_2": {
+          "endpoint": -0.012246569770549082,
+          "modes_per_half_epoch": [
+            0.7,
+            0.94
+          ],
+          "modes_per_epoch": [
+            0.48999999999999994,
+            0.8835999999999999
+          ],
+          "amplitudes": [
+            0.09201129899706864,
+            0.26313344312508763
+          ],
+          "train_sse": 1.9871955507566597e-05,
+          "heldout_mse": 2.5067979496537063e-05,
+          "forecast": [
+            0.0922047515777935,
+            0.08583283326450933,
+            0.0798746817597373,
+            0.07429603554205216,
+            0.0690675194351885
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": 1.4988066850521808,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.005063919914811071,
+        "critical_value_5_percent": 0.6030772612724548,
+        "one_sided_p_value": 0.0069965017491254375,
+        "prefer_rank2_at_5_percent": true,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": true
+      }
+    },
+    "gsm8k_tf__gap": {
+      "models": {
+        "rank_1": {
+          "endpoint": 0.037910737563198196,
+          "modes_per_half_epoch": [
+            0.8
+          ],
+          "modes_per_epoch": [
+            0.6400000000000001
+          ],
+          "amplitudes": [
+            0.506953781754791
+          ],
+          "train_sse": 0.002096981420649069,
+          "heldout_mse": 0.0001262083694624928,
+          "forecast": [
+            0.055747588052299304,
+            0.05218021795447909,
+            0.049326321876222906,
+            0.047043205013617966,
+            0.045216711523534014
+          ]
+        },
+        "rank_2": {
+          "endpoint": 0.05108052707873513,
+          "modes_per_half_epoch": [
+            0.5,
+            0.8
+          ],
+          "modes_per_epoch": [
+            0.25,
+            0.6400000000000001
+          ],
+          "amplitudes": [
+            0.09695653138753374,
+            0.4258079179385964
+          ],
+          "train_sse": 0.00012186158238969291,
+          "heldout_mse": 1.325214487479797e-06,
+          "forecast": [
+            0.06606527018037892,
+            0.06306743389649375,
+            0.06066960870116382,
+            0.058751570460788986,
+            0.05721725082643366
+          ]
+        }
+      },
+      "log_heldout_mse_ratio_rank1_over_rank2": 4.556359942517911,
+      "parametric_bootstrap": {
+        "replicates": 2000,
+        "rank1_null_noise_sd": 0.012054252239906313,
+        "critical_value_5_percent": 0.5311443945937955,
+        "one_sided_p_value": 0.0004997501249375312,
+        "prefer_rank2_at_5_percent": true,
+        "qualification": "conditional on a fitted rank-one null, iid Gaussian residuals, the fixed modal grid, and vector-figure values",
+        "holm_bonferroni_5_percent": true
+      }
+    }
+  },
+  "multiple_testing": {
+    "method": "Holm-Bonferroni",
+    "family_size": 12,
+    "familywise_level": 0.05,
+    "rejected_series": [
+      "gsm8k_tf__gap",
+      "gsm8k_tf__solver",
+      "gsm8k_tf__verifier",
+      "math_qe__solver",
+      "math_tf__gap",
+      "math_tf__solver",
+      "math_tf__verifier"
+    ]
+  },
+  "shared_mode_audit": {
+    "math_qe": {
+      "shared_rank1": {
+        "mode_per_half_epoch": 0.85,
+        "mode_per_epoch": 0.7224999999999999,
+        "endpoints": [
+          -0.05157334734127343,
+          0.048461949431292166,
+          -0.11248628335396466
+        ],
+        "amplitudes": [
+          1.0023377556213162,
+          0.9939589747469949,
+          1.0074397119756267
+        ],
+        "train_sse": 0.0392466500228219,
+        "forecast": [
+          [
+            0.035985084576727874,
+            0.02285131978902767,
+            0.011687619719482512,
+            0.0021984746603691194,
+            -0.005867298639877262
+          ],
+          [
+            0.13528845948899665,
+            0.12226448298034095,
+            0.11119410294798363,
+            0.10178427992047992,
+            0.09378593034710175
+          ],
+          [
+            -0.024482174022743886,
+            -0.03768279042242702,
+            -0.048903314362157654,
+            -0.05844075971092871,
+            -0.0665475882573841
+          ]
+        ],
+        "heldout_mse": 0.003164284567135364,
+        "scale": "each series affinely normalized to its observed range"
+      },
+      "separate_rank1_heldout_mse": 0.000773368819709201,
+      "separate_rank2_heldout_mse": 5.956705229257313e-05,
+      "log_mse_ratio_shared_rank1_over_separate_rank1": 1.4089262013918953,
+      "qualification": "descriptive only; a joint test requires seed-level covariance, and the plotted gap is algebraically related to solver and verifier"
+    },
+    "gsm8k_qe": {
+      "shared_rank1": {
+        "mode_per_half_epoch": 0.8,
+        "mode_per_epoch": 0.6400000000000001,
+        "endpoints": [
+          0.03149028370775735,
+          0.16016715390974426,
+          -0.060711097034653265
+        ],
+        "amplitudes": [
+          0.955423122508923,
+          0.9432714077998376,
+          0.9641302512434883
+        ],
+        "train_sse": 0.07766241677669196,
+        "forecast": [
+          [
+            0.06510624635238504,
+            0.0583830538234595,
+            0.05300449980031907,
+            0.04870165658180673,
+            0.045259382006996855
+          ],
+          [
+            0.19335556610253016,
+            0.186717883663973,
+            0.18140773771312724,
+            0.17715962095245064,
+            0.17376112754390938
+          ],
+          [
+            -0.026788779532803265,
+            -0.033573243033173265,
+            -0.03900081383346926,
+            -0.043342870473706066,
+            -0.046816515785895504
+          ]
+        ],
+        "heldout_mse": 0.007919543538827688,
+        "scale": "each series affinely normalized to its observed range"
+      },
+      "separate_rank1_heldout_mse": 0.0004270036606480422,
+      "separate_rank2_heldout_mse": 0.0002866680742481534,
+      "log_mse_ratio_shared_rank1_over_separate_rank1": 2.920296263020839,
+      "qualification": "descriptive only; a joint test requires seed-level covariance, and the plotted gap is algebraically related to solver and verifier"
+    },
+    "math_tf": {
+      "shared_rank1": {
+        "mode_per_half_epoch": 0.8,
+        "mode_per_epoch": 0.6400000000000001,
+        "endpoints": [
+          0.03851490006827365,
+          0.13999746087942533,
+          -0.01590947342213088
+        ],
+        "amplitudes": [
+          0.9537232969423609,
+          0.9369996075224938,
+          0.9626920854135652
+        ],
+        "train_sse": 0.03629694106917097,
+        "forecast": [
+          [
+            0.07207105541768132,
+            0.06535982434779977,
+            0.05999083949189456,
+            0.055695651607170375,
+            0.05225950129939103
+          ],
+          [
+            0.17296520371758634,
+            0.1663716551499541,
+            0.16109681629584838,
+            0.15687694521256376,
+            0.1535010483459361
+          ],
+          [
+            0.01796224311803367,
+            0.011187899810000755,
+            0.005768425163574432,
+            0.0014328454464333715,
+            -0.002035618327279479
+          ]
+        ],
+        "heldout_mse": 0.005835501929619639,
+        "scale": "each series affinely normalized to its observed range"
+      },
+      "separate_rank1_heldout_mse": 0.0005801309234803396,
+      "separate_rank2_heldout_mse": 1.4642706861819658e-05,
+      "log_mse_ratio_shared_rank1_over_separate_rank1": 2.3084617533141523,
+      "qualification": "descriptive only; a joint test requires seed-level covariance, and the plotted gap is algebraically related to solver and verifier"
+    },
+    "gsm8k_tf": {
+      "shared_rank1": {
+        "mode_per_half_epoch": 0.8,
+        "mode_per_epoch": 0.6400000000000001,
+        "endpoints": [
+          0.015062759841899568,
+          0.10962751031211503,
+          -0.03345806799340673
+        ],
+        "amplitudes": [
+          0.9633166235293655,
+          0.9353739041027508,
+          0.9776539352041889
+        ],
+        "train_sse": 0.024473882473741534,
+        "forecast": [
+          [
+            0.048956450363514085,
+            0.04217771225919118,
+            0.036754721775732864,
+            0.03241632938896621,
+            0.028945615479552878
+          ],
+          [
+            0.1425380537962497,
+            0.13595594509942277,
+            0.13069025814196122,
+            0.12647770857599197,
+            0.12310766892321659
+          ],
+          [
+            0.0009400718369283259,
+            -0.0059395561291386845,
+            -0.01144325850199229,
+            -0.01584622040027518,
+            -0.019368589918901488
+          ]
+        ],
+        "heldout_mse": 0.0035146949878031614,
+        "scale": "each series affinely normalized to its observed range"
+      },
+      "separate_rank1_heldout_mse": 0.0008144654847291428,
+      "separate_rank2_heldout_mse": 0.00015293321879180348,
+      "log_mse_ratio_shared_rank1_over_separate_rank1": 1.4621759749061949,
+      "qualification": "descriptive only; a joint test requires seed-level covariance, and the plotted gap is algebraically related to solver and verifier"
+    }
+  }
+}
