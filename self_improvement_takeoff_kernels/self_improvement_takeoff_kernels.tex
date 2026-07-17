@@ -1,0 +1,219 @@
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[margin=0.70in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{microtype}
+\usepackage{times}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+
+\setlist{nosep,leftmargin=*}
+\setlength{\columnsep}{0.22in}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0pt}
+\emergencystretch=1em
+
+\title{\vspace{-1.2em}Takeoff Kernels for Recursive Self-Improvement:\\
+A Short Formal Sketch}
+\author{Jonathan R. Landers}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+\vspace{-1.5em}
+
+\begin{abstract}
+Current theories of language-model self-improvement usually ask whether a
+generator can use its own verification signal to produce a better successor.
+That question records the amount or eventual limit of improvement, but not the
+finite shape by which improvement appears across rounds.  This sketch applies
+the takeoff-kernel viewpoint to the standard generator--verifier--update loop.
+For bounded self-training, the kernel records what fraction of the eventual
+gain arrives in each round.  For sustained recursive improvement, it records
+how log-capability growth approaches its terminal velocity.  The resulting
+language distinguishes immediate, delayed, monotone, ringing, mixed, and
+diffusive takeoff even when two systems have the same terminal performance or
+asymptotic growth rate.
+\end{abstract}
+
+\section{Context}
+
+Recent self-improvement theory studies a recurring pattern.  A model generates
+candidate answers, a verifier scores or filters those answers, and the accepted
+data are distilled back into a new model.  The verifier may be external, or it
+may be another use of the same model.  Sharpening theory interprets the process
+as moving probability mass toward outputs the model can recognize as better
+\cite{huang2025}.  The generation--verification gap measures whether such
+reweighting has positive value \cite{song2025}.  More recent analyses study the
+multi-round trajectory, finite-sample effects, saturation, and easy-to-hard
+curricula \cite{sun2026,liu2026}.
+
+This is usually bounded self-training, not unrestricted recursive
+self-improvement.  Nevertheless, it already defines a discrete response curve
+over improvement rounds.  The takeoff-kernel question is: not only \emph{does}
+performance rise, but \emph{when and in what shape} does the rise occur?
+
+\section{Standard self-improvement loop}
+
+Let $\mathcal Q$ be a question or task space, $P$ a task distribution, and
+$\mathcal A$ an answer space.  At round $t$:
+\begin{align}
+q&\sim P, & a&\sim\pi_t(\cdot\mid q),
+\end{align}
+where $\pi_t$ is the current solver.  Let
+$s_t(q,a)\in[0,1]$ be a verifier score and let $w$ be a nonnegative filtering
+or weighting function.  The verifier-induced target distribution is
+\begin{equation}
+\bar\pi_t(a\mid q)
+=\frac{\pi_t(a\mid q)w(s_t(q,a))}{Z_t(q)},
+\end{equation}
+where $Z_t(q)$ normalizes the distribution.  Supervised fine-tuning or
+reinforcement learning then implements an approximate update
+\begin{equation}
+\pi_{t+1}=\mathcal U(\pi_t,\bar\pi_t;B_t),
+\end{equation}
+with sample and compute budget $B_t$.
+
+Let $r(q,a)$ denote the evaluation utility one ultimately cares about, which
+need not equal the verifier score, and define
+\begin{equation}
+J(\pi)=\mathbb E_{q\sim P,\,a\sim\pi(\cdot\mid q)}[r(q,a)],
+\qquad J_t=J(\pi_t).
+\end{equation}
+The idealized generation--verification advantage is
+\begin{equation}
+g_t=J(\bar\pi_t)-J(\pi_t).
+\end{equation}
+A positive $g_t$ says that verification exposes better probability mass.  It
+does not say how efficiently finite training transfers that advantage into the
+successor.  Schematically,
+\begin{equation}
+J_{t+1}-J_t\approx \eta_t g_t-\ell_t,
+\end{equation}
+where $\eta_t$ is uptake efficiency and $\ell_t$ collects sampling,
+optimization, distribution-shift, and verifier-mismatch losses.
+
+\section{Bounded improvement kernel}
+
+Suppose the repeated update converges to $J_\infty>J_0$.  Define the normalized
+takeoff profile
+\begin{equation}
+F_t^{\mathrm b}=\frac{J_t-J_0}{J_\infty-J_0},
+\qquad F_0^{\mathrm b}=0,
+\end{equation}
+and its causal finite difference
+\begin{equation}
+\kappa_t^{\mathrm b}=F_t^{\mathrm b}-F_{t-1}^{\mathrm b},
+\qquad t\ge1.
+\end{equation}
+Then
+\begin{equation}
+\sum_{t\ge1}\kappa_t^{\mathrm b}=1.
+\end{equation}
+Thus $\kappa_t^{\mathrm b}$ is the fraction of eventual capability gain
+delivered in round $t$.  If performance improves monotonically, the kernel is
+nonnegative and can be read as a probability distribution over improvement
+time.  If some entries are negative, the response is signed: the system
+overshoots, regresses, or rings before settling.
+
+Two useful shape statistics transfer directly.  For tolerance $\varepsilon$,
+the settling time is
+\begin{equation}
+T_\varepsilon=\min\{T:|F_t^{\mathrm b}-1|\le\varepsilon
+\text{ for all }t\ge T\},
+\end{equation}
+and the excess signed response is
+\begin{equation}
+R(\kappa^{\mathrm b})=\sum_{t\ge1}|\kappa_t^{\mathrm b}|-1.
+\end{equation}
+The first measures how long improvement remains in startup; the second measures
+instability invisible in the final score.
+
+\section{Sustained recursive takeoff}
+
+Bounded benchmark accuracy cannot itself sustain a positive exponential
+velocity.  For open-ended recursive improvement, choose an unbounded effective
+capability coordinate $C_t>0$: for example, the size of the reliably solvable
+task frontier, inverse error $(1-J_t)^{-1}$, or success odds where meaningful.
+Define the capability velocity
+\begin{equation}
+u_t=\log C_{t+1}-\log C_t.
+\end{equation}
+If $u_t\to\alpha>0$, define
+\begin{equation}
+F_t^{\mathrm r}=\frac{u_t}{\alpha},
+\qquad
+\kappa_t^{\mathrm r}=F_t^{\mathrm r}-F_{t-1}^{\mathrm r}.
+\end{equation}
+This is the direct analogue of a velocity takeoff kernel for recursive
+redundancy \cite{landers2026}.  The terminal number $\alpha$ says how fast
+capability eventually grows; the kernel says how that growth rate becomes
+visible.  Therefore two systems can share the same $\alpha$ while having
+arbitrarily different finite takeoff.  A genuinely accelerating regime in
+which $u_t$ itself grows without bound would require a second-order extension
+rather than normalization by a fixed terminal velocity.
+
+\section{Takeoff types and interpretation}
+
+The same vocabulary now classifies self-improvement trajectories.
+\begin{itemize}
+\item \emph{No takeoff.} Verification supplies no usable advantage, or learning
+cannot absorb it.
+\item \emph{Immediate.} Most kernel mass lies in the first rounds; a strong verifier
+quickly extracts the available gain.
+\item \emph{Delayed.} Early rounds contribute little until coverage, curriculum, or
+verification quality crosses a threshold.
+\item \emph{Monotone long tail.} Gains stay positive but decay as the solver catches
+its verifier or the supply of accepted information is exhausted.
+\item \emph{Ringing.} Negative kernel entries mark alternating improvement and
+regression from reward bias, distribution shift, or evaluator drift.
+\item \emph{Mixed.} A fast output-level channel is followed by slower weight, tool,
+architecture, or meta-agent improvement.
+\item \emph{Diffusive.} Algebraic rather than exponential settling suggests a broad
+or growing state space rather than finitely many dominant modes.
+\end{itemize}
+
+The generation--verification gap is therefore best viewed as an available
+forcing signal; the takeoff kernel is the realized temporal response.  Under a
+local linear approximation, sequential stages such as verification, filtering,
+and distillation compose by convolution, while parallel feedback channels mix.
+Outside that approximation the update is nonlinear, but the measured kernel
+still gives a model-independent summary of onset, delay, settling, and
+instability.
+
+The basic separation principle is simple: terminal gain $J_\infty-J_0$, or
+terminal log-capability velocity $\alpha$, does not determine takeoff.  A fuller
+evaluation of recursive self-improvement should report the response shape as
+well: its kernel, settling time, signed response, and, where a modal fit is
+appropriate, its slowest settling mode.
+
+\begin{thebibliography}{9}\footnotesize
+
+\bibitem{huang2025}
+A.~Huang, A.~Block, D.~J. Foster, et al.
+\newblock Self-improvement in language models: The sharpening mechanism.
+\newblock \emph{ICLR}, 2025. \href{https://arxiv.org/abs/2412.01951}{arXiv:2412.01951}.
+
+\bibitem{song2025}
+Y.~Song, H.~Zhang, C.~Eisenach, S.~Kakade, D.~Foster, and U.~Ghai.
+\newblock Mind the gap: Examining the self-improvement capabilities of large language models.
+\newblock \emph{ICLR}, 2025. \href{https://arxiv.org/abs/2412.02674}{arXiv:2412.02674}.
+
+\bibitem{sun2026}
+Y.~Sun, Y.~Liang, Z.~Zhang, X.~Liu, and J.~Teng.
+\newblock Theoretical modeling of large language model self-improvement training dynamics through solver--verifier gap.
+\newblock \emph{ICLR}, 2026. \href{https://arxiv.org/abs/2507.00075}{arXiv:2507.00075}.
+
+\bibitem{liu2026}
+C.~Liu, Y.~Dong, Y.~Shen, and Q.~Lei.
+\newblock A task-centric theory for iterative self-improvement with easy-to-hard curricula.
+\newblock \emph{ICLR}, 2026. \href{https://arxiv.org/abs/2602.10014}{arXiv:2602.10014}.
+
+\bibitem{landers2026}
+J.~R. Landers.
+\newblock The shape of recursive redundancy: Velocity takeoff kernels for memoization.
+\newblock Manuscript, 2026.
+
+\end{thebibliography}
+
+\end{document}
