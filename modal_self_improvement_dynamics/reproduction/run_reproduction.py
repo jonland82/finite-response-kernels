@@ -51,6 +51,8 @@ class ExperimentConfig:
     lora_alpha: int
     lora_dropout: float
     seed: int
+    dense_checkpoints_per_epoch: int | None = None
+    dense_checkpoints_until_epoch: float | None = None
 
 
 @dataclass
@@ -86,6 +88,19 @@ def load_config(path: Path, seed_override: int | None) -> ExperimentConfig:
         raise ValueError("candidate_count must be at least two")
     if config.checkpoints_per_epoch < 1:
         raise ValueError("checkpoints_per_epoch must be positive")
+    dense_fields = (
+        config.dense_checkpoints_per_epoch,
+        config.dense_checkpoints_until_epoch,
+    )
+    if (dense_fields[0] is None) != (dense_fields[1] is None):
+        raise ValueError(
+            "dense checkpoint count and cutoff epoch must be provided together"
+        )
+    if config.dense_checkpoints_per_epoch is not None:
+        if config.dense_checkpoints_per_epoch < 1:
+            raise ValueError("dense checkpoints per epoch must be positive")
+        if not 0.0 < float(config.dense_checkpoints_until_epoch) <= config.epochs:
+            raise ValueError("dense checkpoint cutoff must lie within training")
     return config
 
 
@@ -644,6 +659,26 @@ def main() -> None:
     evaluation_interval = max(
         1, int(math.ceil(steps_per_epoch / config.checkpoints_per_epoch))
     )
+    dense_evaluation_interval = (
+        max(
+            1,
+            int(
+                math.ceil(
+                    steps_per_epoch / float(config.dense_checkpoints_per_epoch)
+                )
+            ),
+        )
+        if config.dense_checkpoints_per_epoch is not None
+        else None
+    )
+    for label, interval in (
+        ("base", evaluation_interval),
+        ("dense", dense_evaluation_interval),
+    ):
+        if interval is not None and interval % config.gradient_accumulation_steps != 0:
+            raise ValueError(
+                f"{label} evaluation interval must align with optimizer updates"
+            )
     total_steps = config.epochs * steps_per_epoch
     trajectory_path = args.output / "trajectory.csv"
     detail_directory = args.output / "checkpoint_details"
@@ -678,6 +713,7 @@ def main() -> None:
     optimizer.zero_grad(set_to_none=True)
     global_step = 0
     accumulated_loss = 0.0
+    steps_since_checkpoint = 0
     for _epoch in range(config.epochs):
         for batch_index, batch in enumerate(loader, start=1):
             batch = {key: value.to(device) for key, value in batch.items()}
@@ -685,6 +721,7 @@ def main() -> None:
             loss = output.loss / config.gradient_accumulation_steps
             loss.backward()
             accumulated_loss += float(output.loss.detach().cpu())
+            steps_since_checkpoint += 1
             should_update = (
                 batch_index % config.gradient_accumulation_steps == 0
                 or batch_index == steps_per_epoch
@@ -693,13 +730,24 @@ def main() -> None:
                 optimizer.step()
                 optimizer.zero_grad(set_to_none=True)
             global_step += 1
-            if global_step % evaluation_interval == 0 or global_step == total_steps:
-                mean_loss = accumulated_loss / evaluation_interval
+            current_epoch = global_step / steps_per_epoch
+            current_interval = (
+                dense_evaluation_interval
+                if dense_evaluation_interval is not None
+                and current_epoch <= float(config.dense_checkpoints_until_epoch)
+                else evaluation_interval
+            )
+            should_checkpoint = (
+                should_update and global_step % current_interval == 0
+            ) or global_step == total_steps
+            if should_checkpoint:
+                mean_loss = accumulated_loss / steps_since_checkpoint
                 model.config.use_cache = True
                 checkpoint(global_step, mean_loss)
                 model.config.use_cache = False
                 model.train()
                 accumulated_loss = 0.0
+                steps_since_checkpoint = 0
 
     model.save_pretrained(args.output / "final_adapter")
     tokenizer.save_pretrained(args.output / "final_adapter")

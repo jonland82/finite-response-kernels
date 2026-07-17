@@ -1,0 +1,119 @@
+{
+  "seed": 20260719,
+  "sparse_checkpoint_count": 21,
+  "dense_checkpoint_count": 29,
+  "dense_interval_epochs": 0.25,
+  "dense_until_epoch": 4.0,
+  "optimizer_updates_per_epoch": 4,
+  "common_checkpoint_validation": {
+    "common_checkpoint_count": 21,
+    "missing_sparse_epochs": [],
+    "maximum_absolute_metric_difference": 0.0,
+    "exact_metric_match": true
+  },
+  "selected_transitions": [
+    {
+      "from_epoch": 1.25,
+      "to_epoch": 1.5,
+      "before": {
+        "solver_uncertainty": 10.415845025330782,
+        "verifier_uncertainty": 10.265374852344394,
+        "solver_normalized_uncertainty": 0.37874764343723655,
+        "verifier_normalized_uncertainty": 0.32727623684331775,
+        "solver_mean_token_count": 14.375,
+        "verifier_mean_token_count": 16.125,
+        "solver_accuracy": 0.5,
+        "verifier_accuracy": 0.75
+      },
+      "after": {
+        "solver_uncertainty": 2.3940058182924986,
+        "verifier_uncertainty": 6.251887657679617,
+        "solver_normalized_uncertainty": 0.3334132148884237,
+        "verifier_normalized_uncertainty": 0.40984898852184415,
+        "solver_mean_token_count": 6.875,
+        "verifier_mean_token_count": 14.0,
+        "solver_accuracy": 0.375,
+        "verifier_accuracy": 0.625
+      },
+      "change": {
+        "solver_uncertainty": -8.021839207038283,
+        "verifier_uncertainty": -4.013487194664776,
+        "solver_normalized_uncertainty": -0.045334428548812866,
+        "verifier_normalized_uncertainty": 0.0825727516785264,
+        "solver_mean_token_count": -7.5,
+        "verifier_mean_token_count": -2.125,
+        "solver_accuracy": -0.125,
+        "verifier_accuracy": -0.125
+      }
+    },
+    {
+      "from_epoch": 3.0,
+      "to_epoch": 3.25,
+      "before": {
+        "solver_uncertainty": 2.253430733922869,
+        "verifier_uncertainty": 6.02261223224923,
+        "solver_normalized_uncertainty": 0.3141965395770967,
+        "verifier_normalized_uncertainty": 0.3656629822216928,
+        "solver_mean_token_count": 6.875,
+        "verifier_mean_token_count": 14.125,
+        "solver_accuracy": 0.375,
+        "verifier_accuracy": 0.625
+      },
+      "after": {
+        "solver_uncertainty": 2.2329118652269244,
+        "verifier_uncertainty": 9.70292857196182,
+        "solver_normalized_uncertainty": 0.3112359009683132,
+        "verifier_normalized_uncertainty": 0.4334221100434661,
+        "solver_mean_token_count": 6.875,
+        "verifier_mean_token_count": 18.25,
+        "solver_accuracy": 0.375,
+        "verifier_accuracy": 0.5
+      },
+      "change": {
+        "solver_uncertainty": -0.020518868695944548,
+        "verifier_uncertainty": 3.68031633971259,
+        "solver_normalized_uncertainty": -0.0029606386087834835,
+        "verifier_normalized_uncertainty": 0.06775912782177329,
+        "solver_mean_token_count": 0.0,
+        "verifier_mean_token_count": 4.125,
+        "solver_accuracy": 0.0,
+        "verifier_accuracy": -0.125
+      }
+    },
+    {
+      "from_epoch": 9.5,
+      "to_epoch": 10.0,
+      "before": {
+        "solver_uncertainty": 2.188640317879617,
+        "verifier_uncertainty": 9.718624356202781,
+        "solver_normalized_uncertainty": 0.30618120543658733,
+        "verifier_normalized_uncertainty": 0.4331713141873479,
+        "solver_mean_token_count": 6.875,
+        "verifier_mean_token_count": 19.5,
+        "solver_accuracy": 0.5,
+        "verifier_accuracy": 0.5
+      },
+      "after": {
+        "solver_uncertainty": 2.133911526761949,
+        "verifier_uncertainty": 2.303829023614526,
+        "solver_normalized_uncertainty": 0.28035250771790743,
+        "verifier_normalized_uncertainty": 0.23928968701511621,
+        "solver_mean_token_count": 8.125,
+        "verifier_mean_token_count": 10.25,
+        "solver_accuracy": 0.5,
+        "verifier_accuracy": 0.625
+      },
+      "change": {
+        "solver_uncertainty": -0.05472879111766815,
+        "verifier_uncertainty": -7.414795332588255,
+        "solver_normalized_uncertainty": -0.025828697718679905,
+        "verifier_normalized_uncertainty": -0.19388162717223167,
+        "solver_mean_token_count": 1.25,
+        "verifier_mean_token_count": -9.25,
+        "solver_accuracy": 0.0,
+        "verifier_accuracy": 0.125
+      }
+    }
+  ],
+  "qualification": "The held-out panel has eight prompts. Exact agreement at common checkpoints validates measurement isolation for this seed, but the observed jumps need not generalize to larger models or tasks."
+}

@@ -4,7 +4,7 @@
 
 Start a **new standalone paper/project** rather than expanding the existing two-page sketch. The sketch remains a compact conceptual bridge; this project will contain theorems, identification methods, experiments, and a reproducible empirical test.
 
-**Working title:** *Beyond Single-Exponential Self-Improvement: Modal Takeoff Kernels for Solver–Verifier Dynamics*
+**Working title:** *Beyond Single-Exponential Self-Improvement: Takeoff Kernels, Response Modes, and Source Identification*
 
 Related local notes:
 
@@ -20,19 +20,36 @@ Phase 4 now has a completed three-seed, 21-checkpoint resource-scaled reproducti
 
 The direct inverse experiment is complete in [SPECTRAL_MODE_AUDIT.md](SPECTRAL_MODE_AUDIT.md). Matrix-pencil recovery is exact in noiseless controls but cannot reliably count heterogeneous modes at 20--21 checkpoints and 1% noise. Conditional one-pole summaries are stable but differ systematically across published solver, verifier, and gap curves, contradicting the exact shared-rate restriction without identifying a unique replacement order. The complete handoff state is in [RESTART_STATE.md](RESTART_STATE.md).
 
+The first local-versus-global audit is complete in [LOCAL_DYNAMICS_AUDIT.md](LOCAL_DYNAMICS_AUDIT.md). A shared two-phase model never beats shared rank two on the published curves, where separate power laws remain the strongest overall baseline. On the reproduction, the two-phase model wins 11/15 structural comparisons and finds prefix-stable change points at epochs 1.0, 1.5, and 3.5, but two seeds are best represented by delay followed by an abrupt jump rather than a smooth local exponential. Matched synthetic controls identify true two-phase dynamics only 51% of the time at this horizon.
+
+The dense-start follow-up is now complete. Seed 20260719 was evaluated every optimizer update through epoch 4, then on the original half-epoch schedule. The 21 overlapping checkpoints match the sparse run exactly. The extra checkpoints localize one-update changes coupled to output length and accuracy, including a solver total-uncertainty drop from 10.416 to 2.394 while solver accuracy falls from 0.50 to 0.375. The result is evidence for response-regime changes and measurement confounding, not a positive claim of a universal startup exponential or a resolved mode count.
+
+### Empirical-priority update: local versus global dynamics
+
+The next empirical target is no longer a direct search for exactly two or three persistent modes. The published trajectories are figure-derived aggregates, and the reproduction is dominated by plateaus and discrete changes. Both can make a global constant-rate fit fail without implying a stable higher modal order.
+
+The project will now compare three nested explanations:
+
+1. **Global shared rate:** solver, verifier, and gap follow one exponential rate over the full training run.
+2. **Global shared modes:** a fixed latent mode set persists through the run, with observable-specific amplitudes and the gap amplitudes constrained by $G=U_s-U_v$.
+3. **Time-local response:** one-mode behavior is valid only during a startup window or training phase, with rates that later change, vanish into a plateau, or restart after an intervention.
+
+The figure-derived audit remains a motivating observation rather than the primary evidence. The rolling local-rate and change-point audit on the existing published and reproduction trajectories is complete, and its dense-start follow-up is recorded below.
+
 Primary empirical/theoretical target:
 
 - Sun et al., *Theoretical Modeling of Large Language Model Self-Improvement Training Dynamics Through Solver–Verifier Gap* (ICLR 2026), [arXiv:2507.00075](https://arxiv.org/abs/2507.00075).
 
 ## Central question
 
-Do observed self-improvement trajectories behave like a single geometric/exponential mode, or do they contain multiple identifiable response modes—fast and slow stages, delay, overshoot, ringing, or long tails—that are hidden by endpoint or aggregate-rate descriptions?
+Is the standard shared exponential a global training law, a local startup law, or an approximate description of changing training phases? If the global law fails, are the deviations better represented by persistent shared modes, a broad relaxation spectrum, or time-varying local dynamics?
 
-The kernel approach should contribute at three levels:
+The kernel approach should contribute at four levels:
 
 1. **Verification:** turn the standard single-rate model into falsifiable local identities.
-2. **Generalization:** replace one rate by a finite modal response kernel.
-3. **Identification:** infer the number and location of modes from trajectories and compare their predictive value.
+2. **Localization:** determine the training windows on which those identities are approximately stable.
+3. **Generalization:** compare persistent finite modes with diffuse spectra, piecewise, and smoothly time-varying response laws.
+4. **Identification:** infer only those response components that are stable across held-out windows and seeds, and keep latent-source attribution separate.
 
 ## Scope and clocks
 
@@ -109,7 +126,7 @@ $$
      {\sum_{r=1}^{R}c_r}.
 $$
 
-Interpret $\theta_r$ as response modes, not merely fit parameters: positive real modes give monotone stages, negative or complex modes allow alternating or ringing responses, and a slow dominant mode controls the tail.
+Interpret $\theta_r$ as response modes, not merely fit parameters: positive real modes give monotone stages, negative or complex modes allow alternating or ringing responses, and a slow dominant mode controls the tail. These are modes of the measured response, not automatically distinct causal sources.
 
 ### Result 3: shape and settling behavior
 
@@ -142,7 +159,7 @@ $$
 H_{ij}=\kappa_{i+j}.
 $$
 
-For distinct active modes and nonzero coefficients, prove that its exact rank equals the number of active modes. Thus:
+For distinct active modes and nonzero coefficients, prove that its exact rank equals the number of active modes. This identifies response order under the finite-modal model; it does not uniquely identify latent mechanisms. Thus:
 
 - rank one corresponds to a single exponential;
 - rank two is the minimal two-stage alternative;
@@ -159,9 +176,9 @@ Keep the paper's claims tiered so that partial empirical results still yield a c
 
 1. **Core theorem claim:** the standard single-rate model is exactly the rank-one kernel case.
 2. **Diagnostic claim:** local ratio and Hankel tests can reject that case.
-3. **Generalization claim:** coupled solver–verifier dynamics naturally generate multiple modes.
-4. **Empirical claim:** at least one published or reproduced trajectory is better predicted by a multi-mode kernel.
-5. **Interpretive claim:** recovered modes suggest distinct fast and slow self-improvement mechanisms; present this as an interpretation unless separately identified causally.
+3. **Generalization claim:** a finite-dimensional coupled state generates a finite-modal response as one controlled subclass of general kernels.
+4. **Empirical claim:** available trajectories reject a rigid shared rank-one forecast in some settings, while broader alternatives remain competitive.
+5. **Interpretive claim:** recovered response modes do not identify distinct causal mechanisms without source-separation measurements or interventions.
 
 ## Experimental program
 
@@ -237,6 +254,28 @@ Fit the inner-clock and outer-clock kernels independently before attempting a co
 
 **Gate C:** a full reproduction is warranted only if published data are inadequate or if the synthetic power analysis indicates that the planned checkpoint density can identify more than one mode.
 
+### Experiment D — local-versus-global dynamics
+
+First use the existing published and reproduction trajectories to compare:
+
+- a global rank-one exponential;
+- a global rank-two modal response;
+- a continuous two-phase exponential with a fitted change point;
+- rolling local exponential rates;
+- power-law, local-linear, and persistence baselines.
+
+The two-phase model should use no larger a parameter budget than the rank-two model and must be scored on untouched held-out checkpoints. Synthetic controls should include true global rank one, true global rank two, and true two-phase trajectories so that model-selection confusion is measured directly.
+
+The completed dense-start run samples every optimizer update through epoch $4$. Future runs should retain paired seed-level $U_s$ and $U_v$, derive $G$ from the pair, and retain optimizer step, epoch, learning rate, loss, response length, verifier acceptance, and data-refresh events.
+
+**Gate D:**
+
+- stable rates across windows and seeds would support a global modal law;
+- a stable early rate followed by a plateau or rate transition would support a local startup law;
+- drifting rates or split-dependent change points would support time-varying dynamics;
+- persistence dominance would indicate that no stable smooth response law is resolved at the current scale;
+- the completed dense run instead shows one-update changes coupled to length and accuracy, so response measurement and source separation remain unresolved.
+
 ## Paper sketch
 
 1. **Introduction** — standard single-rate descriptions omit response shape.
@@ -311,6 +350,9 @@ Fit the inner-clock and outer-clock kernels independently before attempting a co
 - [x] Log every kernel observable at every checkpoint.
 - [x] Fit models on early checkpoints and evaluate held-out tail forecasts.
 - [x] Test whether modes replicate across three fresh seeds; verifier variants remain open.
+- [x] Run the local-versus-global audit on the existing published and reproduction trajectories.
+- [x] Use that audit to set a dense-start checkpoint schedule.
+- [x] Repeat the controlled run with dense early checkpoints and paired seed-level observables.
 
 **Deliverable:** controlled evidence for or against a multi-modal self-improvement response.
 
@@ -321,7 +363,7 @@ Fit the inner-clock and outer-clock kernels independently before attempting a co
 - [x] Insert synthetic results before making claims about real trajectories.
 - [x] Add the strongest credible empirical section available.
 - [x] Separate mathematical identification from mechanistic interpretation.
-- [ ] Write abstract, introduction, discussion, and limitations last.
+- [x] Write abstract, introduction, discussion, and limitations last.
 
 **Deliverable:** complete compilable manuscript.
 
@@ -368,15 +410,17 @@ Create later files only as their phase begins, so the repository records actual 
 | Inner and outer dynamics are conflated | Maintain separate time indices, datasets, fits, and interpretations. |
 | Accuracy is bounded and noisy | Analyze uncertainty and verifier quantities alongside task accuracy. |
 | Multi-mode models overfit | Use held-out forecasting, bootstrap stability, information criteria, and singular-spectrum diagnostics. |
+| A global fit invents modes to approximate changing phases | Compare persistent modal fits with equally parameterized piecewise-rate models over rolling splits. |
+| Early takeoff is undersampled | Concentrate checkpoints near initialization and known schedule transitions, then sample more sparsely after settling. |
 | Recovered modes are given causal labels too quickly | Call them response modes unless an intervention identifies a mechanism. |
 
 ## Immediate work queue
 
-1. Decide whether to position the empirical contribution as quantified nonidentifiability or wait for longer, lower-noise raw trajectories.
-2. If better data become available, prioritize paired seed-level curves, an independently constrained endpoint, and 40--60 checkpoints.
-3. On improved data, compare a sparse finite set of inverse-Laplace atoms with a regularized diffuse spectrum.
-4. Draft related work from primary sources and run the notation/theorem dependency audit.
-5. Add outer recursive rounds only after the inner-clock baseline is stable.
+1. Preserve this stopping-point claim map and do not promote a mode count or causal source claim.
+2. If raw published trajectories become available, repeat the audit with paired seed-level data and an independently constrained endpoint.
+3. Add independent observables or interventions before attempting latent-source separation.
+4. If research resumes, test whether the dense-run jumps replicate across seeds or disappear with a larger evaluation panel.
+5. Draft related work and add outer recursive rounds only after the inner-clock empirical law is stable.
 
 ## Minimum viable paper: definition of done
 

@@ -36,6 +36,33 @@ The setup creates a local Python 3.10 environment and installs the CUDA 12.4 PyT
 .\.venv\Scripts\python.exe .\analyze_multiseed.py .\runs\arithmetic_seed_20260718\trajectory.csv .\runs\arithmetic_seed_20260719\trajectory.csv .\runs\arithmetic_seed_20260720\trajectory.csv
 ```
 
+The local-dynamics follow-up keeps the same training procedure but evaluates after every optimizer update through epoch 4, then returns to twice-per-epoch evaluation:
+
+```powershell
+.\.venv\Scripts\python.exe .\run_reproduction.py `
+  --config .\config_arithmetic_dense_start.json `
+  --seed 20260719 --output .\runs\arithmetic_dense_seed_20260719
+```
+
+This schedule targets the epoch 1.0--3.5 change points found by the first [local-versus-global audit](../LOCAL_DYNAMICS_AUDIT.md). It changes measurement density, not the optimizer, pseudo-labels, task, or training horizon. The dense interval is required to align with optimizer updates so repeated evaluations of unchanged weights are not mistaken for plateaus.
+
+The completed dense run has 29 checkpoints. Its 21 shared half-epoch checkpoints
+match `arithmetic_seed_20260719` exactly across all logged metrics (maximum
+absolute difference 0); `run_reproduction.py` snapshots and restores Python,
+NumPy, CPU, and CUDA RNG states around evaluation. The added quarter-epoch
+measurements resolve one-update changes in uncertainty, response length, and
+accuracy. Run the reproducible summary with:
+
+```powershell
+.\.venv\Scripts\python.exe ..\scripts\dense_start_audit.py `
+  --project-root ..
+```
+
+The resulting `results/dense_start_metadata.json`,
+`results/dense_start_step_changes.csv`, and
+`figures/fig7_dense_start_audit.pdf` are measurement-resolution artifacts, not
+evidence of a universal local exponential or a causal mode count.
+
 The primary empirical test fits the first 15 of 21 checkpoints and forecasts the final six. It compares
 
 $$

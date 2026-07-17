@@ -70,6 +70,33 @@ We successfully recreated a fresh-seed, locally runnable version of the experime
 
 The result does not identify physical modes or contradict the larger-model experiments. The held-out set is small, the generated outputs change discretely as LoRA weights cross decoding boundaries, and each seed also draws a new synthetic task sample. A more decisive reproduction would keep a larger evaluation panel fixed, use at least a 3B model on a published task, and add seed-level uncertainty to the joint shared-mode test.
 
+## Dense-start follow-up
+
+The seed-20260719 run was repeated with evaluation after every optimizer update
+through epoch 4, followed by the original twice-per-epoch schedule. This gives
+29 checkpoints rather than 21 while leaving the optimizer, pseudo-labels, task,
+and training horizon unchanged. The 21 shared checkpoints match the original
+trajectory exactly across all logged metrics (maximum absolute difference 0),
+because the runner snapshots and restores Python, NumPy, CPU, and CUDA RNG
+states around evaluation.
+
+The added measurements localize the main early event to one optimizer update.
+From epoch 1.25 to 1.5, solver total uncertainty falls from 10.416 to 2.394,
+but mean solver response length falls from 14.375 to 6.875 tokens and solver
+accuracy falls from 0.50 to 0.375. Verifier accuracy also falls from 0.75 to
+0.625, while verifier per-token uncertainty increases from 0.327 to 0.410.
+Another verifier transition at epochs 3.0--3.25 coincides with a length rise
+from 14.125 to 18.25 tokens and an accuracy decrease. These changes are useful
+evidence that dense sampling can expose response-regime and decoding
+transitions, but they are not a smooth capability takeoff and do not identify
+modal or causal sources.
+
+The audit artifacts are [dense_start_metadata.json](../results/dense_start_metadata.json),
+[dense_start_step_changes.csv](../results/dense_start_step_changes.csv), and
+[fig7_dense_start_audit.pdf](../figures/fig7_dense_start_audit.pdf). The
+reproduction therefore closes with a measurement warning: total uncertainty,
+per-token uncertainty, response length, and accuracy must be analyzed together.
+
 ## Reproduce
 
-The environment and commands are in [README.md](README.md). Each run records its configuration and hardware in `manifest.json`, pseudo-labels in `pseudolabels.jsonl`, checkpoint-level metrics in `trajectory.csv`, and prompt-level samples in `checkpoint_details/`. `analyze_reproduction.py` performs the individual audit; `analyze_multiseed.py` aggregates the fresh seeds and produces the combined figure and JSON audit.
+The environment and commands are in [README.md](README.md). Each run records its configuration and hardware in `manifest.json`, pseudo-labels in `pseudolabels.jsonl`, checkpoint-level metrics in `trajectory.csv`, and prompt-level samples in `checkpoint_details/`. `analyze_reproduction.py` performs the individual audit; `analyze_multiseed.py` aggregates the fresh seeds and produces the combined figure and JSON audit; `../scripts/dense_start_audit.py` validates the dense/sparse overlap and writes the transition artifacts.

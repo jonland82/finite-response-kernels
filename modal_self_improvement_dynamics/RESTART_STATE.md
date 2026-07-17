@@ -1,14 +1,31 @@
 # Research restart state
 
-Last updated: 2026-07-16
+Last updated: 2026-07-17
 
 ## Plain-language state
 
-The project has a complete mathematical core, synthetic validation, a qualified audit of published curves, and a controlled local reproduction. The strongest empirical conclusion is not "there are exactly two modes." It is:
+The project has a complete mathematical core, synthetic validation, a qualified audit of published curves, a controlled local reproduction, and a dense-start follow-up. The strongest empirical conclusion is not "there are exactly two modes." It is:
 
-> The standard shared one-exponential description is too rigid. The published curves contain smooth, observably different relaxation scales, but current 20--21 checkpoint data cannot determine whether the richer structure is two discrete modes, several modes, a power-law continuum, or changing dynamics. The local reproduction is dominated by plateaus and discrete jumps rather than stable modal relaxation.
+> The standard shared one-exponential description is too rigid. The published curves contain smooth, observably different relaxation scales, but current 20--21 checkpoint data cannot determine whether the richer structure is two discrete modes, several modes, a power-law continuum, or changing dynamics. The local reproduction is dominated by plateaus and discrete jumps rather than stable modal relaxation. Dense sampling localizes those jumps to individual updates and shows that at least the largest one is coupled to response length and declining accuracy.
 
 Do not foreground this project in the repository-level `README.md` or `index.html` yet. It has been committed as a self-contained research folder so work can resume without making it a featured project.
+
+## Current research decision
+
+The empirical priority shifted from counting persistent modes to testing whether the standard exponential is global or time-local. That audit is complete. The separation among figure-derived solver, verifier, and gap rates remains exploratory because the public artifact contains aggregate plotted points rather than raw paired seed trajectories. The dense follow-up is also complete: it provides a controlled measurement-resolution result, not a new mechanism claim.
+
+The completed dense run concentrated checkpoints near initialization and the observed schedule transitions. A stable early rate followed by a plateau would support a startup takeoff law; split-dependent or drifting rates would support time-varying dynamics; stable poles across windows and seeds would support a persistent modal interpretation. The present dense result is instead a one-update behavioral transition with response-length and accuracy confounds.
+
+The first audit is complete in [LOCAL_DYNAMICS_AUDIT.md](LOCAL_DYNAMICS_AUDIT.md). On the published panels, shared rank two wins all 20 structural rolling comparisons and a shared two-phase model wins none; separate power laws win 12/20 comparisons once broader baselines are included. On the reproduction, shared two phase wins 11/15 structural comparisons and finds stable within-seed change points at epochs 1.0, 1.5, and 3.5. Two seeds use an extreme $0.995\rightarrow0.05$ fit, indicating delay plus an abrupt jump rather than smooth startup relaxation. Synthetic two-phase truth is correctly selected only 51% of the time at 20--21 checkpoints and 1% noise.
+
+The dense-start audit is recorded in `results/dense_start_metadata.json` and
+`results/dense_start_step_changes.csv`, with Figure 7 in
+`figures/fig7_dense_start_audit.pdf`. It adds quarter-epoch checkpoints through
+epoch 4 and validates exact agreement with the sparse trajectory at all 21
+shared checkpoints. From epoch 1.25 to 1.5, solver total uncertainty falls
+10.416 to 2.394 while mean solver length falls 14.375 to 6.875 tokens and
+solver accuracy falls 0.50 to 0.375. This is a behavioral/measurement
+transition, not a clean capability takeoff.
 
 ## What is complete
 
@@ -61,6 +78,13 @@ Three fixed seeds, 21 checkpoints, six observables per seed, 0.5B Qwen, controll
 - Across five rolling splits, persistence wins 52/90 cases and is the consensus winner for 15/18 trajectories.
 - The spectral audit labels most cases high-rank, but no full trajectory has perturbation-stable poles. This reflects plateaus and jumps, not evidence for many physical modes.
 
+### Dense-start follow-up
+
+- `scripts/dense_start_audit.py` verifies the sparse/dense overlap and writes the transition artifacts.
+- The run has 29 checkpoints: every optimizer update through epoch 4, then the original half-epoch schedule.
+- The runner snapshots and restores all relevant RNG states around evaluation; the 21 common checkpoints match exactly.
+- The sharpest early change is coupled to response length and accuracy, so the uncertainty drop cannot be interpreted as capability improvement alone.
+
 ## Current claim map
 
 | Claim | State |
@@ -73,6 +97,8 @@ Three fixed seeds, 21 checkpoints, six observables per seed, 0.5B Qwen, controll
 | Exactly two discrete modes are present | Unresolved |
 | A broad spectrum/power-law tail is competitive | Supported predictively |
 | Local reproduction contains stable response modes | Not supported |
+| Takeoff kernel is an exponential mixture | False as a definition; finite modal mixtures are one response subclass |
+| Response modes identify causal sources | Unresolved and underdetermined from solver/verifier/gap alone |
 | Kernel methods improve the result type | Supported: they distinguish model failure, order recovery, and mechanism identification |
 
 ## Main documents
@@ -84,6 +110,7 @@ Three fixed seeds, 21 checkpoints, six observables per seed, 0.5B Qwen, controll
 - `BASELINE_AUDIT.md`: rolling forecast baselines.
 - `SPECTRAL_MODE_AUDIT.md`: direct inverse spectral experiment.
 - `reproduction/REPRODUCTION_REPORT.md`: local reproduction.
+- `scripts/dense_start_audit.py`, `results/dense_start_metadata.json`, and `figures/fig7_dense_start_audit.pdf`: dense-start resolution audit.
 
 ## Reproduction commands
 
@@ -104,17 +131,18 @@ pdflatex -interaction=nonstopmode -halt-on-error modal_self_improvement_dynamics
 
 ## Best next steps
 
-1. Treat mode count as nonidentified unless longer or lower-noise raw trajectories become available.
-2. If improving the empirical result, prioritize raw paired seed-level curves, an independently constrained endpoint, and roughly 40--60 checkpoints over adding a more elaborate inverse algorithm.
-3. With better data, fit a regularized inverse-Laplace measure
+1. Treat both mode count and change-point count as nonidentified unless they replicate across windows and seeds.
+2. If improving the published-data result, prioritize raw paired seed-level curves and an independently constrained endpoint over more elaborate inverse algorithms.
+3. Add independent observables or interventions before attempting latent-source separation.
+4. With better data, fit a regularized inverse-Laplace measure
 
    $$
    e(t)=\int_0^\infty e^{-\lambda t}\,d\mu(\lambda)
    $$
 
    and compare a few stable atoms with a diffuse spectrum.
-4. Finish related work and a notation/theorem dependency audit only after deciding whether the paper will be positioned as a positive multimode result or a quantified nonidentifiability result.
-5. Add outer recursive rounds only after the inner-clock empirical baseline is stable.
+5. Finish related work and a notation/theorem dependency audit only after deciding whether the paper will be positioned as a local-startup, global-multimode, time-varying, or quantified-nonidentifiability result.
+6. Add outer recursive rounds only after the inner-clock empirical baseline is stable.
 
 ## Repository checkpoint
 

@@ -1,0 +1,375 @@
+{
+  "trajectory_group_counts": {
+    "published": 4,
+    "reproduction": 3,
+    "synthetic_local": 300
+  },
+  "models": [
+    "persistence",
+    "separate_local",
+    "separate_power",
+    "separate_rank_1",
+    "shared_rank_1",
+    "shared_rank_2",
+    "shared_two_phase"
+  ],
+  "structural_models": [
+    "shared_rank_1",
+    "shared_rank_2",
+    "shared_two_phase"
+  ],
+  "comparisons": {
+    "published": {
+      "case_count": 20,
+      "winner_counts": {
+        "persistence": 0,
+        "separate_local": 1,
+        "separate_power": 12,
+        "separate_rank_1": 1,
+        "shared_rank_1": 0,
+        "shared_rank_2": 6,
+        "shared_two_phase": 0
+      },
+      "structural_winner_counts": {
+        "shared_rank_1": 0,
+        "shared_rank_2": 20,
+        "shared_two_phase": 0
+      },
+      "two_phase_beats_shared_rank_1": 15,
+      "two_phase_beats_shared_rank_2": 0,
+      "best_structural_beats_persistence": 20
+    },
+    "reproduction": {
+      "case_count": 15,
+      "winner_counts": {
+        "persistence": 4,
+        "separate_local": 1,
+        "separate_power": 0,
+        "separate_rank_1": 0,
+        "shared_rank_1": 0,
+        "shared_rank_2": 1,
+        "shared_two_phase": 9
+      },
+      "structural_winner_counts": {
+        "shared_rank_1": 0,
+        "shared_rank_2": 4,
+        "shared_two_phase": 11
+      },
+      "two_phase_beats_shared_rank_1": 15,
+      "two_phase_beats_shared_rank_2": 11,
+      "best_structural_beats_persistence": 11
+    },
+    "synthetic_local": {
+      "case_count": 1500,
+      "winner_counts": {
+        "persistence": 124,
+        "separate_local": 106,
+        "separate_power": 207,
+        "separate_rank_1": 254,
+        "shared_rank_1": 137,
+        "shared_rank_2": 416,
+        "shared_two_phase": 256
+      },
+      "structural_winner_counts": {
+        "shared_rank_1": 451,
+        "shared_rank_2": 687,
+        "shared_two_phase": 362
+      },
+      "two_phase_beats_shared_rank_1": 825,
+      "two_phase_beats_shared_rank_2": 607,
+      "best_structural_beats_persistence": 1331
+    }
+  },
+  "synthetic_structural_confusion_counts": {
+    "shared_rank_1": {
+      "shared_rank_1": 286,
+      "shared_rank_2": 141,
+      "shared_two_phase": 73
+    },
+    "shared_rank_2": {
+      "shared_rank_1": 15,
+      "shared_rank_2": 451,
+      "shared_two_phase": 34
+    },
+    "shared_two_phase": {
+      "shared_rank_1": 150,
+      "shared_rank_2": 95,
+      "shared_two_phase": 255
+    }
+  },
+  "synthetic_structural_confusion_fractions": {
+    "shared_rank_1": {
+      "shared_rank_1": 0.572,
+      "shared_rank_2": 0.282,
+      "shared_two_phase": 0.146
+    },
+    "shared_rank_2": {
+      "shared_rank_1": 0.03,
+      "shared_rank_2": 0.902,
+      "shared_two_phase": 0.068
+    },
+    "shared_two_phase": {
+      "shared_rank_1": 0.3,
+      "shared_rank_2": 0.19,
+      "shared_two_phase": 0.51
+    }
+  },
+  "synthetic_structural_accuracy_by_train_count": {
+    "10": {
+      "shared_rank_1": 0.63,
+      "shared_rank_2": 0.85,
+      "shared_two_phase": 0.49
+    },
+    "12": {
+      "shared_rank_1": 0.45,
+      "shared_rank_2": 0.9,
+      "shared_two_phase": 0.53
+    },
+    "14": {
+      "shared_rank_1": 0.63,
+      "shared_rank_2": 0.92,
+      "shared_two_phase": 0.5
+    },
+    "15": {
+      "shared_rank_1": 0.56,
+      "shared_rank_2": 0.93,
+      "shared_two_phase": 0.54
+    },
+    "16": {
+      "shared_rank_1": 0.59,
+      "shared_rank_2": 0.91,
+      "shared_two_phase": 0.49
+    }
+  },
+  "two_phase_parameter_stability": {
+    "published::gsm8k_qe": {
+      "train_counts": [
+        10,
+        12,
+        14,
+        15,
+        16
+      ],
+      "change_checkpoints": [
+        4.0,
+        5.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "early_modes": [
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "late_modes": [
+        0.7,
+        0.7,
+        0.7,
+        0.7,
+        0.6
+      ],
+      "structural_win_count": 0,
+      "overall_win_count": 0
+    },
+    "published::gsm8k_tf": {
+      "train_counts": [
+        10,
+        12,
+        14,
+        15,
+        16
+      ],
+      "change_checkpoints": [
+        4.0,
+        5.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "early_modes": [
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "late_modes": [
+        0.7,
+        0.7,
+        0.7,
+        0.6,
+        0.6
+      ],
+      "structural_win_count": 0,
+      "overall_win_count": 0
+    },
+    "published::math_qe": {
+      "train_counts": [
+        10,
+        12,
+        14,
+        15,
+        16
+      ],
+      "change_checkpoints": [
+        3.5,
+        4.0,
+        5.0,
+        5.0,
+        7.0
+      ],
+      "early_modes": [
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.85
+      ],
+      "late_modes": [
+        0.7,
+        0.7,
+        0.6,
+        0.6,
+        0.94
+      ],
+      "structural_win_count": 0,
+      "overall_win_count": 0
+    },
+    "published::math_tf": {
+      "train_counts": [
+        10,
+        12,
+        14,
+        15,
+        16
+      ],
+      "change_checkpoints": [
+        4.0,
+        4.5,
+        5.5,
+        5.5,
+        6.0
+      ],
+      "early_modes": [
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "late_modes": [
+        0.7,
+        0.7,
+        0.6,
+        0.6,
+        0.5
+      ],
+      "structural_win_count": 0,
+      "overall_win_count": 0
+    },
+    "reproduction::20260718": {
+      "train_counts": [
+        10,
+        12,
+        14,
+        15,
+        16
+      ],
+      "change_checkpoints": [
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5
+      ],
+      "early_modes": [
+        0.995,
+        0.995,
+        0.995,
+        0.995,
+        0.995
+      ],
+      "late_modes": [
+        0.05,
+        0.05,
+        0.05,
+        0.05,
+        0.05
+      ],
+      "structural_win_count": 1,
+      "overall_win_count": 1
+    },
+    "reproduction::20260719": {
+      "train_counts": [
+        10,
+        12,
+        14,
+        15,
+        16
+      ],
+      "change_checkpoints": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "early_modes": [
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96
+      ],
+      "late_modes": [
+        0.6,
+        0.6,
+        0.6,
+        0.6,
+        0.6
+      ],
+      "structural_win_count": 5,
+      "overall_win_count": 4
+    },
+    "reproduction::20260720": {
+      "train_counts": [
+        10,
+        12,
+        14,
+        15,
+        16
+      ],
+      "change_checkpoints": [
+        3.5,
+        3.5,
+        3.5,
+        3.5,
+        3.5
+      ],
+      "early_modes": [
+        0.995,
+        0.995,
+        0.995,
+        0.995,
+        0.995
+      ],
+      "late_modes": [
+        0.05,
+        0.05,
+        0.05,
+        0.05,
+        0.05
+      ],
+      "structural_win_count": 5,
+      "overall_win_count": 4
+    }
+  },
+  "qualification": "All forecasts use training prefixes only. Errors are normalized by each series' training range and averaged across solver, verifier, and the derived gap. The published values remain figure-derived.",
+  "seed": 20260723,
+  "synthetic_replicates_per_truth": 100,
+  "synthetic_noise": 0.01,
+  "local_window": 7
+}

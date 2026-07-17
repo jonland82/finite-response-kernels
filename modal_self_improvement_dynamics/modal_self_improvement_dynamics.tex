@@ -29,7 +29,7 @@
 \newcommand{\rank}{\operatorname{rank}}
 
 \title{\vspace{-1.0em}Beyond Single-Exponential Self-Improvement:\
-Modal Takeoff Kernels for Solver--Verifier Dynamics}
+Takeoff Kernels, Response Modes, and Source Identification}
 \author{Jonathan R. Landers}
 \date{Working draft, July 2026}
 
@@ -38,38 +38,22 @@ Modal Takeoff Kernels for Solver--Verifier Dynamics}
 \vspace{-1.3em}
 
 \begin{abstract}
-Recent phenomenological theory models language-model self-improvement by a
-solver--verifier uncertainty gap whose linearized dynamics converge with one
-exponential rate.  We show that, after sampling at training checkpoints, this
-law is exactly a rank-one takeoff kernel.  The reduction yields joint empirical
-restrictions stronger than separate exponential fits: normalized solver,
-verifier, and gap trajectories must share one discrete mode, consecutive kernel
-ratios must be constant, and all second-order Hankel minors must vanish.  We
-then give the minimal finite-dimensional extension.  A locally linear hidden
-state produces a finite modal kernel whose modes are the active eigenvalues of
-the sampled transition operator.  The active modal radius determines settling
-time, while the exact kernel Hankel rank equals the number of distinct active
-modes and a matrix pencil recovers them.  A constructive separation then gives
-rank-one and rank-two trajectories with the same endpoints but arbitrarily
-different settling times.  These results separate the terminal amount of
-improvement from its response shape and give a direct route from current
-self-improvement theory to falsifiable modal diagnostics.  A calibrated
-synthetic power study further shows that Hankel tests on the residual can be
-substantially more noise-tolerant than tests on its differenced kernel.  When
-the asymptote is estimated jointly, held-out model selection can detect rank-one
-misspecification well before the endpoint or individual modes are reliably
-recovered.  An exploratory extraction of the published Phi-4 vector
-trajectories finds held-out departures from both separate rank-one fits and the
-stronger shared-mode restriction.  A three-seed resource-scaled reproduction
-narrows the per-token gap qualitatively but does not yield stable modes.  In a
-five-boundary audit, power laws win $27/60$ published-curve forecasts whereas
-persistence wins $52/90$ reproduction forecasts; no published curve keeps one
-winner across all boundaries.  An endpoint-free matrix-pencil audit recovers
-both poles in only $12.5\%$ of matched rank-two controls at this resolution,
-yet stable one-pole summaries differ systematically across the published gap,
-solver, and verifier curves.  Thus the framework rejects one exact shared rate
-while leaving modal count unidentified; it does not claim identified
-mechanisms.
+A takeoff kernel records when eventual improvement is delivered; it need not
+be exponential.  We use this general response object to recast a linearized
+solver--verifier theory as a joint rank-one null: normalized solver, verifier,
+and gap trajectories must share one discrete mode.  A finite-state extension
+produces exponential response modes, but decomposing an observed kernel into
+such modes is a source-separation problem, and response modes do not by
+themselves identify mechanisms.  Synthetic studies confirm that rejecting
+rank one is easier than recovering endpoints or modes.  In figure-derived
+Phi-4 curves, one exact shared rate fails, while power-law relaxation often
+matches or exceeds finite-modal forecasts and a shared phase-change model does
+not win.  A resource-scaled reproduction closes the per-token gap without a
+stable modal law.  Dense checkpoints further resolve one-optimizer-update
+changes coupled to response length and accuracy, not a smooth capability
+takeoff.  The evidence supports kernel-based response diagnosis and rejection
+of a global shared-rate law, but not a discrete mode count, a universal local
+exponential, or identified causal sources.
 \end{abstract}
 
 \section{Question and Scope}
@@ -90,12 +74,38 @@ theory analyzed below concerns the inner clock.  Applying the same kernel
 language to the outer clock is possible, but the corresponding modes have a
 different meaning and should be estimated separately.
 
-Our first contribution is an exact reduction: the current linearized
-solver--verifier law is the one-mode member of a larger family.  Our second is
-the minimal generalization: a finite-dimensional local state produces a finite
-mixture of response modes.  We then connect those modes to settling time and
-Hankel rank, which supplies an exact inverse procedure in the noiseless case.
-At this stage we make no empirical claim that more than one mode is required.
+The takeoff kernel itself makes no exponential assumption.  It is the sequence
+of normalized checkpoint-to-checkpoint gains, and it can be concentrated,
+long-tailed, signed, piecewise, or irregular.  Exponentials enter only when a
+particular dynamical model is imposed.  An exponential curve approaching a
+limit has a geometric residual, constant increment ratios, and rank-one Hankel
+matrices.  For the coupled solver--verifier law, solver, verifier, and gap must
+also share the same geometric mode.  This turns a visual curve-fitting claim
+into a joint, falsifiable null without confusing the null with the general
+kernel framework.
+
+The theoretical development separates the response object from models of its
+sources.  We first normalize increasing scores and decreasing uncertainties on
+a common scale, then derive the rank-one restrictions implied by the standard
+law.  A finite-dimensional hidden state gives one tractable subclass in which
+active modes determine settling time and noiseless Hankel rank records modal
+count.  Recovering those temporal components is already an inverse problem;
+assigning them to solver learning, verifier drift, data refresh, or optimizer
+state is a further source-identification problem.  A rank-one versus rank-two
+construction isolates the basic point: identical endpoints need not imply
+similar finite takeoff.
+
+The empirical half asks what can actually be learned from short, noisy
+trajectories.  Synthetic studies first separate rejection of rank one from the
+harder tasks of estimating the asymptote and recovering individual modes.  We
+then examine vector-extracted Phi-4 trajectories from Sun et al., run a
+resource-scaled fresh-seed reproduction, compare global modal, time-local, and
+nonmodal forecasts, and repeat one seed with quarter-epoch measurements through
+epoch four.  The published curves are inconsistent with one exact shared rate,
+but neither they nor the reproduction identify a stable replacement mode count
+or local exponential.  The intended outcome is therefore a sharper inverse
+problem and measurement protocol, not a claim that hidden mechanisms have been
+recovered.
 
 \section{Response Normalization}
 
@@ -127,7 +137,18 @@ By telescoping,
 Hence $\sum_{j\geq1}\kappa_j=1$ whenever $e_n\to0$.  If $F_n$ is monotone,
 the kernel is nonnegative and can be read as a distribution of improvement
 over checkpoints.  Negative entries instead mark regression, overshoot, or
-ringing.
+ringing.  With this common scale in place, a single exponential becomes an
+exact algebraic hypothesis rather than a qualitative curve shape.
+
+\begin{remark}[The kernel precedes its parameterization]
+Equations~\eqref{eq:normalization}--\eqref{eq:kernel} define a kernel for any
+convergent observed trajectory once an endpoint and clock are fixed.  They do
+not require linearity, smoothness, or an exponential mixture.  Finite modal,
+power-law, phase-changing, and nonparametric laws are competing descriptions
+of the kernel, not competing definitions of it.  Consequently, the kernel
+formalism alone is descriptive; empirical content comes from restrictions that
+forecast untouched checkpoints and replicate across seeds.
+\end{remark}
 
 \section{The Standard Law Is Rank One}
 
@@ -266,7 +287,9 @@ response.
 
 \section{Finite-Dimensional Modal Generalization}
 
-The rank-one null can be relaxed without abandoning a tractable response law.
+The rank-one null can be relaxed without abandoning a tractable response law,
+but this is a model class for the observed response, not a definition of the
+kernel and not yet a claim about its physical sources.  Let
 Let $x_n\in\CC^d$ be a hidden state centered at its limiting value and suppose
 that, over the observation window, it evolves linearly:
 \begin{equation}\label{eq:state-space}
@@ -341,7 +364,32 @@ identifies response modes.  Assigning a recovered fast or slow mode to solver
 learning, verifier drift, data refresh, or optimizer state requires additional
 measurements or interventions.
 
+\subsection{Response modes versus latent sources}
+
+The distinction can be written as a small source-separation problem.  Suppose
+the centered measured observables are
+\begin{equation}\label{eq:source-mixing}
+ \mathbf y_n=C\mathbf z_n,\qquad \mathbf z_{n+1}=A\mathbf z_n,
+\end{equation}
+where the coordinates of $\mathbf z_n$ are latent response channels and $C$
+is an unknown observation map.  Diagonalizing $A$ gives temporal response modes
+in each measured curve, but it does not determine the columns of $C$ or attach
+them to named training mechanisms.  Different latent systems can therefore
+produce the same observed kernel.
+
+In the solver--verifier data, this ambiguity is particularly sharp.  The gap
+is derived, $G=U_s-U_v$, so the three plotted curves are not three independent
+sensors.  A fitted second mode is evidence for a second effective timescale in
+the response model; it is not, by itself, evidence for a second causal source.
+Source separation requires additional independent observables, repeated
+conditions with different mixing weights, or interventions that selectively
+perturb a channel.  The empirical analyses below therefore separate response
+diagnosis from mechanistic attribution.
+
 \section{Modal Radius and Settling}
+
+The modal representation tells us what components are present.  We next ask
+what those components imply for the time required to approach the endpoint.
 
 \begin{definition}[Settling time]
 For $\epsilon>0$, define
@@ -467,9 +515,24 @@ equal such a tail eventually, because every such sum has root-decay rate
 strictly below one.  An observed algebraic tail therefore points to
 time-varying, infinite-dimensional, or broad-spectrum dynamics rather than a
 larger but finite stable modal order.
+
+For completely monotone residuals, a broad spectrum can be represented as a
+positive mixture of exponentials,
+\begin{equation}\label{eq:diffuse-spectrum}
+ e(t)=\int_0^\infty e^{-\lambda t}\,d\mu(\lambda),
+\end{equation}
+with a finite-modal response corresponding to an atomic measure $\mu$.  This
+representation is a useful comparison class, not a universal representation
+of arbitrary signed or phase-changing kernels.  A power-law forecast can thus
+be a compact description of many timescales without identifying a finite list
+of modes.
 \end{remark}
 
 \section{Hankel Rank and Exact Modal Recovery}
+
+Settling is the forward consequence of the active modes.  The corresponding
+inverse question is whether those modes can be counted and recovered from the
+observed response.
 
 Write the modal kernel from \eqref{eq:modal-kernel} as
 \begin{equation}\label{eq:kernel-modal-sum}
@@ -553,6 +616,10 @@ stability, and held-out prediction.  Theorem~\ref{thm:hankel-rank} supplies the
 population target for that procedure.
 
 \section{Same Endpoints, Different Takeoff}
+
+The recovery results make modal order observable in principle.  The following
+construction shows why that order matters even when the usual endpoint
+comparison cannot distinguish two trajectories.
 
 \begin{corollary}[Endpoint separation]\label{cor:endpoint-separation}
 Fix $Y_0\ne Y_\infty$, $0<a<b<1$, and $w\in(0,1)$.  Define
@@ -740,7 +807,14 @@ forecast failure can support ``one exponential is inadequate'' while the
 ultimate endpoint and a mechanistic two-mode interpretation remain
 nonidentifiable.
 
-\section{Exploratory Published-Trajectory Audit}
+\section{Empirical Stress Tests}
+
+The synthetic studies establish what the diagnostics can recover under known
+conditions.  We now ask what the same hierarchy of tests says about available
+self-improvement trajectories, beginning with the published evidence and then
+moving to a controlled reproduction and broader forecast baselines.
+
+\subsection{Published trajectories}
 
 Sun et al.\ validate their law with separate exponential fits to solver
 uncertainty, verifier uncertainty, and their gap over ten self-improvement
@@ -785,7 +859,7 @@ misspecification.  The result therefore improves the empirical question---it
 identifies a concrete failure mode and a raw-data test---without yet proving a
 multi-mode mechanism.
 
-\section{Fresh-Seed Reproduction}
+\subsection{Fresh-seed reproduction}
 
 We also implemented a structural rather than numerical reproduction of the
 inner-clock experiment in Sun et al.\ \cite{sun2026}.  The same
@@ -842,7 +916,7 @@ replicated second mode.  Its small evaluation panel and discrete decoding
 transitions make it a falsifiable pilot, not a replacement for the published
 scale.
 
-\section{Rolling Baseline Audit}
+\subsection{Rolling forecast baselines}
 
 To test whether the modal comparison is specific and split-robust, we forecast
 from five prefixes containing $50,60,70,75,$ and $80$ percent of each curve.
@@ -880,6 +954,8 @@ $0.43$ to $0.625$ across the five splits.  Hence forecast improvement can
 detect misspecification without reliably classifying modal order at this
 resolution.
 
+\subsection{Endpoint-free inverse audit}
+
 We also apply an endpoint-free inverse diagnostic to first differences.  For
 a candidate order $R$, we calibrate the squared Hankel energy beyond rank $R$
 on 400 matched synthetic nulls, then recover poles with a truncated matrix
@@ -896,7 +972,58 @@ mode count.  On the reproduction, most cases have high numerical Hankel rank
 but no stable poles, consistent with discrete jumps rather than many physical
 modes.
 
-\section{Empirical Consequence}
+\subsection{Global, local, and dense-start dynamics}
+
+The first local-versus-global audit compares a shared rank-one response, a
+shared rank-two response, and a continuous two-phase exponential with broader
+power-law, local-linear, and persistence baselines.  On the four published
+panels, shared rank two wins all $20$ structural rolling comparisons and the
+two-phase model wins none against it.  Once the broader baselines are included,
+separate power laws win $12$ cases, shared rank two wins $6$, separate rank one
+wins $1$, and local linear wins $1$.  All $56$ published local-rate windows
+fall in $(0,1)$, but their panel medians range from $0.751$ to $0.843$ with no
+consistent early-to-late shift.  The fitted change point drifts with the
+training prefix.  The published curves therefore look like smooth
+multiscale or nonmodal relaxation, not a stable shared phase transition.
+
+The reproduction has the opposite shape.  Shared two phase wins $11/15$
+structural comparisons, with prefix-stable fitted change points at epochs
+$1.0$, $1.5$, and $3.5$ for the three seeds; two of those fits use an extreme
+$0.995\to0.05$ rate change.  Those fits describe delayed jumps into plateaus
+more naturally than smooth startup exponentials.  Matched synthetic controls
+select true two-phase dynamics only $51\%$ of the time at this checkpoint
+horizon.  Thus the apparent local law is a useful measurement hypothesis, not
+an identified mechanism.
+
+To resolve that ambiguity, seed $20260719$ was rerun with evaluation after
+every optimizer update through epoch $4$ (quarter-epoch spacing), followed by
+the original half-epoch schedule.  The $21$ shared checkpoints agree exactly
+with the original trajectory across all logged metrics, validating that the
+dense measurements did not change training.  The added checkpoints localize
+the largest early event to one update, from epoch $1.25$ to $1.5$: solver total
+uncertainty falls from $10.416$ to $2.394$ while mean solver response length
+falls from $14.375$ to $6.875$ tokens; solver accuracy falls from $0.50$ to
+$0.375$, and verifier accuracy falls from $0.75$ to $0.625$.  Solver
+per-token uncertainty decreases only from $0.379$ to $0.333$, while verifier
+per-token uncertainty increases from $0.327$ to $0.410$.  A later verifier
+transition from epoch $3.0$ to $3.25$ similarly coincides with a length increase
+from $14.125$ to $18.25$ tokens and a verifier-accuracy decrease.  These are
+behavioral and measurement transitions, not clean evidence of a capability
+takeoff.  They also show why a general kernel remains useful when a finite
+modal law fails: a concentrated or signed response can be measured without
+pretending that it is a sum of stable exponentials.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.94\textwidth]{figures/fig7_dense_start_audit.pdf}
+\caption{\textbf{Dense-start audit for seed 20260719.} Quarter-epoch
+measurements through epoch $4$ (shaded) resolve one-update transitions in total
+and per-token uncertainty, response length, and accuracy.  The sharp changes
+are coupled to decoding behavior and do not form a smooth exponential landing.}
+\label{fig:dense-start}
+\end{figure*}
+
+\section{Experimental Implications}
 
 The immediate experiment is a joint null test, not an unconstrained search for
 complexity.  For each model--task--verifier trajectory family:
@@ -904,7 +1031,8 @@ complexity.  For each model--task--verifier trajectory family:
  \item estimate or profile over plausible asymptotes;
  \item fit one shared $\lambda$ to normalized $U_s,U_v,G$ trajectories;
  \item test kernel-ratio and Hankel-minor residuals;
- \item compare against regularized two-mode and nonparametric alternatives;
+ \item compare against regularized finite-modal, diffuse-spectrum, phase-changing,
+ and nonparametric alternatives;
  \item evaluate by held-out checkpoints and stability across seeds.
 \end{enumerate}
 The synthetic studies separate two design targets.  Roughly fifteen
@@ -921,6 +1049,17 @@ null can be tested with the correct covariance.
 If the available checkpoint count cannot distinguish one mode from two in a
 matched synthetic study, the correct conclusion is nonidentifiability at the
 available resolution, not evidence for rank one.
+
+The resulting narrative is deliberately narrower than a general theory of
+self-improvement.  The standard solver--verifier law supplies a useful null;
+the takeoff-kernel reduction states exactly what that null predicts; and finite
+modal, diffuse-spectrum, and time-local models supply controlled alternatives
+when it fails.  Current evidence is strong enough to question one exact global
+shared exponential rate, but not strong enough to name a discrete mode count,
+to assert a universal local exponential, or to separate causal sources from
+their aggregate response.  Better checkpoint density, independent observables,
+paired seed-level trajectories, and explicit asymptote and response-length
+sensitivity are the next research requirements.
 
 \begin{thebibliography}{9}\footnotesize
 
