@@ -24,6 +24,8 @@ The first local-versus-global audit is complete in [LOCAL_DYNAMICS_AUDIT.md](LOC
 
 The dense-start follow-up is now complete. Seed 20260719 was evaluated every optimizer update through epoch 4, then on the original half-epoch schedule. The 21 overlapping checkpoints match the sparse run exactly. The extra checkpoints localize one-update changes coupled to output length and accuracy, including a solver total-uncertainty drop from 10.416 to 2.394 while solver accuracy falls from 0.50 to 0.375. The result is evidence for response-regime changes and measurement confounding, not a positive claim of a universal startup exponential or a resolved mode count.
 
+A first outer-clock prompt experiment is complete in [recursive_prompting/](recursive_prompting/). A fixed Bedrock model recursively reproduced structured output populations for 16 replicates and 10 rounds. Diversity verification and diversity-guided prompting produced front-loaded positive kernels and high plateaus; raw replacement was mixed and nearly neutral; repeatedly injecting the same small anchor subset produced a delayed negative tail in joint diversity. This establishes a low-cost collapse-to-improvement response spectrum at the prompt/population level, not weight-level recursive self-training.
+
 ### Empirical-priority update: local versus global dynamics
 
 The next empirical target is no longer a direct search for exactly two or three persistent modes. The published trajectories are figure-derived aggregates, and the reproduction is dominated by plateaus and discrete changes. Both can make a global constant-rate fit fail without implying a stable higher modal order.
@@ -346,7 +348,7 @@ The completed dense-start run samples every optimizer update through epoch $4$. 
 - [x] Use Phase 2 power analysis to set checkpoint density.
 - [x] Lock model, task, verifier variants, seeds, and compute budget.
 - [x] Reproduce the baseline single-round dynamics first.
-- [ ] Add outer recursive rounds only after the baseline is stable.
+- [ ] Add weight-level outer recursive rounds; the prompt-level population pilot is complete.
 - [x] Log every kernel observable at every checkpoint.
 - [x] Fit models on early checkpoints and evaluate held-out tail forecasts.
 - [x] Test whether modes replicate across three fresh seeds; verifier variants remain open.

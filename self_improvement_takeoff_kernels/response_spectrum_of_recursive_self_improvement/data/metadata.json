@@ -1,0 +1,29 @@
+{
+  "config": {
+    "region": "us-east-1",
+    "model_id": "us.amazon.nova-lite-v1:0",
+    "replicates": 16,
+    "rounds": 10,
+    "population_size": 24,
+    "candidate_size": 36,
+    "anchor_size": 6,
+    "workers": 24,
+    "temperature": 0.8,
+    "max_tokens": 2400,
+    "seed": 20260717,
+    "output_dir": "modal_self_improvement_dynamics\\recursive_prompting\\population_results"
+  },
+  "calls": 640,
+  "errors": 0,
+  "input_tokens": 344406,
+  "output_tokens": 332067,
+  "estimated_usd_at_public_nova_lite_rates": 0.10036044,
+  "elapsed_seconds": 100.45312213897705,
+  "initial_metrics": {
+    "entropy": 0.8647869792568111,
+    "coverage": 1.0,
+    "unique_fraction": 0.875,
+    "quality": 0.8698934896284056,
+    "population_fraction": 1.0
+  }
+}

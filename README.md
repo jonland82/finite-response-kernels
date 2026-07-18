@@ -49,6 +49,33 @@ structure can be recovered from an observed takeoff profile:
 
 $$\text{observed takeoff}\longrightarrow\text{modal decomposition}\longrightarrow\text{candidate recurrence mechanisms}.$$
 
+## Future Work: Recursive Self-Improvement
+
+[The Response Spectrum of Recursive Self-Improvement](self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/response_spectrum_of_recursive_self_improvement.pdf)
+extends the kernel program from recursive computations to recursive model
+feedback. At each outer round, an LLM generates a population of outputs, a
+successor rule decides which outputs survive, and the survivors become the
+state presented in the next round. The model weights can remain fixed while the
+feedback loop itself is studied cleanly.
+
+The central question is whether that loop collapses, changes without lasting
+gain, or improves. A control $\rho$ orders interventions along that spectrum,
+and the derivative with respect to $\rho$ gives the local direction in the
+space of finite-response kernels. This extends the existing program directly:
+terminal gain says where a recursive system ends, while its signed kernel says
+how the gain or loss arrives across rounds.
+
+The first inexpensive LLM pilot already realizes four regimes. Repeated use of
+one small anchor set collapses joint combinations, raw replacement churns near
+its starting score, diversity guidance improves quickly, and deterministic
+diversity selection reaches a still higher plateau. The next step is a
+continuous phase diagram in selector strength and anchor fraction, followed by
+tests across models, tasks, and eventually weight-updating recursive training.
+
+- [PDF note](self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/response_spectrum_of_recursive_self_improvement.pdf)
+- [LaTeX source](self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/response_spectrum_of_recursive_self_improvement.tex)
+- [Recursive-prompting experiment](modal_self_improvement_dynamics/recursive_prompting/)
+
 ## Contents
 
 | Directory | Description |
@@ -56,6 +83,8 @@ $$\text{observed takeoff}\longrightarrow\text{modal decomposition}\longrightarro
 | `entropy_of_finite_response/` | Develops passive causal kernels as finite-response mediators. It studies closure under convolution and mixing, moment growth, entropy power, and the geometry between the delta-like instantaneous boundary and the Gaussian spreading boundary. |
 | `velocity_takeoff_revised/` | Introduces velocity takeoff kernels for recursive redundancy. It shows that recursive schemas can have the same terminal overlap velocity while exhibiting different finite takeoff shapes, so the kernel carries information that first-order asymptotics miss. |
 | `inverse_takeoff_kernels/` | Poses the inverse problem. Given an observed redundancy takeoff curve, it separates recoverable modal structure from underdetermined source-level mechanisms and frames reconstruction as constrained system identification. |
+| `self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/` | Future-work note extending takeoff kernels to model feedback loops, with collapse, neutral churn, and improvement organized as a response spectrum. |
+| `modal_self_improvement_dynamics/recursive_prompting/` | Low-cost fixed-weight LLM experiments that realize four locations on the response spectrum and preserve the scaled result tables needed to reproduce the paper figures. |
 | `classical_motion/` | Side note on the smoothness hierarchy of time differentiation in classical motion, with impulsive jerk, finite response, and ballistic/diffusive mediation as the connecting branch. |
 
 ## Primary Artifacts
@@ -67,6 +96,8 @@ $$\text{observed takeoff}\longrightarrow\text{modal decomposition}\longrightarro
 - `velocity_takeoff_revised/velocity_takeoff_revised.html`
 - `inverse_takeoff_kernels/inverse_takeoff_kernels.tex`
 - `inverse_takeoff_kernels/inverse_takeoff_kernels.pdf`
+- `self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/response_spectrum_of_recursive_self_improvement.tex`
+- `self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/response_spectrum_of_recursive_self_improvement.pdf`
 - `classical_motion/smoothness_hierarchy_classical_motion.html`
 
 The `.tex` files are the source of record for the manuscripts. PDFs and the
@@ -89,6 +120,10 @@ Pop-Location
 Push-Location inverse_takeoff_kernels
 pdflatex -interaction=nonstopmode -halt-on-error inverse_takeoff_kernels.tex
 Pop-Location
+
+Push-Location self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement
+pdflatex -interaction=nonstopmode -halt-on-error response_spectrum_of_recursive_self_improvement.tex
+Pop-Location
 ```
 
 Run `pdflatex` a second time if references or table-of-contents entries need to
@@ -101,6 +136,7 @@ Figure scripts are included with the relevant manuscripts.
 ```powershell
 python entropy_of_finite_response/kernels.py
 python velocity_takeoff_revised/velocity_takeoff_figures/experiments.py
+python self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/figures.py
 ```
 
 The scripts expect a scientific Python environment with packages such as

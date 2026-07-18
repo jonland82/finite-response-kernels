@@ -18,6 +18,8 @@ The completed dense run concentrated checkpoints near initialization and the obs
 
 The first audit is complete in [LOCAL_DYNAMICS_AUDIT.md](LOCAL_DYNAMICS_AUDIT.md). On the published panels, shared rank two wins all 20 structural rolling comparisons and a shared two-phase model wins none; separate power laws win 12/20 comparisons once broader baselines are included. On the reproduction, shared two phase wins 11/15 structural comparisons and finds stable within-seed change points at epochs 1.0, 1.5, and 3.5. Two seeds use an extreme $0.995\rightarrow0.05$ fit, indicating delay plus an abrupt jump rather than smooth startup relaxation. Synthetic two-phase truth is correctly selected only 51% of the time at 20--21 checkpoints and 1% noise.
 
+The first outer-clock prompt pilot is complete in `recursive_prompting/`. Across 16 replicates and 10 rounds, diversity verification improves the response score from 0.8699 to 0.9957, diversity-guided prompting to 0.9622, raw replacement to 0.8777, and repeated fixed anchoring lowers it to 0.7387 through loss of joint combinations. This is a clean demonstration that terminal direction and takeoff shape vary across recursive interventions, but it uses fixed model weights and must not be described as weight-level model collapse.
+
 The dense-start audit is recorded in `results/dense_start_metadata.json` and
 `results/dense_start_step_changes.csv`, with Figure 7 in
 `figures/fig7_dense_start_audit.pdf`. It adds quarter-epoch checkpoints through
@@ -142,7 +144,7 @@ pdflatex -interaction=nonstopmode -halt-on-error modal_self_improvement_dynamics
 
    and compare a few stable atoms with a diffuse spectrum.
 5. Finish related work and a notation/theorem dependency audit only after deciding whether the paper will be positioned as a local-startup, global-multimode, time-varying, or quantified-nonidentifiability result.
-6. Add outer recursive rounds only after the inner-clock empirical baseline is stable.
+6. Use the completed prompt-level outer pilot to design a verifier-strength/anchor-fraction phase diagram; keep weight-level recursive rounds as a separate later experiment.
 
 ## Repository checkpoint
 

@@ -660,6 +660,7 @@
       <nav aria-label="Primary navigation">
         <a href="#formalism">Formalism</a>
         <a href="#manuscripts">Manuscripts</a>
+        <a href="#future-work">Future Work</a>
         <a href="#side-branch">Side Branch</a>
         <a href="#results">Results</a>
         <a href="#artifacts">Artifacts</a>
@@ -864,6 +865,69 @@
       </div>
     </section>
 
+    <section id="future-work">
+      <div class="section-inner">
+        <div class="section-title">
+          <h2>Future Work: Recursive Self-Improvement</h2>
+          <p class="lead">
+            The next extension moves the kernel viewpoint from recursive
+            computations to recursive model feedback: not only whether a loop
+            improves, but when its gains or losses appear across rounds.
+          </p>
+        </div>
+
+        <div class="thread-grid">
+          <figure class="figure-frame">
+            <a href="self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/fig1_recursive_population.png" aria-label="Open recursive self-improvement response curves full size">
+              <img src="self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/fig1_recursive_population.png" alt="Four recursive LLM output-population trajectories ranging from collapse to improvement.">
+            </a>
+            <figcaption class="caption">
+              One fixed LLM, four successor rules: anchoring collapses joint
+              variety, raw replacement churns, and diversity guidance or
+              verification produces rapid positive response.
+            </figcaption>
+          </figure>
+
+          <article class="result accent-blue">
+            <h3>The Response Spectrum of Recursive Self-Improvement</h3>
+            <p>
+              At each outer round, the model generates a population of outputs,
+              a rule selects what survives, and that selected population becomes
+              the state for the next round. The model weights stay fixed in the
+              first experiment, making the feedback rule itself visible.
+            </p>
+            <div class="math-block">
+              \[
+              \rho:\quad
+              \text{collapse}\longrightarrow
+              \text{neutral churn}\longrightarrow
+              \text{improvement}
+              \]
+            </div>
+            <p>
+              The control \(\rho\) moves through this spectrum. Differentiating
+              with respect to \(\rho\) asks an intuitive dynamical question: as
+              the intervention is strengthened, which recursive rounds change
+              first, and by how much? The resulting tangent describes the local
+              direction through the space of finite-response kernels.
+            </p>
+            <p>
+              The current pilot supplies four discrete points. Future experiments
+              will sweep selector strength and anchor fraction continuously,
+              repeat the measurement across models and tasks, and only then move
+              from fixed-weight prompting to weight-updating recursive training.
+            </p>
+            <div class="links">
+              <a href="self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/response_spectrum_of_recursive_self_improvement.pdf">PDF</a>
+              <a href="self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/response_spectrum_of_recursive_self_improvement.tex">LaTeX</a>
+              <a href="modal_self_improvement_dynamics/recursive_prompting/README.md">Experiment</a>
+              <a href="self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/figures.py">Figures</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="side-branch">
       <div class="section-inner">
         <div class="section-title">
@@ -1000,6 +1064,18 @@
             <a href="inverse_takeoff_kernels/inverse_takeoff_kernels.pdf">
               <strong>Inverse Takeoff Kernels</strong>
               <span>PDF manuscript</span>
+            </a>
+          </li>
+          <li>
+            <a href="self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/response_spectrum_of_recursive_self_improvement.pdf">
+              <strong>Recursive Self-Improvement Spectrum</strong>
+              <span>Future-work PDF note</span>
+            </a>
+          </li>
+          <li>
+            <a href="modal_self_improvement_dynamics/recursive_prompting/README.md">
+              <strong>Recursive LLM experiments</strong>
+              <span>Scripts and scaled results</span>
             </a>
           </li>
           <li>
