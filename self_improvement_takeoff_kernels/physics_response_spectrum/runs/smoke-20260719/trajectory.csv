@@ -1,0 +1,2 @@
+problem_id,tag,replicate,rho,round,population_size,mean_accuracy,pass_at_4,distinct_fraction,effective_answers,invalid_fraction,regressions,recoveries,candidate_ids
+432,ELECTRICITY,0,0.0,0,1,0.0,0,1.0,1.0,0.0,0,0,smoke-20260719-3834d618a2c5413c

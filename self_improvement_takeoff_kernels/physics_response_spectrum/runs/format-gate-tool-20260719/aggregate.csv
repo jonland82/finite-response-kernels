@@ -1,0 +1,5 @@
+rho,round,n,mean_accuracy_mean,mean_accuracy_se,mean_fitness_mean,mean_fitness_se,pass_at_4_mean,pass_at_4_se,distinct_fraction_mean,distinct_fraction_se,effective_answers_mean,effective_answers_se,invalid_fraction_mean,invalid_fraction_se,regressions,recoveries,fitness_regressions,fitness_improvements
+-6.0,0,2,0.0,0.0,0.004716981132075471,0.004716981132075471,0.0,0.0,1.0,0.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+-6.0,1,2,0.0,0.0,0.0,0.0,0.0,0.0,0.75,0.0,2.6666666666666665,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+6.0,0,2,0.0,0.0,0.004716981132075471,0.004716981132075471,0.0,0.0,1.0,0.0,4.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+6.0,1,2,0.0,0.0,0.0,0.0,0.0,0.0,0.625,0.125,2.333333333333333,0.3333333333333332,0.0,0.0,0.0,0.0,2.0,0.0

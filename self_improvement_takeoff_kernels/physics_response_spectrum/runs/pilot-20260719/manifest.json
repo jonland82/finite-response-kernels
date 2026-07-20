@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-07-20T01:34:05.357470+00:00",
+  "stage": "pilot",
+  "run_id": "pilot-20260719",
+  "region": "us-east-1",
+  "model_id": "us.amazon.nova-lite-v1:0",
+  "problem_ids": [
+    432,
+    688,
+    36,
+    367,
+    65
+  ],
+  "problem_count": 5,
+  "population_size": 4,
+  "rounds": 3,
+  "replicates": 1,
+  "rhos": [
+    -6.0,
+    -2.0,
+    0.0,
+    2.0,
+    6.0
+  ],
+  "workers": 24,
+  "temperature": 0.8,
+  "top_p": 0.9,
+  "max_tokens": 900,
+  "seed": 20260719,
+  "stage_cap_usd": 0.5,
+  "global_stop_usd": 9.5,
+  "pricing": {
+    "input_usd_per_million": 0.06,
+    "output_usd_per_million": 0.24
+  },
+  "source_sha256": "a01955ffb2ff86d7833770d3d9f308e3bc1b0e2fea92c5092c4e68a619048a6b",
+  "split_sha256": "c95ce3aa6988e2ac1c486d7692ea1fc5e72ce2a35085910cd396e1c4ce1ede19",
+  "global_spend_before": 0.00012312,
+  "completed_at": "2026-07-20T01:37:54.422987+00:00",
+  "calls": 320,
+  "stage_spend_usd": 0.06736014000000001,
+  "global_spend_after_usd": 0.06748326000000002
+}

@@ -1,0 +1,5 @@
+boto3
+latex2sympy2_extended==1.11.0
+matplotlib
+numpy
+sympy

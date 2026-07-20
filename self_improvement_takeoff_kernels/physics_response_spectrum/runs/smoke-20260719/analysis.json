@@ -1,0 +1,35 @@
+{
+  "aggregate": [
+    {
+      "rho": 0.0,
+      "round": 0,
+      "n": 1,
+      "mean_accuracy_mean": 0.0,
+      "mean_accuracy_se": 0.0,
+      "pass_at_4_mean": 0.0,
+      "pass_at_4_se": 0.0,
+      "distinct_fraction_mean": 1.0,
+      "distinct_fraction_se": 0.0,
+      "effective_answers_mean": 1.0,
+      "effective_answers_se": 0.0,
+      "invalid_fraction_mean": 0.0,
+      "invalid_fraction_se": 0.0,
+      "regressions": 0.0,
+      "recoveries": 0.0
+    }
+  ],
+  "terminal": [
+    {
+      "rho": 0.0,
+      "initial_accuracy": 0.0,
+      "terminal_accuracy": 0.0,
+      "terminal_gain": 0.0,
+      "total_response": 0,
+      "erased_response": 0.0,
+      "terminal_pass_at_4": 0.0,
+      "terminal_distinct_fraction": 1.0,
+      "terminal_effective_answers": 1.0,
+      "negative_steps": 0
+    }
+  ]
+}

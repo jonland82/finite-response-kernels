@@ -1,0 +1,1 @@
+{"timestamp": "2026-07-20T01:33:29.011576+00:00", "run_id": "smoke-20260719", "stage": "smoke", "call_id": "smoke-20260719-3834d618a2c5413c", "model_id": "us.amazon.nova-lite-v1:0", "input_tokens": 324, "output_tokens": 432, "estimated_usd": "0.0001231200", "error": ""}

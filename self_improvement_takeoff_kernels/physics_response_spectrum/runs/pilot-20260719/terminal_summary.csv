@@ -1,0 +1,6 @@
+rho,initial_accuracy,terminal_accuracy,terminal_gain,total_response,erased_response,terminal_pass_at_4,terminal_distinct_fraction,terminal_effective_answers,negative_steps
+-6.0,0.0,0.0,0.0,0.0,0.0,0.0,0.75,2.7199999999999998,0
+-2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.7,2.533333333333333,0
+0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.7,2.506666666666667,0
+2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.55,2.0533333333333332,0
+6.0,0.0,0.0,0.0,0.0,0.0,0.0,0.6,2.2666666666666666,0

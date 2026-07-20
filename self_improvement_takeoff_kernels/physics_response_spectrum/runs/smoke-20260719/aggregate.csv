@@ -1,0 +1,2 @@
+rho,round,n,mean_accuracy_mean,mean_accuracy_se,pass_at_4_mean,pass_at_4_se,distinct_fraction_mean,distinct_fraction_se,effective_answers_mean,effective_answers_se,invalid_fraction_mean,invalid_fraction_se,regressions,recoveries
+0.0,0,1,0.0,0.0,0.0,0.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0

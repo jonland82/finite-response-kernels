@@ -1,0 +1,3 @@
+rho,fitness_metric,initial_fitness,terminal_fitness,initial_accuracy,terminal_accuracy,terminal_gain,total_response,erased_response,terminal_pass_at_4,terminal_distinct_fraction,terminal_effective_answers,negative_steps
+-6.0,eed,0.06902515723270439,0.033333333333333326,0.0,0.0,-0.03569182389937106,0.03569182389937106,0.0,0.0,0.625,2.333333333333333,1
+6.0,eed,0.06902515723270439,0.11666666666666665,0.0,0.0,0.04764150943396227,0.04764150943396227,0.0,0.0,0.5,2.0,0

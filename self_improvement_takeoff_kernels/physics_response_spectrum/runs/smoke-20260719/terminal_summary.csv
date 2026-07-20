@@ -1,0 +1,2 @@
+rho,initial_accuracy,terminal_accuracy,terminal_gain,total_response,erased_response,terminal_pass_at_4,terminal_distinct_fraction,terminal_effective_answers,negative_steps
+0.0,0.0,0.0,0.0,0,0.0,0.0,1.0,1.0,0

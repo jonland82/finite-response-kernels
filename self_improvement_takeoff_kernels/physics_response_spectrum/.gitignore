@@ -1,0 +1,12 @@
+*.aux
+*.log
+*.out
+physics_response_spectrum_page-*.png
+physics_response_spectrum_revision-*.png
+physics_response_spectrum_final_page5.png
+
+# Local manuscript render checks. Keep only the three publication figures.
+/*.png
+!/fig1_physics_response_spectrum.png
+!/fig2_context_controls.png
+!/fig3_takeoff_kernels.png
