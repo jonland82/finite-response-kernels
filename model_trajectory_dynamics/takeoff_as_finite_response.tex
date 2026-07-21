@@ -48,7 +48,7 @@
 \begin{document}
 
 \begin{center}
-{\LARGE\bfseries The Finite Response Structure of LLM Scaling Laws}\par
+{\LARGE\bfseries Finite-Response Structure in Language-Model Grokking}\par
 \vspace{0.18em}
 {\large Apparent takeoff as a resolved, two-stage generalization process}\par
 \vspace{0.52em}
@@ -57,40 +57,45 @@
 \vspace{0.1em}
 
 \begin{abstract}
-Scaling laws describe how far a learning system moves, but not how a new
-regime arrives. We treat LLM takeoff as a finite response: the cumulative
-arrival of improvement is a step response \(F_t\), and its finite difference
-\(\kappa_t\) is a takeoff kernel. A delta kernel is instantaneous; a broad or
-multilobed kernel carries temporal structure that a terminal exponent or
-changepoint cannot retain. We test this distinction in a controlled
-grokking-style Transformer trained on modular addition. Across six independent
-seeds, the late rise from 50 to 90 percent held-out accuracy occupies
+Resource scaling laws vary model size, data, or compute. We study a different
+object: the optimization-time path of delayed generalization in a small causal
+Transformer. The cumulative arrival of improvement is a step response \(F_t\),
+and its finite difference \(\kappa_t\) is a response kernel. A delta kernel is
+instantaneous; a broad or multilobed kernel carries temporal structure that a
+terminal exponent or changepoint cannot retain. Across six independent seeds
+on modular addition, the late rise from 50 to 90 percent held-out accuracy occupies
 600--1,250 optimizer updates, or 12--25 resolved checkpoint intervals. More
-strikingly, a two-response mixture predicts held-out checkpoints better than
+strikingly, a basis-free valley theorem rejects every single unimodal response
+kernel on checkpoints withheld from selecting the valley, in all six seeds.
+A two-response mixture then predicts those held-out checkpoints better than
 either a step or one smooth response in every seed. Roughly 30 percent of the
 fitted response arrives in an early component and 70 percent in a later,
-sharper component. The apparent takeoff is therefore not the whole event; it
-is the second lobe of a longer response. A separate modal test finds no need
-for two exponential settling modes, so the evidence supports two transition
-stages without yet identifying two physical mechanisms.
+sharper component. Apparent takeoff is therefore the second lobe of a longer
+response. A separate modal test finds no need for two exponential settling
+modes, so multiplicity of the transition does not yet identify two physical
+mechanisms.
 \end{abstract}
 
-\section*{1. The part a scaling law leaves out}
+\section*{1. What a terminal curve leaves out}
 
-A scaling law is deliberately forgetful. It compresses a family of models,
-datasets, or training runs into an asymptotic relation, often with remarkable
-predictive power \cite{kaplan2020,hoffmann2022}. But a terminal rate does not
-say how that rate became visible. Two trajectories may share the same
-eventual exponent while one turns on immediately, another gathers momentum
-over thousands of updates, and a third arrives through several overlapping
-stages.
+Neural scaling laws compress families of models, datasets, or compute budgets
+into predictive resource--performance relations \cite{kaplan2020,hoffmann2022}.
+Smoothly broken power laws extend that program to inflections and delayed
+transitions across scale \cite{caballero2023}. Our independent variable is not
+resource scale: architecture and data fraction are fixed within each run, and
+\(t\) is optimizer update. We therefore study a \emph{training trajectory},
+using scaling laws only as a motivating contrast. A terminal rate still does
+not say whether improvement turns on immediately, gathers momentum, or arrives
+through overlapping stages.
 
 This missing temporal information matters most when a curve is described as
 \emph{takeoff}. A late transition can look sudden simply because its waiting
 time is long compared with its final rise. That contrast is visually real,
 but it does not make the rise instantaneous. Nor does the location of a
 changepoint tell us whether earlier, smaller components were already delivering
-part of the eventual gain.
+part of the eventual gain. Metric choice can itself create apparent emergence
+\cite{schaeffer2023}; any temporal claim must therefore name both its score and
+its observation resolution.
 
 The finite-response view separates three questions:
 \begin{questionbox}
@@ -108,16 +113,17 @@ The finite-response view separates three questions:
 convolution of sequential stages, or a sum of settling modes?
 \end{enumerate}
 \end{questionbox}
-The first is the usual scaling question. The second and third are the subject
-of this paper.
+The first is a resource-scaling question. The second and third concern the
+training path and are the subject of this paper.
 
 The empirical result below gives the distinction a concrete form. In a small
 causal Transformer, held-out generalization does not wait motionless and then
 jump. It first rises to a partial plateau, continues through a long shallow
 middle, and then completes in a comparatively sharp second rise. That pattern
-survives six new seeds and out-of-fit checkpoint prediction. The scientifically
-interesting object is therefore not a magic iteration. It is the shape by
-which learnable structure becomes visible.
+survives six new seeds and a nonparametric test on checkpoints excluded from
+selecting the pattern. The scientifically interesting object is therefore not
+a magic iteration. It is the shape by which learnable structure becomes
+visible.
 
 \section*{2. From trajectory to takeoff kernel}
 
@@ -158,7 +164,10 @@ F_t^{\rm b}=\frac{J_t-J_0}{J_\infty-J_0},
 This kernel records when the eventual score gain is delivered. It does not
 claim that accuracy itself obeys an asymptotic exponential law. The
 experiment uses (4); equations (1)--(2) remain the natural version for an
-unbounded scaling coordinate such as inverse error or a task frontier.
+unbounded coordinate such as inverse error or a task frontier. Following the
+metric sensitivity emphasized by Schaeffer et al.~\cite{schaeffer2023}, all
+claims below are explicitly conditional on held-out accuracy and 50-update
+sampling.
 
 \begin{proposition}[Normalization and resolution]
 If \(F_t\to1\), then \(\sum_{t\ge0}\kappa_t=1\) in convergent partial sums.
@@ -254,6 +263,59 @@ An exponent is terminal information. A kernel is path information.
 
 \section*{3. One response, two responses, or two mechanisms?}
 
+Before choosing a parametric response, one mode has a basis-free obstruction.
+Call a nonnegative kernel \emph{unimodal} if it is nondecreasing up to some
+mode and nonincreasing thereafter.
+
+\begin{theorem}[The single-mode valley obstruction]
+Let \(I_1<I_2<I_3\) be three ordered, disjoint intervals and let
+\[
+\bar\kappa(I)=\frac{1}{|I|}\int_I\kappa(t)\,dt.
+\]
+If
+\[
+\bar\kappa(I_2)
+<\min\!\left\{\bar\kappa(I_1),\bar\kappa(I_3)\right\},
+\]
+then the nonnegative kernel \(\kappa\) is not unimodal. The same statement
+holds for a discrete kernel with interval integrals replaced by sums.
+\end{theorem}
+
+\emph{Proof.}
+The interval averages imply the existence of ordered points
+\(t_1<t_2<t_3\) for which
+\[
+\kappa(t_1)\ge\bar\kappa(I_1),\qquad
+\kappa(t_2)\le\bar\kappa(I_2),\qquad
+\kappa(t_3)\ge\bar\kappa(I_3).
+\]
+Hence
+\[
+\kappa(t_2)<\min\{\kappa(t_1),\kappa(t_3)\}.
+\]
+But a unimodal kernel obeys
+\[
+\kappa(t_2)\ge\min\{\kappa(t_1),\kappa(t_3)\}
+\]
+for every ordered triple: if its mode lies before \(t_2\), the right side is
+bounded by \(\kappa(t_3)\); if after \(t_2\), it is bounded by
+\(\kappa(t_1)\). This is a contradiction. \hfill\(\square\)
+
+For equal-width intervals of width \(w\), define the valley certificate
+\[
+V_w=\min\!\left\{\bar\kappa(I_1),\bar\kappa(I_3)\right\}
+-\bar\kappa(I_2).
+\]
+The certificate is deterministically robust. If an estimated cumulative
+profile satisfies \(\lvert\widehat F-F\rvert\le\varepsilon\) at the six
+window endpoints, then each average rate changes by at most
+\(2\varepsilon/w\). Consequently,
+\[
+\widehat V_w>\frac{4\varepsilon}{w}
+\]
+still rules out one mode. This result establishes multiplicity without
+deciding whether the cause is a mixture, a sequence, or something else.
+
 Finite responses combine in two different ways. Parallel channels mix:
 \[
 \kappa_{\rm mix}(t)=\sum_{r=1}^{m}\pi_r\kappa_r(t),
@@ -298,6 +360,15 @@ was first isolated \cite{power2022}. Each input was the token sequence
 Transformer block, width 64, four attention heads, feed-forward width 256, and
 59,136 trainable parameters.
 
+This setting now has several complementary explanations. Mechanistic progress
+measures resolve memorization, circuit formation, and cleanup
+\cite{nanda2023}; theory links delayed generalization in modular addition to
+leaving an early kernel-like regime \cite{mohamadi2024}; and broader algorithmic
+experiments connect grokking to competition between memorizing and generalizing
+circuits \cite{huang2024}. Our analysis is deliberately output-side: it asks
+what temporal structure the held-out trajectory identifies before assigning a
+circuit-level cause.
+
 All 4,489 ordered pairs were available. A four-condition pilot varied training
 fraction and weight decay, then selected the condition with the longest
 completed generalization delay: 30 percent training data (1,347 examples),
@@ -330,23 +401,21 @@ treating every repeated test answer as an independent longitudinal sample.
 Synthetic delta, single-response, and two-response trajectories were recovered
 before analyzing the experiment.
 
+We also tested one mode without fitting a response family. On even-numbered
+checkpoints, three ordered, nonoverlapping windows were chosen to maximize
+\(V_w\). Their locations were then frozen and \(V_w\) was evaluated on the
+odd-numbered checkpoints after a separate weighted isotonic projection. The
+primary window width was 1,000 optimizer updates; widths 800 and 1,500 tested
+scale sensitivity. A noiseless logistic and a separated two-response curve
+verified that the procedure respectively withholds and produces a positive
+certificate.
+
 The complete cloud workload took 392 seconds on one CPU instance. Including a
 failed launcher attempt, compute, temporary storage, and collection cost about
 \$0.10. Raw trajectories, scripts, hashes, and post-processing provenance are
 retained with the manuscript.
 
 \section*{5. The jump is resolved}
-
-\begin{figure}[!t]
-\centering
-\includegraphics[width=0.94\linewidth]{experiment/runs/llm-takeoff-20260721T022627Z/results/trajectory_results_overview.pdf}
-\caption{\textbf{The overall experiment.} (a) Held-out accuracy for six
-confirmation seeds. (b) Training accuracy reaches 99 percent hundreds to
-thousands of updates before held-out thresholds; the 50--90 percent segment
-itself spans many checkpoints. (c) Checkpoint-level cross-validated error falls
-for every seed from a step, to one smooth response, to two responses.}
-\label{fig:overview}
-\end{figure}
 
 The first empirical fact is delay. Training accuracy reached 99 percent at
 update 350 or 400 in every seed. Held-out accuracy did not reach 50 percent
@@ -372,10 +441,14 @@ Held-out 50\% step & 3,900 & 5,025 & 13,450\\
 Observed 50--90\% width & 600 & 1,000 & 1,250\\
 Full-kernel 10--90\% width & 4,262 & 5,781 & 9,611\\
 Effective kernel checkpoints & 19.4 & 23.5 & 29.9\\
+Held-out valley \(V_{1000}\) & 0.049 & 0.134 & 0.215\\
+Uniform-error radius & 1.2 pp & 3.3 pp & 5.4 pp\\
 \bottomrule
 \end{tabular}
 \caption{Resolved timing over six confirmation seeds. Widths are optimizer
-updates; the observation spacing is 50 updates.}
+updates; the observation spacing is 50 updates. The valley is normalized
+response gain per 1,000 updates; the final row is the endpoint perturbation
+required to erase its sign.}
 \label{tab:timing}
 \end{table}
 
@@ -383,11 +456,31 @@ Thus \emph{sudden} is true only comparatively: the last rise is short beside
 the preceding delay. It is not instantaneous at the available resolution. The
 takeoff impression comes from juxtaposing two timescales, not from a delta.
 
-\section*{6. The jump is also composite}
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.94\linewidth]{experiment/runs/llm-takeoff-20260721T022627Z/results/trajectory_results_overview.pdf}
+\caption{\textbf{The overall experiment.} (a) Held-out accuracy for six
+confirmation seeds. (b) Training accuracy reaches 99 percent hundreds to
+thousands of updates before held-out thresholds; the 50--90 percent segment
+itself spans many checkpoints. (c) Checkpoint-level cross-validated error falls
+for every seed from a step, to one smooth response, to two responses.}
+\label{fig:overview}
+\end{figure}
+
+\section*{6. One mode fails; two responses explain why}
 
 Width alone does not explain the shape in Fig.~\ref{fig:overview}(a). Each
-trajectory contains an early partial rise and a later completion. Under the
-two-response fit, write
+trajectory contains an early partial rise and a later completion. The
+nonparametric test makes that observation exact: the held-out
+\(V_{1000}\) is positive in all six seeds, ranging from 0.049 to 0.215
+normalized response per 1,000 updates. All 18 seed-by-width evaluations remain
+positive at widths 800, 1,000, and 1,500. Thus the observed high--low--high
+delivery pattern cannot arise from any single nonnegative unimodal kernel at
+these resolutions. The weakest certificate survives arbitrary endpoint errors
+up to 1.2 percentage points; the median survives 3.3 points.
+
+Having established multiplicity without a basis, we use the two-response fit
+to describe it economically. Write
 \[
 F_i(t)=S\!\left(\frac{t-\tau_i}{s_i}\right),\qquad
 \kappa_i(t)=\frac{dF_i}{dt}.
@@ -400,9 +493,9 @@ Then the fitted trajectory and its derivative obey the same mixture law:
 \widehat\kappa(t)=\pi\kappa_1(t)+(1-\pi)\kappa_2(t).
 \tag{12}
 \]
-The final trajectory is therefore literally the cumulative sum of two
-weighted finite-response kernels. No separate metaphor is needed: integrating
-the right side of (12) gives the two-stage curve.
+Within this descriptive model, the final trajectory is literally the
+cumulative sum of two weighted finite-response kernels. Integrating the right
+side of (12) gives the two-stage curve.
 Figure~\ref{fig:composition} displays that identity directly: the cumulative
 components add in panel (b), and their differentiated kernels add in panel (c).
 
@@ -445,9 +538,11 @@ as longitudinal observations.}
 \label{tab:models}
 \end{table}
 
-The mixture is favored by both checkpoint BIC and held-out checkpoint RMSE in
-all six seeds. Yet a different question receives a negative answer. We fit one
-and two decaying exponentials to the post-onset residual over both the full
+The theorem and the fit answer complementary questions. The held-out valley
+rules out one mode without selecting a basis; the mixture is favored by both
+checkpoint BIC and held-out checkpoint RMSE in all six seeds and supplies a
+compact decomposition. Yet a different question receives a negative answer.
+We fit one and two decaying exponentials to the post-onset residual over both the full
 tail and a local 5--95 percent window. The penalized fit selects one mode in
 all 12 comparisons. The data support two separated \emph{arrivals} of
 generalization, not two exponential tail modes. That negative result is useful:
@@ -461,25 +556,27 @@ matter:
 
 \begin{quote}
 \emph{In this controlled language model, apparent takeoff is the terminal lobe
-of a temporally extended, two-stage generalization response. It is neither an
-instantaneous transition nor well summarized by one smooth onset.}
+of a temporally extended generalization response. It is neither instantaneous
+nor compatible with any single nonnegative unimodal kernel at the tested
+resolutions; a two-response mixture predicts and describes its two stages.}
 \end{quote}
 
 The claim is novel within this framework because it joins two facts that are
 usually reported separately. Grokking establishes a delay between memorization
 and generalization. Finite-response analysis resolves what happens \emph{inside}
-that delayed transition: about one-third of the eventual held-out gain arrives
-through an earlier component, while a later, comparatively stable kernel
-delivers the rest. A single \emph{grokking time} marks the most visible lobe and
-misses the response already in motion.
+that delayed transition. A held-out valley first establishes that the route is
+not one mode; the fitted decomposition then shows that about one-third of the
+eventual held-out gain arrives through an earlier component, while a later,
+comparatively stable kernel delivers the rest. A single \emph{grokking time}
+marks the most visible lobe and misses the response already in motion.
 
-This suggests a sharper reading of LLM scaling curves. A terminal exponent is
-dynamically incomplete; a changepoint is temporally incomplete. Reporting a
-kernel adds center, width, entropy, and internal composition. It also forces
-the observation scale into the claim: a response may be delta-like at coarse
-resolution and plainly finite at dense resolution.
+This suggests a sharper reading of language-model training trajectories that
+appear emergent. A changepoint is temporally incomplete; a kernel adds center,
+width, entropy, and internal composition. It also forces the observation scale
+into the claim: a response may be delta-like at coarse resolution and plainly
+finite at dense resolution.
 
-The experiment does not establish a universal LLM kernel. It uses one small
+The experiment does not establish a universal language-model kernel. It uses one small
 architecture, one synthetic task, one pilot-selected hyperparameter condition,
 and six seeds. Alternating checkpoint validation reduces but does not remove
 temporal dependence. The logistic components are an economical descriptive
@@ -487,6 +584,9 @@ basis, not discovered neurons or circuits. Most importantly, a mixture fit does
 not prove two physical channels. Distinguishing mixture from convolution, or
 assigning components to memorization, representation formation, and rule
 deployment, requires interventions and intermediate-state measurements.
+The valley certificate is likewise conditional on a nonnegative latent
+response, the isotonic projection, and the stated window scale; it proves a
+shape constraint, not a mechanism.
 
 The next decisive test is therefore comparative rather than merely larger:
 predeclare the coordinate and estimators, then vary task family, data fraction,
@@ -498,15 +598,16 @@ route differs when the endpoint does not.
 
 \section*{8. Conclusion}
 
-An asymptote tells us where a learning curve is going. A finite-response kernel
-tells us how it arrives. In the experiment here, the celebrated late jump is
-real, but it is not singular and it is not alone. Generalization begins earlier,
-travels through a broad first component, and completes through a sharper second
-one. The interesting scientific object is not the instant of takeoff. It is the
-resolved structure hidden by calling the whole journey a jump.
+An asymptote says where a learning curve goes; a finite-response kernel says
+how it arrives. Here the late jump is real but neither singular nor alone. A
+held-out certificate rules out one unimodal response, and a predictive
+two-response model shows how the gain separates: generalization begins earlier,
+travels through a broad first component, and completes through a sharper second.
+The scientific object is not an instant of takeoff, but the structure hidden by
+calling the journey a jump.
 
-\vspace{0.35em}
-{\footnotesize
+\vspace{-0.1em}
+{\normalsize
 \begin{thebibliography}{9}
 \setlength{\itemsep}{0.05em}
 \bibitem{kaplan2020}
@@ -519,6 +620,21 @@ J. Hoffmann et al., "Training Compute-Optimal Large Language Models,"
 A. Power, Y. Burda, H. Edwards, I. Babuschkin, and V. Misra, "Grokking:
 Generalization Beyond Overfitting on Small Algorithmic Datasets," \emph{ICLR},
 2022.
+\bibitem{caballero2023}
+E. Caballero, K. Gupta, I. Rish, and D. Krueger, "Broken Neural Scaling
+Laws," \emph{ICLR}, 2023.
+\bibitem{schaeffer2023}
+R. Schaeffer, B. Miranda, and S. Koyejo, "Are Emergent Abilities of Large
+Language Models a Mirage?" \emph{NeurIPS}, 2023.
+\bibitem{nanda2023}
+N. Nanda, L. Chan, T. Lieberum, J. Smith, and J. Steinhardt, "Progress
+Measures for Grokking via Mechanistic Interpretability," \emph{ICLR}, 2023.
+\bibitem{mohamadi2024}
+M. A. Mohamadi, Z. Li, L. Wu, and D. J. Sutherland, "Why Do You Grok? A
+Theoretical Analysis on Grokking Modular Addition," \emph{ICML}, 2024.
+\bibitem{huang2024}
+Y. Huang, S. Hu, X. Han, Z. Liu, and M. Sun, "Unified View of Grokking,
+Double Descent and Emergent Abilities," \emph{COLM}, 2024.
 \end{thebibliography}
 }
 

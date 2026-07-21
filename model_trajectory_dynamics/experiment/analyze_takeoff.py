@@ -346,6 +346,145 @@ def kernel_from_accuracy(
     return profile, kernel, stats
 
 
+def window_response_rate(
+    times: np.ndarray,
+    profile: np.ndarray,
+    start: float,
+    width: float,
+) -> float:
+    """Return normalized response mass delivered per optimizer update."""
+    left = float(np.interp(start, times, profile))
+    right = float(np.interp(start + width, times, profile))
+    return (right - left) / width
+
+
+def heldout_valley_certificate(
+    times: np.ndarray,
+    accuracy: np.ndarray,
+    totals: np.ndarray,
+    window_width: float,
+) -> dict[str, float]:
+    """Select a high-low-high triple on even checkpoints and test it on odd ones.
+
+    A nonnegative unimodal kernel cannot have three ordered windows whose middle
+    average rate is below both outer rates.  Window locations are chosen using
+    one alternating half of the checkpoints and evaluated without relocation on
+    the other half.
+    """
+    indices = np.arange(len(times))
+    selection_mask = indices % 2 == 0
+    evaluation_mask = ~selection_mask
+    selection_times = times[selection_mask]
+    evaluation_times = times[evaluation_mask]
+    selection_profile, _, _ = kernel_from_accuracy(
+        selection_times,
+        accuracy[selection_mask],
+        totals[selection_mask],
+    )
+    evaluation_profile, _, _ = kernel_from_accuracy(
+        evaluation_times,
+        accuracy[evaluation_mask],
+        totals[evaluation_mask],
+    )
+
+    common_start = max(float(selection_times[0]), float(evaluation_times[0]))
+    common_end = min(float(selection_times[-1]), float(evaluation_times[-1]))
+    starts = selection_times[
+        (selection_times >= common_start)
+        & (selection_times + window_width <= common_end)
+    ]
+    selection_rates = np.asarray(
+        [
+            window_response_rate(
+                selection_times, selection_profile, float(start), window_width
+            )
+            for start in starts
+        ]
+    )
+    best: tuple[float, int, int, int] | None = None
+    for middle_index, middle_start in enumerate(starts):
+        left_indices = np.flatnonzero(starts + window_width <= middle_start)
+        right_indices = np.flatnonzero(starts >= middle_start + window_width)
+        if not len(left_indices) or not len(right_indices):
+            continue
+        left_index = int(left_indices[np.argmax(selection_rates[left_indices])])
+        right_index = int(right_indices[np.argmax(selection_rates[right_indices])])
+        certificate = min(
+            selection_rates[left_index], selection_rates[right_index]
+        ) - selection_rates[middle_index]
+        candidate = (
+            float(certificate),
+            left_index,
+            middle_index,
+            right_index,
+        )
+        if best is None or candidate[0] > best[0]:
+            best = candidate
+    if best is None:
+        raise ValueError("trajectory is too short for three valley-test windows")
+
+    _, left_index, middle_index, right_index = best
+    selected_starts = [
+        float(starts[left_index]),
+        float(starts[middle_index]),
+        float(starts[right_index]),
+    ]
+    evaluation_rates = [
+        window_response_rate(
+            evaluation_times,
+            evaluation_profile,
+            start,
+            window_width,
+        )
+        for start in selected_starts
+    ]
+    evaluated_certificate = (
+        min(evaluation_rates[0], evaluation_rates[2]) - evaluation_rates[1]
+    )
+    return {
+        "window_width_steps": float(window_width),
+        "early_window_start": selected_starts[0],
+        "valley_window_start": selected_starts[1],
+        "late_window_start": selected_starts[2],
+        "selection_certificate_per_1000": float(best[0] * 1000.0),
+        "evaluation_early_rate_per_1000": float(evaluation_rates[0] * 1000.0),
+        "evaluation_valley_rate_per_1000": float(evaluation_rates[1] * 1000.0),
+        "evaluation_late_rate_per_1000": float(evaluation_rates[2] * 1000.0),
+        "evaluation_certificate_per_1000": float(
+            evaluated_certificate * 1000.0
+        ),
+        "uniform_error_radius": float(
+            max(evaluated_certificate, 0.0) * window_width / 4.0
+        ),
+        "single_mode_rejected": bool(evaluated_certificate > 0.0),
+    }
+
+
+def validate_valley_estimator() -> dict[str, object]:
+    """Check that the held-out test separates noiseless one- and two-mode curves."""
+    times = np.arange(0.0, 10000.0 + 50.0, 50.0)
+    totals = np.full_like(times, 10000.0)
+    one_mode = expit((times - 5000.0) / 600.0)
+    two_mode = 0.30 * expit((times - 1200.0) / 180.0) + 0.70 * expit(
+        (times - 7200.0) / 350.0
+    )
+    one_result = heldout_valley_certificate(times, one_mode, totals, 1000.0)
+    two_result = heldout_valley_certificate(times, two_mode, totals, 1000.0)
+    passed = (
+        float(one_result["evaluation_certificate_per_1000"]) <= 1e-8
+        and float(two_result["evaluation_certificate_per_1000"]) > 0.0
+    )
+    return {
+        "passed": bool(passed),
+        "one_mode_certificate_per_1000": one_result[
+            "evaluation_certificate_per_1000"
+        ],
+        "two_mode_certificate_per_1000": two_result[
+            "evaluation_certificate_per_1000"
+        ],
+    }
+
+
 def fit_modes(times: np.ndarray, profile: np.ndarray, local: bool) -> dict[str, object]:
     start_candidates = np.flatnonzero(profile >= 0.05)
     if not len(start_candidates):
@@ -495,7 +634,11 @@ def main() -> int:
     kernel_rows: list[dict[str, object]] = []
     mode_rows: list[dict[str, object]] = []
     threshold_rows: list[dict[str, object]] = []
+    valley_rows: list[dict[str, object]] = []
     curves: list[dict[str, object]] = []
+    valley_validation = validate_valley_estimator()
+    if not valley_validation["passed"]:
+        raise RuntimeError("single-mode valley estimator validation failed")
 
     for summary in summary_rows:
         if summary["stage"] != "confirmation":
@@ -512,6 +655,19 @@ def main() -> int:
         for row in fitted_rows:
             transition_rows.append({"run_id": run_id, "seed": summary["seed"], **row})
         profile, kernel, stats = kernel_from_accuracy(times, accuracy, totals)
+        for window_width in (800.0, 1000.0, 1500.0):
+            valley_rows.append(
+                {
+                    "run_id": run_id,
+                    "seed": summary["seed"],
+                    **heldout_valley_certificate(
+                        times,
+                        accuracy,
+                        totals,
+                        window_width,
+                    ),
+                }
+            )
         threshold_steps: dict[float, float] = {}
         for threshold in (0.10, 0.25, 0.50, 0.75, 0.90):
             hits = np.flatnonzero(accuracy >= threshold)
@@ -574,6 +730,7 @@ def main() -> int:
     write_csv(results_dir / "takeoff_kernel_summary.csv", kernel_rows)
     write_csv(results_dir / "modal_decomposition.csv", mode_rows)
     write_csv(results_dir / "transition_thresholds.csv", threshold_rows)
+    write_csv(results_dir / "single_mode_valley.csv", valley_rows)
     universality_rows: list[dict[str, object]] = []
     for first, second in combinations(curves, 2):
         first_stats = next(row for row in kernel_rows if row["run_id"] == first["run_id"])
@@ -608,6 +765,15 @@ def main() -> int:
     mixture_holdout_count = sum(
         row["best_heldout_transition_model"] == "mixture" for row in kernel_rows
     )
+    primary_valley_rows = [
+        row for row in valley_rows if float(row["window_width_steps"]) == 1000.0
+    ]
+    single_mode_rejected_count = sum(
+        bool(row["single_mode_rejected"]) for row in primary_valley_rows
+    )
+    valley_sensitivity_count = sum(
+        bool(row["single_mode_rejected"]) for row in valley_rows
+    )
     two_mode_count = sum(int(row["selected_modes"]) == 2 for row in mode_rows)
     distances = [float(row["standardized_wasserstein_distance"]) for row in universality_rows]
     summary = {
@@ -616,6 +782,27 @@ def main() -> int:
         "confirmation_runs_analyzed": len(curves),
         "finite_takeoff_count": int(finite_count),
         "mixture_best_heldout_count": int(mixture_holdout_count),
+        "single_mode_rejected_count": int(single_mode_rejected_count),
+        "single_mode_confirmation_count": len(primary_valley_rows),
+        "valley_sensitivity_positive_count": int(valley_sensitivity_count),
+        "valley_sensitivity_comparison_count": len(valley_rows),
+        "median_primary_valley_certificate_per_1000": float(
+            np.median(
+                [
+                    float(row["evaluation_certificate_per_1000"])
+                    for row in primary_valley_rows
+                ]
+            )
+        ),
+        "minimum_primary_valley_error_radius": float(
+            min(float(row["uniform_error_radius"]) for row in primary_valley_rows)
+        ),
+        "median_primary_valley_error_radius": float(
+            np.median(
+                [float(row["uniform_error_radius"]) for row in primary_valley_rows]
+            )
+        ),
+        "valley_estimator_validation": valley_validation,
         "two_mode_selected_count": int(two_mode_count),
         "modal_fit_count": len(mode_rows),
         "median_standardized_kernel_wasserstein": float(np.median(distances)) if distances else None,
@@ -653,6 +840,10 @@ def main() -> int:
         f"Completed confirmation trajectories analyzed: **{len(curves)}**.",
         f"Finite takeoff preferred to a checkpoint-delta model: **{finite_count}/{len(curves)}**.",
         f"A two-component transition won held-out checkpoint likelihood: **{mixture_holdout_count}/{len(curves)}**.",
+        f"A held-out 1,000-update valley rejected a single unimodal kernel: "
+        f"**{single_mode_rejected_count}/{len(primary_valley_rows)}**.",
+        f"The valley remained positive across 800-, 1,000-, and 1,500-update windows: "
+        f"**{valley_sensitivity_count}/{len(valley_rows)}** seed-by-width checks.",
         f"Two settling modes passed the BIC threshold: **{two_mode_count}/{len(mode_rows)}** fitted windows.",
         f"Median first-crossing width from 25% to 90% accuracy: "
         f"**{summary['median_observed_25_90_width_steps']:.0f} updates**.",

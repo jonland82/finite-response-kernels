@@ -11,12 +11,14 @@ one-checkpoint jump. All six confirmation seeds took 600--1,250 optimizer update
 to move from the first observed 50% held-out accuracy to the first observed 90%
 (median 1,000 updates), while checkpoints were only 50 updates apart.
 
-The full response was also not well described by one step or one sigmoid. Each
-trajectory showed an early partial rise, a long gradual interval, and a later
-steep rise. A two-sigmoid mixture had lower checkpoint-level BIC and lower
-cross-validated checkpoint RMSE than both a delta step and a single sigmoid in
-all 6/6 confirmation seeds. This supports a two-stage decomposition of held-out
-accuracy for this experiment.
+The full response was also incompatible with one nonnegative unimodal kernel at
+the tested scales. A basis-free test selected three high--low--high delivery
+windows on even checkpoints, then found a positive valley certificate on the
+withheld odd checkpoints in all 6/6 seeds and at all three tested widths (18/18
+seed--width evaluations). A two-sigmoid mixture also had lower checkpoint-level
+BIC and cross-validated checkpoint RMSE than both a delta step and a single
+sigmoid in all six seeds. Together these results establish multiplicity under a
+weak shape assumption, then describe that multiplicity as two stages.
 
 This is evidence about one controlled modular-arithmetic transformer, not a
 proof about all LLMs and not a verification of a universal theorem. It rejects
@@ -63,6 +65,31 @@ effective support was about 19--30 nonzero checkpoints. Thus even the sharp
 late part was resolved across 12--25 checkpoints, and the entire response was
 far more distributed.
 
+## Can one response mode explain the curve?
+
+Not if a single response is assumed to be nonnegative and unimodal. For three
+ordered, equal-width windows, define the valley certificate
+
+`V_w = min(early average rate, late average rate) - middle average rate`.
+
+Every nonnegative unimodal kernel must have `V_w <= 0`: once its rate falls, it
+cannot rise again without creating another mode. The test chose the three window
+locations using only even-numbered checkpoints. It then froze those locations,
+isotonic-projected the odd-numbered checkpoints separately, and evaluated the
+certificate on that withheld half of the trajectory.
+
+At the primary 1,000-update width, `V_1000` was positive in every seed, ranging
+from 0.049 to 0.215 normalized response gain per 1,000 updates (median 0.134).
+The result remained positive for every seed at widths 800, 1,000, and 1,500
+updates. A deterministic endpoint-error calculation shows that the weakest
+primary result survives arbitrary errors up to 1.2 percentage points at every
+window endpoint; the median survives 3.3 points and the strongest 5.4 points.
+
+The implementation was also tested on noiseless synthetic controls. A single
+logistic response produced a nonpositive certificate, while two separated
+responses produced a positive one. This is a shape theorem plus a held-out test,
+not evidence that the two modes correspond to two distinct neural mechanisms.
+
 ## Does the curve decompose?
 
 Three models were fit to the held-out accuracy trajectory:
@@ -104,8 +131,12 @@ The experiment gives two useful results relative to the manuscript's claims:
 
 - **Finite takeoff:** yes, for this task and resolution. The delta model loses in
   every seed, and the late 50--90% rise alone spans a median of 20 checkpoints.
-- **Decomposition:** yes for two transition components in accuracy; no evidence
-  here for two exponential residual modes.
+- **More than one response mode:** yes, conditional on a nonnegative latent
+  response and the tested 800--1,500-update scales; the held-out valley is
+  positive in all 18 seed--width evaluations.
+- **Descriptive decomposition:** yes for two transition components in accuracy;
+  no evidence here for two exponential residual modes and no identification of
+  two physical mechanisms.
 
 It does **not** verify or falsify a general no-go theorem for closed-source LLMs.
 The model is small, the task is synthetic, one hyperparameter condition was
@@ -149,6 +180,7 @@ volumes remain.
 - Threshold crossings: [`transition_thresholds.csv`](runs/llm-takeoff-20260721T022627Z/results/transition_thresholds.csv)
 - Transition fits: [`transition_model_comparison.csv`](runs/llm-takeoff-20260721T022627Z/results/transition_model_comparison.csv)
 - Kernel statistics: [`takeoff_kernel_summary.csv`](runs/llm-takeoff-20260721T022627Z/results/takeoff_kernel_summary.csv)
+- Held-out one-mode test: [`single_mode_valley.csv`](runs/llm-takeoff-20260721T022627Z/results/single_mode_valley.csv)
 - Modal fits: [`modal_decomposition.csv`](runs/llm-takeoff-20260721T022627Z/results/modal_decomposition.csv)
 - Seed summary: [`run_summary.csv`](runs/llm-takeoff-20260721T022627Z/results/run_summary.csv)
 - Machine-readable result: [`analysis_summary.json`](runs/llm-takeoff-20260721T022627Z/results/analysis_summary.json)
@@ -157,7 +189,7 @@ volumes remain.
 SHA-256 identifiers:
 
 - training script used on AWS: `a380fa68771d786e9c2ea56706da697e7af7c906351b967dc9a260c265826ddc`;
-- final local analysis script: `93d85d4861a7828bccae94030f926fc82724237f925f915e4f9f51d882300a5b`;
+- final local analysis script: `19c868b4efb184254cc969cb1c837e67702906c4d1343cb8d5ad9447e5e6fa8e`;
 - collected AWS archive: `85cfa25be9e4eb09a29538c28d1335da7b87edcb99491b3a48acfa10da7aa03a`.
 
 The cloud training completed, but its first post-processing invocation failed
