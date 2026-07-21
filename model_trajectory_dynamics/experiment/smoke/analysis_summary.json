@@ -1,0 +1,13 @@
+{
+  "status": "inconclusive",
+  "synthetic_validation_passed": true,
+  "confirmation_runs_analyzed": 0,
+  "finite_takeoff_count": 0,
+  "mixture_best_heldout_count": 0,
+  "two_mode_selected_count": 0,
+  "modal_fit_count": 0,
+  "median_standardized_kernel_wasserstein": null,
+  "median_kernel_10_90_width_steps": null,
+  "median_logistic_width_steps": null,
+  "analysis_script_sha256": "99e507f2b19392714b8e7c3bf1c5c3865312fb4e62cc44667db9630e4bc16fe1"
+}

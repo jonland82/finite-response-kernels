@@ -1,0 +1,15 @@
+{
+  "status": "complete",
+  "synthetic_validation_passed": true,
+  "confirmation_runs_analyzed": 6,
+  "finite_takeoff_count": 6,
+  "mixture_best_heldout_count": 6,
+  "two_mode_selected_count": 0,
+  "modal_fit_count": 12,
+  "median_standardized_kernel_wasserstein": 0.20606317576085748,
+  "median_kernel_10_90_width_steps": 5780.598522251447,
+  "median_logistic_width_steps": 395.5235022160583,
+  "median_observed_25_90_width_steps": 3850.0,
+  "median_observed_50_90_width_steps": 1000.0,
+  "analysis_script_sha256": "93d85d4861a7828bccae94030f926fc82724237f925f915e4f9f51d882300a5b"
+}

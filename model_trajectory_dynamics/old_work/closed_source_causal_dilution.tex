@@ -1,0 +1,225 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1.15in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.34em}
+\setlength{\abovedisplayskip}{5pt plus 1pt minus 2pt}
+\setlength{\belowdisplayskip}{5pt plus 1pt minus 2pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt}
+\setlength{\belowdisplayshortskip}{3pt plus 1pt}
+\setlist[itemize]{leftmargin=1.25em,itemsep=0.1em,topsep=0.2em}
+
+\newtheoremstyle{compact}
+  {5pt}{5pt}{\itshape}{}{}{.}{0.45em}{}
+\theoremstyle{compact}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+
+\newcommand{\EP}{N}
+\newcommand{\C}{\mathfrak C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\E}{\mathbb E}
+\newcommand{\indep}{\mathbin{\perp\!\!\!\perp}}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Closed-Source Exhaustion and}\par
+\vspace{-0.08em}
+{\LARGE\bfseries Passive Causal Dilution}\par
+\vspace{0.18em}
+{\large A no-go theorem for repeated training on a fixed dataset}\par
+\vspace{0.52em}
+{Jonathan R. Landers \qquad July 2026}
+\end{center}
+\vspace{0.2em}
+
+A learner may circle through the same corpus thousands of times. Loss falls, representations reorganize, and individual strings can become recoverable. The motion is real, but the source has not changed. Every epoch reads the same random object $D$; it does not summon a second copy of the information in $D$.
+
+There is also a temporal fact. Learning is not an instantaneous map from an example to its final downstream effect. Influence persists through later parameters, optimizer state, and predictions. When that propagation is modeled by finite passive causal stages, successive stages compose by convolution and spread in entropy power. The result below joins these two closures: \emph{the source budget is exhaustible, while the response width is forced outward.}
+
+\section*{1. The source law: innovation must vanish}
+Let $D$ be a discrete random dataset and let $W_0,W_1,\ldots$ be any sequence of random training states. The corpus is random because information is defined over an ensemble of possible corpora; after conditioning on one realized corpus $D=d$, its Shannon entropy is of course zero. Assume only
+\[
+H(D\mid W_0)<\infty.
+\]
+Define the cumulative information extracted into the observed trajectory and the innovation of round $t$ by
+\[
+J_n:=I(D;W_{1:n}\mid W_0),
+\qquad
+\delta_t:=I(D;W_t\mid W_{0:t-1}).
+\tag{1}
+\]
+No assumption on SGD, smoothness, optimizer noise, or the dimension of the weights is needed.
+
+\begin{proposition}[No creation and exhaustion]
+For every training trajectory,
+\[
+J_n=\sum_{t=1}^{n}\delta_t
+=H(D\mid W_0)-H(D\mid W_{0:n})
+\le H(D\mid W_0).
+\tag{2}
+\]
+Consequently,
+\[
+\boxed{\delta_t\longrightarrow0},
+\qquad
+\boxed{\frac{J_n}{n}\longrightarrow0}.
+\tag{3}
+\]
+\end{proposition}
+
+\emph{Proof.}
+The two identities in (2) are the chain rules for mutual information and conditional entropy. Since conditional entropy is nonnegative, $J_n\le H(D\mid W_0)$. The terms $\delta_t$ are nonnegative and their partial sums are bounded, so $\sum_{t\ge1}\delta_t<\infty$ and hence $\delta_t\to0$. Finally $0\le J_n/n\le H(D\mid W_0)/n\to0$. \hfill$\square$
+
+This is stronger than saying that the final weights cannot contain more information about $D$ than $D$ contains. It says that a fixed source cannot sustain a positive rate of \emph{new} dataset information indefinitely. Later rounds may reinforce, compress, rearrange, or memorize information already extracted, but their conditional information innovation must disappear.
+
+``Closed source'' means that $D$ is the complete source variable under study. External retrieval, fresh data, or an oracle does not violate (2) relative to $D$; it enlarges the relevant source to $(D,E_1,E_2,\ldots)$, whose budget may itself grow.
+
+\newpage
+\section*{2. The response law: finite causal stages spread}
+A \emph{passive causal response stage} is represented by a nondegenerate density $K_t$ supported on $[0,\infty)$, with finite differential entropy
+\[
+h(K_t):=-\int_0^\infty K_t(\tau)\log K_t(\tau)\,d\tau.
+\]
+It is passive in the narrow mathematical sense $K_t\ge0$ and $\int K_t=1$: the kernel redistributes normalized influence magnitude across future lags. If independent stage delays $T_t\sim K_t$ act sequentially, then
+\[
+T_{1:n}=T_1+\cdots+T_n,
+\qquad
+K_{1:n}=K_n*\cdots*K_1.
+\tag{4}
+\]
+Define entropy power and the corresponding response-time scale by
+\[
+\EP(K):=\frac{1}{2\pi e}e^{2h(K)},
+\qquad
+\tau_{\!E}(K):=\sqrt{\EP(K)}.
+\tag{5}
+\]
+To exclude arbitrarily sharp stages, impose the operational anti-concentration condition
+\[
+\sup_{t\ge1}\|K_t\|_\infty\le M<\infty.
+\tag{6}
+\]
+
+\begin{lemma}[Finite resolution]
+Under (6), every stage has a uniform positive entropy-power width:
+\[
+\EP(K_t)\ge \nu:=\frac{1}{2\pi eM^2}>0.
+\tag{7}
+\]
+\end{lemma}
+
+\emph{Proof.}
+Since $K_t(\tau)\le M$, one has $-\log K_t(\tau)\ge-\log M$ wherever $K_t>0$. Therefore $h(K_t)\ge-\log M$, and (7) follows from (5). \hfill$\square$
+
+\begin{theorem}[Closed-source passive causal dilution]
+Let $D,W_0,W_1,\ldots$ satisfy $H(D\mid W_0)<\infty$. Let $K_1,K_2,\ldots$ be independent-stage passive causal densities satisfying (6), and let $K_{1:n}$ be given by (4). For $n\ge2$, define the cumulative information concentration
+\[
+\C_n:=\frac{I(D;W_{1:n}\mid W_0)}{\tau_{\!E}(K_{1:n})}.
+\tag{8}
+\]
+Then
+\[
+\boxed{
+\C_n
+<
+\frac{H(D\mid W_0)}
+{\sqrt{\sum_{t=1}^{n}\EP(K_t)}}
+\le
+\frac{H(D\mid W_0)}{\sqrt{n\nu}}
+\longrightarrow0.}
+\tag{9}
+\]
+Moreover, the per-round concentration also vanishes:
+\[
+\boxed{
+\frac{I(D;W_t\mid W_{0:t-1})}{\tau_{\!E}(K_t)}
+\longrightarrow0.}
+\tag{10}
+\]
+\end{theorem}
+
+\emph{Proof.}
+Proposition 1 gives
+\[
+I(D;W_{1:n}\mid W_0)\le H(D\mid W_0).
+\tag{11}
+\]
+Let $T_t\sim K_t$ be the independent causal delays. Shannon--Stam applied to their sum gives
+\[
+\EP(K_{1:n})\ge\sum_{t=1}^{n}\EP(K_t).
+\tag{12}
+\]
+Equality requires Gaussian summands, but a nondegenerate Gaussian charges the whole real line whereas every $K_t$ is supported on $[0,\infty)$. Thus
+\[
+\EP(K_{1:n})>\sum_{t=1}^{n}\EP(K_t)\ge n\nu.
+\tag{13}
+\]
+Combining (11) and (13) proves (9). Finally, $\delta_t\to0$ by Proposition 1 and $\tau_E(K_t)\ge\sqrt\nu$ by (7), proving (10). \hfill$\square$
+
+\newpage
+\section*{3. Meaning, measurement, and the boundary of the law}
+The theorem separates two phenomena that are easily conflated. The trajectory may contain progressively more information about the fixed dataset:
+\[
+J_1\le J_2\le\cdots\le H(D\mid W_0).
+\]
+But its increments must die away, and under passive causal mediation the temporal support of that information spreads. Thus repeated training cannot preserve a nonzero density of newly acquired dataset information, either per round or per unit entropy-power response time:
+\[
+\boxed{
+\text{finite source} + \text{finite passive response}
+\quad\Longrightarrow\quad
+\text{asymptotic information dilution}.}
+\]
+This is a no-go statement, not a claim that late epochs are useless. A round with nearly zero $\delta_t$ may still produce a large functional change by reorganizing information already represented in the trajectory. The theorem forbids a perpetual supply of fresh information from a closed source and, within the passive convolutional response class, forbids hiding that exhaustion inside an indefinitely sharp causal mechanism.
+
+\paragraph{An operational response kernel.}
+Choose an example $z$, a training time $t$, and a later scalar observable $A(W_{t+k})$---for example a held-out loss, a logit, or a representation coordinate. Upweight $z$ at time $t$ by an infinitesimal $\varepsilon$ and define the lagged influence magnitude
+\[
+a_t(k;z,A)
+:=
+\E\left|
+\frac{\partial A(W_{t+k})}{\partial\varepsilon_t(z)}
+\right|,
+\qquad k=0,1,2,\ldots
+\tag{14}
+\]
+whenever the derivative exists; finite differences may be used otherwise. Normalize
+\[
+q_t(k):=\frac{a_t(k;z,A)}{\sum_{j\ge0}a_t(j;z,A)}.
+\tag{15}
+\]
+Because checkpoints are discrete while (5) uses differential entropy, fix a causal resolution density $\rho_\epsilon$ supported on $[0,\epsilon]$ and set
+\[
+K_t^{\epsilon}(\tau)
+:=
+\sum_{k\ge0}q_t(k)\,
+\rho_\epsilon(\tau-k\Delta).
+\tag{16}
+\]
+The resulting $K_t^{\epsilon}$ is an estimable continuous influence-magnitude kernel at checkpoint spacing $\Delta$. The absolute value in (14) is deliberate: raw influence may be signed and cancel, while the passive kernel tracks where its magnitude is distributed. Passivity is therefore an operational coarse-graining, not a universal property of nonlinear optimization.
+
+\paragraph{How the law can fail.}
+The information conclusion (3) is unconditional relative to a fixed discrete $D$. The dilution conclusion (9) is conditional and therefore falsifiable. A system can evade it by leaving the modeled class: it may admit a growing external source, produce signed active amplification rather than normalized passive transport, develop dependent stages that do not compose by convolution, or concentrate its normalized response into kernels with no uniform peak bound. These are not loopholes hidden in the proof; they identify the boundary between repeated closed training and genuinely open or actively sharpening learning.
+
+The synthesis is consequently precise. The source theorem says that information innovation is summable. The causal theorem says that finite passive response width is superadditive in entropy power and, under finite resolution, diverges at least as $\sqrt n$. Together they yield a clean asymptotic prohibition:
+\[
+\boxed{
+\text{a closed passive learner cannot sustain information concentration without bound.}}
+\]
+
+\vfill
+{\footnotesize
+\textbf{References.}
+C.~E.~Shannon, ``A Mathematical Theory of Communication,'' \emph{Bell System Technical Journal} 27 (1948).
+A.~J.~Stam, ``Some Inequalities Satisfied by the Quantities of Information of Fisher and Shannon,'' \emph{Information and Control} 2 (1959).
+J.~R.~Landers, \emph{The Entropy of Finite Response: Causal Kernels, Closure, and Spread} (2026).
+}
+
+\end{document}

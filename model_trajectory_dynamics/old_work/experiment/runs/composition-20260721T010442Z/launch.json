@@ -1,0 +1,16 @@
+{
+    "run_id":  "composition-20260721T010442Z",
+    "account":  "222259001580",
+    "region":  "us-east-1",
+    "instance_id":  "i-0ba5eebced1d2922e",
+    "instance_type":  "c7i.2xlarge",
+    "ami_id":  "ami-0f303bae6b670e0ed",
+    "subnet_id":  "subnet-1d8c3c7b",
+    "security_group_id":  "sg-09d7aa76f484a424d",
+    "temporary_bucket":  "causal-composition-222259001580-20260721t010442z",
+    "source_key":  "source/composition-20260721T010442Z.tar.gz",
+    "result_key":  "results/composition-20260721T010442Z.tar.gz",
+    "launch_utc":  "2026-07-21T01:04:55.2222374Z",
+    "hard_stop_minutes":  30,
+    "user_data_bytes":  2757
+}

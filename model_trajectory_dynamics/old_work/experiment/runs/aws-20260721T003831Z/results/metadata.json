@@ -1,0 +1,41 @@
+{
+  "aws_instance_id": "i-0e56a7ec222026546",
+  "aws_region": "us-east-1",
+  "config": {
+    "batch_size": 4,
+    "bootstrap_samples": 500,
+    "d_model": 64,
+    "ff_width": 256,
+    "heads": 4,
+    "influence_epsilon": 0.1,
+    "influence_horizon": 50,
+    "influence_replicas": 16,
+    "influence_times": [
+      50,
+      150,
+      300
+    ],
+    "initial_facts": 16,
+    "layers": 2,
+    "learning_rate": 0.003,
+    "max_runtime_seconds": 2400,
+    "maximum_facts": 32,
+    "output_dir": "/opt/closed-source-pilot/results",
+    "replicas": 128,
+    "reveal_interval": 20,
+    "seed": 20260720,
+    "skip_influence": false,
+    "smoke": false,
+    "steps": 400,
+    "weight_decay": 0.001
+  },
+  "cuda_available": false,
+  "cuda_device": null,
+  "elapsed_seconds": 36.089902120999994,
+  "platform": "Linux-6.1.176-221.367.amzn2023.x86_64-x86_64-with-glibc2.34",
+  "python": "3.11.15 (main, Jul  6 2026, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]",
+  "script_sha256": "b94e64d3b80850f2a72fcc4ac00251bd16cd45a1e9817182f1fb68d7caa60777",
+  "status": "complete",
+  "timestamp_utc": "2026-07-21T00:40:12Z",
+  "torch": "2.10.0+cpu"
+}

@@ -1,0 +1,8 @@
+{
+  "checks": {
+    "delta": true,
+    "finite": true,
+    "mixture": true
+  },
+  "all_passed": true
+}

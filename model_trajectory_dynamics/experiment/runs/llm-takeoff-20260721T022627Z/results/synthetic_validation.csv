@@ -1,0 +1,4 @@
+synthetic_curve,best_bic_model,best_heldout_model,fitted_logistic_width
+delta,delta,logistic,0.039676908081977276
+finite,logistic,logistic,3.000128685242517
+mixture,mixture,mixture,7.177584725575311

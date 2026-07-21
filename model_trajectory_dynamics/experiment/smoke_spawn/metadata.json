@@ -1,0 +1,18 @@
+{
+  "status": "complete",
+  "elapsed_seconds": 9.219218600002932,
+  "smoke": true,
+  "pilot_count": 2,
+  "confirmation_count": 2,
+  "chosen_condition": {
+    "train_fraction": 0.5,
+    "weight_decay": 1.0
+  },
+  "script_sha256": "a380fa68771d786e9c2ea56706da697e7af7c906351b967dc9a260c265826ddc",
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+  "torch": "2.10.0+cpu",
+  "platform": "Windows-11-10.0.22631-SP0",
+  "aws_instance_id": null,
+  "aws_region": null,
+  "timestamp_utc": "2026-07-21T02:25:53Z"
+}

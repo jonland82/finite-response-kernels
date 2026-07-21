@@ -1,0 +1,11 @@
+{
+  "closed_code_loss_reduction_step_192_to_400": 0.6815544064665484,
+  "closed_direct_gain_step_192_to_400": 0.03303074654188087,
+  "closed_final_direct_bits": 15.98873331043055,
+  "closed_final_direct_fraction": 0.9992958319019094,
+  "closed_final_source_bits": 16,
+  "closed_plateau_slope_bits_per_update": 0.000154669355977054,
+  "open_final_direct_bits": 31.91136467288498,
+  "open_final_direct_fraction": 0.9972301460276556,
+  "open_final_source_bits": 32
+}

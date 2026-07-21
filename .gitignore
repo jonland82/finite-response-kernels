@@ -29,6 +29,10 @@ Thumbs.db
 # Local scratch output
 tmp/
 temp/
+model_trajectory_dynamics/experiment/smoke_results/
+model_trajectory_dynamics/experiment/estimator_check/
+model_trajectory_dynamics/experiment/learning_check/
+model_trajectory_dynamics/experiment/learning_check_400/
 
 # Packaged exports generated from tracked sources
 *.zip

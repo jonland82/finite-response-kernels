@@ -1,0 +1,32 @@
+{
+  "aws_instance_id": "i-001ec27d6e867185a",
+  "aws_region": "us-east-1",
+  "base_runner_sha256": "b94e64d3b80850f2a72fcc4ac00251bd16cd45a1e9817182f1fb68d7caa60777",
+  "block_length": 100,
+  "bootstrap_samples": 400,
+  "device": "cpu",
+  "elapsed_seconds": 140.458659891,
+  "epsilon": 0.1,
+  "horizon": 300,
+  "injection_times": [
+    50,
+    150,
+    200,
+    300,
+    400,
+    500
+  ],
+  "platform": "Linux-6.1.176-221.367.amzn2023.x86_64-x86_64-with-glibc2.34",
+  "python": "3.11.15 (main, Jul  6 2026, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]",
+  "replicas": 64,
+  "script_sha256": "9e3adf94f7ac155ec23c9bf535f916759df613d56b4bd6285e4cd7e1af201e62",
+  "seed": 20260722,
+  "starts": [
+    50,
+    200,
+    400
+  ],
+  "status": "complete",
+  "timestamp_utc": "2026-07-21T01:41:23Z",
+  "torch": "2.10.0+cpu"
+}

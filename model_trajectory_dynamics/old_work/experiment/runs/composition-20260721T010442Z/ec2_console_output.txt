@@ -1,0 +1,515 @@
+﻿[2J[01;01H[=3h[2J[01;01H[2J[01;01H[=3h[2J[01;01H[2J[01;01H[=3h[2J[01;01H[0m[35m[40m[2J[01;01H[=3h[2J[01;01H[0m[37m[40m  Booting `Amazon Linux (6.1.176-221.367.amzn2023.x86_64) 2023'
+
+
+
+[    0.000000] x86/mktme: No known encryption algorithm is supported: 0x0
+
+[    2.403812] systemd[1]: Finished kmod-static-nodes.service - Create List of Static Device Nodes.
+
+[    2.405336] systemd[1]: Started systemd-journald.service - Journal Service.
+
+[    3.302264] systemd-journald[1547]: Received client request to flush runtime journal.
+
+[    3.693732] input: Power Button as /devices/LNXSYSTM:00/LNXPWRBN:00/input/input0
+
+[    3.702027] i8042: PNP: PS/2 Controller [PNP0303:KBD,PNP0f13:MOU] at 0x60,0x64 irq 1,12
+
+[    3.703212] i8042: Warning: Keylock active
+
+[    3.708457] serio: i8042 KBD port at 0x60,0x64 irq 1
+
+[    3.709006] serio: i8042 AUX port at 0x60,0x64 irq 12
+
+[    3.719843] ena 0000:27:00.0: Elastic Network Adapter (ENA) v2.17.2g
+
+[    3.720624] ena 0000:27:00.0: enabling device (0000 -> 0002)
+
+[    3.733556] ACPI: button: Power Button [PWRF]
+
+[    3.733709] ena 0000:27:00.0: ENA device version: 0.10
+
+[    3.734100] input: Sleep Button as /devices/LNXSYSTM:00/LNXSLPBN:00/input/input1
+
+[    3.734717] ena 0000:27:00.0: ENA controller version: 0.0.1 implementation version 1
+
+[    3.735906] ACPI: button: Sleep Button [SLPF]
+
+[    3.833489] ena 0000:27:00.0: Forcing large headers and decreasing maximum TX queue size to 512
+
+[    3.834570] ena 0000:27:00.0: ENA Large LLQ is enabled
+
+[    3.857056] ena 0000:27:00.0: Elastic Network Adapter (ENA) found at mem c8700000, mac addr 02:dd:95:d4:12:bd
+
+[    3.963929] ena 0000:27:00.0 enp39s0: renamed from eth0
+
+[    3.973357] RPC: Registered named UNIX socket transport module.
+
+[    3.974042] RPC: Registered udp transport module.
+
+[    3.974682] RPC: Registered tcp transport module.
+
+[    3.975322] RPC: Registered tcp NFSv4.1 backchannel transport module.
+
+[    4.214835] zram_generator::config[2514]: zram0: system has too much memory (15708MB), limit is 800MB, ignoring.
+
+[    5.134847] ena 0000:27:00.0 enp39s0: Local page cache is disabled for less than 16 channels
+
+[    5.932020] cloud-init[2657]: Cloud-init v. 22.2.2 running 'init' at Tue, 21 Jul 2026 01:05:04 +0000. Up 5.89 seconds.
+
+[    5.973005] cloud-init[2657]: ci-info: ++++++++++++++++++++++++++++++++++++++Net device info+++++++++++++++++++++++++++++++++++++++
+
+[    5.975015] cloud-init[2657]: ci-info: +---------+------+----------------------------+---------------+--------+-------------------+
+
+[    5.977336] cloud-init[2657]: ci-info: |  Device |  Up  |          Address           |      Mask     | Scope  |     Hw-Address    |
+
+[    5.981414] cloud-init[2657]: ci-info: +---------+------+----------------------------+---------------+--------+-------------------+
+
+[    5.983357] cloud-init[2657]: ci-info: | enp39s0 | True |        172.31.12.15        | 255.255.240.0 | global | 02:dd:95:d4:12:bd |
+
+[    5.985163] cloud-init[2657]: ci-info: | enp39s0 | True | fe80::dd:95ff:fed4:12bd/64 |       .       |  link  | 02:dd:95:d4:12:bd |
+
+[    5.989220] cloud-init[2657]: ci-info: |    lo   | True |         127.0.0.1          |   255.0.0.0   |  host  |         .         |
+
+[    5.991141] cloud-init[2657]: ci-info: |    lo   | True |          ::1/128           |       .       |  host  |         .         |
+
+[    5.992885] cloud-init[2657]: ci-info: +---------+------+----------------------------+---------------+--------+-------------------+
+
+[    5.994612] cloud-init[2657]: ci-info: +++++++++++++++++++++++++++++Route IPv4 info++++++++++++++++++++++++++++++
+
+[    5.996972] cloud-init[2657]: ci-info: +-------+-------------+------------+-----------------+-----------+-------+
+
+[    5.998464] cloud-init[2657]: ci-info: | Route | Destination |  Gateway   |     Genmask     | Interface | Flags |
+
+[    5.999983] cloud-init[2657]: ci-info: +-------+-------------+------------+-----------------+-----------+-------+
+
+[    6.005067] cloud-init[2657]: ci-info: |   0   |   0.0.0.0   | 172.31.0.1 |     0.0.0.0     |  enp39s0  |   UG  |
+
+[    6.006605] cloud-init[2657]: ci-info: |   1   |  172.31.0.0 |  0.0.0.0   |  255.255.240.0  |  enp39s0  |   U   |
+
+[    6.008114] cloud-init[2657]: ci-info: |   2   |  172.31.0.1 |  0.0.0.0   | 255.255.255.255 |  enp39s0  |   UH  |
+
+[    6.009628] cloud-init[2657]: ci-info: |   3   |  172.31.0.2 |  0.0.0.0   | 255.255.255.255 |  enp39s0  |   UH  |
+
+[    6.012743] cloud-init[2657]: ci-info: +-------+-------------+------------+-----------------+-----------+-------+
+
+[    6.014267] cloud-init[2657]: ci-info: +++++++++++++++++++Route IPv6 info+++++++++++++++++++
+
+[    6.015497] cloud-init[2657]: ci-info: +-------+-------------+---------+-----------+-------+
+
+[    6.021000] cloud-init[2657]: ci-info: | Route | Destination | Gateway | Interface | Flags |
+
+[    6.022488] cloud-init[2657]: ci-info: +-------+-------------+---------+-----------+-------+
+
+[    6.023760] cloud-init[2657]: ci-info: |   0   |  fe80::/64  |    ::   |  enp39s0  |   U   |
+
+[    6.025010] cloud-init[2657]: ci-info: |   2   |    local    |    ::   |  enp39s0  |   U   |
+
+[    6.026264] cloud-init[2657]: ci-info: |   3   |  multicast  |    ::   |  enp39s0  |   U   |
+
+[    6.027502] cloud-init[2657]: ci-info: +-------+-------------+---------+-----------+-------+
+
+[    6.897107] cloud-init[2657]: Generating public/private ed25519 key pair.
+
+[    6.898278] cloud-init[2657]: Your identification has been saved in /etc/ssh/ssh_host_ed25519_key
+
+[    6.899621] cloud-init[2657]: Your public key has been saved in /etc/ssh/ssh_host_ed25519_key.pub
+
+[    6.901011] cloud-init[2657]: The key fingerprint is:
+
+[    6.901871] cloud-init[2657]: SHA256:jygVAwE/Xg0D82ROGZjmMdKtmCzNlgIn3dgUboz3DFs root@ip-172-31-12-15.ec2.internal
+
+[    6.903529] cloud-init[2657]: The key's randomart image is:
+
+[    6.904389] cloud-init[2657]: +--[ED25519 256]--+
+
+[    6.908268] cloud-init[2657]: | ..BBBBo         |
+
+[    6.909021] cloud-init[2657]: |o ==XOo+         |
+
+[    6.909753] cloud-init[2657]: |.*.BO+E .        |
+
+[    6.910748] cloud-init[2657]: |o O+oO o         |
+
+[    6.911562] cloud-init[2657]: | +  o + S        |
+
+[    6.912393] cloud-init[2657]: |     . . o       |
+
+[    6.913198] cloud-init[2657]: |    . . . .      |
+
+[    6.913959] cloud-init[2657]: |     .           |
+
+[    6.914680] cloud-init[2657]: |                 |
+
+[    6.916224] cloud-init[2657]: +----[SHA256]-----+
+
+[    6.916949] cloud-init[2657]: Generating public/private ecdsa key pair.
+
+[    6.917932] cloud-init[2657]: Your identification has been saved in /etc/ssh/ssh_host_ecdsa_key
+
+[    6.919245] cloud-init[2657]: Your public key has been saved in /etc/ssh/ssh_host_ecdsa_key.pub
+
+[    6.924902] cloud-init[2657]: The key fingerprint is:
+
+[    6.925708] cloud-init[2657]: SHA256:N+X3se0v3NI1Pg6khiCtrA1PRkFhC0g+CSzQVuDcvwM root@ip-172-31-12-15.ec2.internal
+
+[    6.927266] cloud-init[2657]: The key's randomart image is:
+
+[    6.928097] cloud-init[2657]: +---[ECDSA 256]---+
+
+[    6.928811] cloud-init[2657]: |*oo+.+.          |
+
+[    6.929518] cloud-init[2657]: |+=+.+ .          |
+
+[    6.930349] cloud-init[2657]: |.=o .o      .    |
+
+[    6.931189] cloud-init[2657]: |  .  .o    o     |
+
+[    6.932202] cloud-init[2657]: |    Eo.oS o .... |
+
+[    6.932931] cloud-init[2657]: |    o.o.....o. o=|
+
+[    6.936219] cloud-init[2657]: |   . =o  . o o.+=|
+
+[    6.936960] cloud-init[2657]: |    B  .  .   =+o|
+
+[    6.937673] cloud-init[2657]: |   . o        .+=|
+
+[    6.938382] cloud-init[2657]: +----[SHA256]-----+
+
+[    7.266739] cloud-init[2778]: Cloud-init v. 22.2.2 running 'modules:config' at Tue, 21 Jul 2026 01:05:05 +0000. Up 7.23 seconds.
+
+2026/07/21 01:05:05Z: SSM Agent unable to acquire credentials: <error>no valid credentials could be retrieved for ec2 identity. Default Host Management Err: error calling RequestManagedInstanceRoleToken: AccessDeniedException: Systems Manager's instance management role is not configured for account: 222259001580
+	status code: 400, request id: c8f3132e-3ebc-473c-b6d2-830090c824e2</error>
+[    7.789734] cloud-init[2799]: Cloud-init v. 22.2.2 running 'modules:final' at Tue, 21 Jul 2026 01:05:06 +0000. Up 7.76 seconds.
+[    7.836362] cloud-init[2799]: pilot_boot_utc=2026-07-21T01:05:06Z
+[    7.841641] cloud-init[2799]: Shutdown scheduled for Tue 2026-07-21 01:35:06 UTC, use 'shutdown -c' to cancel.
+[    7.845457] cloud-init[2799]:   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+[    7.847216] cloud-init[2799]:                                  Dload  Upload   Total   Spent    Left  Speed
+[    7.929513] cloud-init[2799]: 
+  0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+100 13316 100 13316   0     0 157753     0  --:--:-- --:--:-- --:--:-- 158523
+[    9.821177] cloud-init[2799]: Amazon Linux 2023 repository                     78 MB/s |  73 MB     00:00
+
+
+
+Amazon Linux 2023.12.20260720
+
+Kernel 6.1.176-221.367.amzn2023.x86_64 on an x86_64 (-)
+
+
+
+ip-172-31-12-15 login: [   20.076094] cloud-init[2799]: Amazon Linux 2023 Kernel Livepatch repository   530 kB/s |  61 kB     00:00
+
+[   21.342228] cloud-init[2799]: Dependencies resolved.
+
+[   21.385166] cloud-init[2799]: ================================================================================
+
+[   21.385746] cloud-init[2799]:  Package                     Arch   Version                   Repository   Size
+
+[   21.386825] cloud-init[2799]: ================================================================================
+
+[   21.388460] cloud-init[2799]: Installing:
+
+[   21.389234] cloud-init[2799]:  python3.11                  x86_64 3.11.15-1.amzn2023.0.4    amazonlinux  28 k
+
+[   21.389420] cloud-init[2799]:  python3.11-pip              noarch 22.3.1-2.amzn2023.0.13    amazonlinux 2.8 M
+
+[   21.389432] cloud-init[2799]: Installing dependencies:
+
+[   21.389457] cloud-init[2799]:  mpdecimal                   x86_64 2.5.1-3.amzn2023.0.3      amazonlinux 101 k
+
+[   21.389663] cloud-init[2799]:  python3.11-libs             x86_64 3.11.15-1.amzn2023.0.4    amazonlinux 9.7 M
+
+[   21.389844] cloud-init[2799]:  python3.11-pip-wheel        noarch 22.3.1-2.amzn2023.0.13    amazonlinux 1.4 M
+
+[   21.389855] cloud-init[2799]:  python3.11-setuptools-wheel noarch 65.5.1-2.amzn2023.0.7     amazonlinux 717 k
+
+[   21.389868] cloud-init[2799]: Installing weak dependencies:
+
+[   21.389880] cloud-init[2799]:  libxcrypt-compat            x86_64 4.4.33-7.amzn2023         amazonlinux  92 k
+
+[   21.389892] cloud-init[2799]:  python3.11-setuptools       noarch 65.5.1-2.amzn2023.0.7     amazonlinux 1.5 M
+
+[   21.389903] cloud-init[2799]: Transaction Summary
+
+[   21.389914] cloud-init[2799]: ================================================================================
+
+[   21.389923] cloud-init[2799]: Install  8 Packages
+
+[   21.389946] cloud-init[2799]: Total download size: 16 M
+
+[   21.389959] cloud-init[2799]: Installed size: 68 M
+
+[   21.389970] cloud-init[2799]: Downloading Packages:
+
+[   21.449226] cloud-init[2799]: (1/8): mpdecimal-2.5.1-3.amzn2023.0.3.x86_64.rp 3.2 MB/s | 101 kB     00:00
+
+[   21.458181] cloud-init[2799]: (2/8): python3.11-3.11.15-1.amzn2023.0.4.x86_64 713 kB/s |  28 kB     00:00
+
+[   21.467379] cloud-init[2799]: (3/8): libxcrypt-compat-4.4.33-7.amzn2023.x86_6 1.8 MB/s |  92 kB     00:00
+
+[   21.508841] cloud-init[2799]: (4/8): python3.11-pip-wheel-22.3.1-2.amzn2023.0  35 MB/s | 1.4 MB     00:00
+
+[   21.521806] cloud-init[2799]: (5/8): python3.11-pip-22.3.1-2.amzn2023.0.13.no  44 MB/s | 2.8 MB     00:00
+
+[   21.546745] cloud-init[2799]: (6/8): python3.11-setuptools-65.5.1-2.amzn2023.  41 MB/s | 1.5 MB     00:00
+
+[   21.585473] cloud-init[2799]: (7/8): python3.11-libs-3.11.15-1.amzn2023.0.4.x  71 MB/s | 9.7 MB     00:00
+
+[   21.591419] cloud-init[2799]: (8/8): python3.11-setuptools-wheel-65.5.1-2.amz  10 MB/s | 717 kB     00:00
+
+[   21.593016] cloud-init[2799]: --------------------------------------------------------------------------------
+
+[   21.593074] cloud-init[2799]: Total                                            79 MB/s |  16 MB     00:00
+
+[   21.726717] cloud-init[2799]: Running transaction check
+
+[   21.748790] cloud-init[2799]: Transaction check succeeded.
+
+[   21.749109] cloud-init[2799]: Running transaction test
+
+[   21.975453] cloud-init[2799]: Transaction test succeeded.
+
+[   21.976062] cloud-init[2799]: Running transaction
+
+[   22.138605] cloud-init[2799]:   Preparing        :                                                        1/1
+
+[   22.148253] cloud-init[2799]:   Installing       : libxcrypt-compat-4.4.33-7.amzn2023.x86_64              1/8
+
+[   22.152609] cloud-init[2799]:   Installing       : python3.11-pip-wheel-22.3.1-2.amzn2023.0.13.noarch     2/8
+
+[   22.156975] cloud-init[2799]:   Installing       : python3.11-setuptools-wheel-65.5.1-2.amzn2023.0.7.no   3/8
+
+[   22.163329] cloud-init[2799]:   Installing       : mpdecimal-2.5.1-3.amzn2023.0.3.x86_64                  4/8
+
+[   22.845622] cloud-init[2799]:   Installing       : python3.11-3.11.15-1.amzn2023.0.4.x86_64               5/8
+
+[   23.043227] cloud-init[2799]:   Installing       : python3.11-libs-3.11.15-1.amzn2023.0.4.x86_64          6/8
+
+[   23.394906] cloud-init[2799]:   Installing       : python3.11-setuptools-65.5.1-2.amzn2023.0.7.noarch     7/8
+
+[   23.417466] cloud-init[2799]:   Installing       : python3.11-pip-22.3.1-2.amzn2023.0.13.noarch           8/8
+
+[   24.683127] cloud-init[2799]:   Running scriptlet: python3.11-pip-22.3.1-2.amzn2023.0.13.noarch           8/8
+
+[   24.683720] cloud-init[2799]:   Verifying        : libxcrypt-compat-4.4.33-7.amzn2023.x86_64              1/8
+
+[   24.684806] cloud-init[2799]:   Verifying        : mpdecimal-2.5.1-3.amzn2023.0.3.x86_64                  2/8
+
+[   24.686235] cloud-init[2799]:   Verifying        : python3.11-3.11.15-1.amzn2023.0.4.x86_64               3/8
+
+[   24.686427] cloud-init[2799]:   Verifying        : python3.11-libs-3.11.15-1.amzn2023.0.4.x86_64          4/8
+
+[   24.686619] cloud-init[2799]:   Verifying        : python3.11-pip-22.3.1-2.amzn2023.0.13.noarch           5/8
+
+[   24.686820] cloud-init[2799]:   Verifying        : python3.11-pip-wheel-22.3.1-2.amzn2023.0.13.noarch     6/8
+
+[   24.687018] cloud-init[2799]:   Verifying        : python3.11-setuptools-65.5.1-2.amzn2023.0.7.noarch     7/8
+
+[   24.915682] cloud-init[2799]:   Verifying        : python3.11-setuptools-wheel-65.5.1-2.amzn2023.0.7.no   8/8
+
+[   24.915840] cloud-init[2799]: Installed:
+
+[   24.915862] cloud-init[2799]:   libxcrypt-compat-4.4.33-7.amzn2023.x86_64
+
+[   24.915917] cloud-init[2799]:   mpdecimal-2.5.1-3.amzn2023.0.3.x86_64
+
+[   24.915939] cloud-init[2799]:   python3.11-3.11.15-1.amzn2023.0.4.x86_64
+
+[   24.915958] cloud-init[2799]:   python3.11-libs-3.11.15-1.amzn2023.0.4.x86_64
+
+[   24.915978] cloud-init[2799]:   python3.11-pip-22.3.1-2.amzn2023.0.13.noarch
+
+[   24.915998] cloud-init[2799]:   python3.11-pip-wheel-22.3.1-2.amzn2023.0.13.noarch
+
+[   24.916199] cloud-init[2799]:   python3.11-setuptools-65.5.1-2.amzn2023.0.7.noarch
+
+[   24.916395] cloud-init[2799]:   python3.11-setuptools-wheel-65.5.1-2.amzn2023.0.7.noarch
+
+[   24.916595] cloud-init[2799]: Complete!
+
+[   27.542214] cloud-init[2799]: Requirement already satisfied: pip in /opt/causal-composition/venv/lib64/python3.11/site-packages (22.3.1)
+
+[   27.597886] cloud-init[2799]: Collecting pip
+
+[   27.613211] cloud-init[2799]:   Downloading pip-26.1.2-py3-none-any.whl (1.8 MB)
+
+[   27.629717] cloud-init[2799]:      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 123.6 MB/s eta 0:00:00
+
+[   27.656186] cloud-init[2799]: Installing collected packages: pip
+
+[   27.656526] cloud-init[2799]:   Attempting uninstall: pip
+
+[   27.659018] cloud-init[2799]:     Found existing installation: pip 22.3.1
+
+[   27.736763] cloud-init[2799]:     Uninstalling pip-22.3.1:
+
+[   27.741515] cloud-init[2799]:       Successfully uninstalled pip-22.3.1
+
+[   28.264701] cloud-init[2799]: Successfully installed pip-26.1.2
+
+[   28.574561] cloud-init[2799]: Looking in indexes: https://download.pytorch.org/whl/cpu
+
+[   28.655896] cloud-init[2799]: Collecting torch==2.10.0
+
+[   28.690163] cloud-init[2799]:   Downloading torch-2.10.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (29 kB)
+
+[   28.715302] cloud-init[2799]: Collecting filelock (from torch==2.10.0)
+
+[   28.735556] cloud-init[2799]:   Downloading filelock-3.29.0-py3-none-any.whl.metadata (2.0 kB)
+
+[   28.777086] cloud-init[2799]: Collecting typing-extensions>=4.10.0 (from torch==2.10.0)
+
+[   28.781977] cloud-init[2799]:   Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+
+[   28.811229] cloud-init[2799]: Collecting sympy>=1.13.3 (from torch==2.10.0)
+
+[   28.815166] cloud-init[2799]:   Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+
+[   28.837476] cloud-init[2799]: Collecting networkx>=2.5.1 (from torch==2.10.0)
+
+[   28.841932] cloud-init[2799]:   Downloading networkx-3.6.1-py3-none-any.whl.metadata (6.8 kB)
+
+[   28.857275] cloud-init[2799]: Collecting jinja2 (from torch==2.10.0)
+
+[   28.861653] cloud-init[2799]:   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+
+[   28.879910] cloud-init[2799]: Collecting fsspec>=0.8.5 (from torch==2.10.0)
+
+[   28.883083] cloud-init[2799]:   Downloading fsspec-2026.4.0-py3-none-any.whl.metadata (10 kB)
+
+[   28.907398] cloud-init[2799]: Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch==2.10.0)
+
+[   28.913709] cloud-init[2799]:   Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+
+[   28.931556] cloud-init[2799]: Collecting MarkupSafe>=2.0 (from jinja2->torch==2.10.0)
+
+[   28.934540] cloud-init[2799]:   Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+
+[   28.947044] cloud-init[2799]: Downloading torch-2.10.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl (188.8 MB)
+
+[   29.924285] cloud-init[2799]:    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 188.8/188.8 MB 194.3 MB/s  0:00:00
+
+[   29.927926] cloud-init[2799]: Downloading fsspec-2026.4.0-py3-none-any.whl (203 kB)
+
+[   29.941778] cloud-init[2799]: Downloading networkx-3.6.1-py3-none-any.whl (2.1 MB)
+
+[   29.958325] cloud-init[2799]:    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 169.0 MB/s  0:00:00
+
+[   29.963940] cloud-init[2799]: Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+
+[   29.992189] cloud-init[2799]:    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 239.6 MB/s  0:00:00
+
+[   29.997652] cloud-init[2799]: Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+
+[   30.005396] cloud-init[2799]:    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 57.4 MB/s  0:00:00
+
+[   30.008364] cloud-init[2799]: Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+
+[   30.015001] cloud-init[2799]: Downloading filelock-3.29.0-py3-none-any.whl (39 kB)
+
+[   30.021292] cloud-init[2799]: Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+
+[   30.027454] cloud-init[2799]: Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+
+[   30.332839] cloud-init[2799]: Installing collected packages: mpmath, typing-extensions, sympy, networkx, MarkupSafe, fsspec, filelock, jinja2, torch
+
+[   42.343405] cloud-init[2799]: Successfully installed MarkupSafe-3.0.3 filelock-3.29.0 fsspec-2026.4.0 jinja2-3.1.6 mpmath-1.3.0 networkx-3.6.1 sympy-1.14.0 torch-2.10.0+cpu typing-extensions-4.15.0
+
+[   42.783711] cloud-init[2799]: Collecting numpy
+
+[   42.802984] cloud-init[2799]:   Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+
+[   42.889147] cloud-init[2799]: Collecting matplotlib
+
+[   42.892298] cloud-init[2799]:   Downloading matplotlib-3.11.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (80 kB)
+
+[   42.947633] cloud-init[2799]: Collecting contourpy>=1.0.1 (from matplotlib)
+
+[   42.955924] cloud-init[2799]:   Downloading contourpy-1.3.3-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (5.5 kB)
+
+[   42.968501] cloud-init[2799]: Collecting cycler>=0.10 (from matplotlib)
+
+[   42.973357] cloud-init[2799]:   Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+
+[   43.073294] cloud-init[2799]: Collecting fonttools>=4.28.2 (from matplotlib)
+
+[   43.076847] cloud-init[2799]:   Downloading fonttools-4.63.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (118 kB)
+
+[   43.127500] cloud-init[2799]: Collecting kiwisolver>=1.3.1 (from matplotlib)
+
+[   43.129910] cloud-init[2799]:   Downloading kiwisolver-1.5.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.1 kB)
+
+[   43.147249] cloud-init[2799]: Collecting packaging>=20.0 (from matplotlib)
+
+[   43.149945] cloud-init[2799]:   Downloading packaging-26.2-py3-none-any.whl.metadata (3.5 kB)
+
+[   43.254615] cloud-init[2799]: Collecting pillow>=9 (from matplotlib)
+
+[   43.257574] cloud-init[2799]:   Downloading pillow-12.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
+
+[   43.276577] cloud-init[2799]: Collecting pyparsing>=3 (from matplotlib)
+
+[   43.279953] cloud-init[2799]:   Downloading pyparsing-3.3.2-py3-none-any.whl.metadata (5.8 kB)
+
+[   43.294181] cloud-init[2799]: Collecting python-dateutil>=2.7 (from matplotlib)
+
+[   43.296883] cloud-init[2799]:   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+
+[   43.310728] cloud-init[2799]: Collecting six>=1.5 (from python-dateutil>=2.7->matplotlib)
+
+[   43.314566] cloud-init[2799]:   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+
+[   43.321700] cloud-init[2799]: Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.9 MB)
+
+[   43.386821] cloud-init[2799]:    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.9/16.9 MB 274.5 MB/s  0:00:00
+
+[   43.391793] cloud-init[2799]: Downloading matplotlib-3.11.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (10.0 MB)
+
+[   43.461666] cloud-init[2799]:    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.0/10.0 MB 145.3 MB/s  0:00:00
+
+[   43.465638] cloud-init[2799]: Downloading contourpy-1.3.3-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (355 kB)
+
+[   43.473329] cloud-init[2799]: Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+
+[   43.481643] cloud-init[2799]: Downloading fonttools-4.63.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.1 MB)
+
+[   43.511154] cloud-init[2799]:    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.1/5.1 MB 182.9 MB/s  0:00:00
+
+[   43.514050] cloud-init[2799]: Downloading kiwisolver-1.5.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.4 MB)
+
+[   43.529205] cloud-init[2799]:    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 101.6 MB/s  0:00:00
+
+[   43.532774] cloud-init[2799]: Downloading packaging-26.2-py3-none-any.whl (100 kB)
+
+[   43.539028] cloud-init[2799]: Downloading pillow-12.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.9 MB)
+
+[   43.572177] cloud-init[2799]:    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 212.9 MB/s  0:00:00
+
+[   43.575296] cloud-init[2799]: Downloading pyparsing-3.3.2-py3-none-any.whl (122 kB)
+
+[   43.581694] cloud-init[2799]: Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+
+[   43.590702] cloud-init[2799]: Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+
+[   43.678137] cloud-init[2799]: Installing collected packages: six, pyparsing, pillow, packaging, numpy, kiwisolver, fonttools, cycler, python-dateutil, contourpy, matplotlib
+
+[   46.923584] cloud-init[2799]: Successfully installed contourpy-1.3.3 cycler-0.12.1 fonttools-4.63.0 kiwisolver-1.5.0 matplotlib-3.11.1 numpy-2.4.6 packaging-26.2 pillow-12.3.0 pyparsing-3.3.2 python-dateutil-2.9.0.post0 six-1.17.0
+
+[   48.094659] cloud-init[2799]: python_bin=/opt/causal-composition/venv/bin/python
+
+[   48.881310] cloud-init[2799]: torch=2.10.0+cpu
+
+[   48.881533] cloud-init[2799]: threads=4
+
+[   48.881554] cloud-init[2799]: cuda=False
+
+[   67.115016] cloud-init[2799]: response t=50 tail50=0.110 endpoint/peak=0.267
+
+[   83.220280] cloud-init[2799]: response t=150 tail50=0.525 endpoint/peak=0.130
+
+[  100.128119] cloud-init[2799]: response t=200 tail50=0.451 endpoint/peak=0.427
+
+[  118.738801] cloud-init[2799]: response t=300 tail50=0.249 endpoint/peak=0.526
+
+

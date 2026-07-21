@@ -1,0 +1,18 @@
+{
+  "status": "complete",
+  "elapsed_seconds": 392.363349633,
+  "smoke": false,
+  "pilot_count": 4,
+  "confirmation_count": 6,
+  "chosen_condition": {
+    "train_fraction": 0.3,
+    "weight_decay": 1.0
+  },
+  "script_sha256": "a380fa68771d786e9c2ea56706da697e7af7c906351b967dc9a260c265826ddc",
+  "python": "3.11.15 (main, Jul  6 2026, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-5)]",
+  "torch": "2.10.0+cpu",
+  "platform": "Linux-6.1.176-221.367.amzn2023.x86_64-x86_64-with-glibc2.34",
+  "aws_instance_id": "i-0fe286e6e17e029c6",
+  "aws_region": "us-east-1",
+  "timestamp_utc": "2026-07-21T02:34:13Z"
+}

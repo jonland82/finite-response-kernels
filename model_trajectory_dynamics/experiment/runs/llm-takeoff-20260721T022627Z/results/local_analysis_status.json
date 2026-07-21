@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "input": "captured AWS raw trajectories",
+  "cloud_training_status": "complete",
+  "cloud_postprocessing_status": "failed_during_csv_write",
+  "local_postprocessing_status": "complete_after_analyzer_fix",
+  "analysis_script_sha256": "93d85d4861a7828bccae94030f926fc82724237f925f915e4f9f51d882300a5b",
+  "source_archive_sha256": "85cfa25be9e4eb09a29538c28d1335da7b87edcb99491b3a48acfa10da7aa03a"
+}

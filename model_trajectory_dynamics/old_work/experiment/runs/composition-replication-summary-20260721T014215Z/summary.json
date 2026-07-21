@@ -1,0 +1,128 @@
+{
+  "run_count": 3,
+  "all_runs_complete": true,
+  "scientific_elapsed_seconds_total": 430.329040194,
+  "composition": {
+    "mean": {
+      "50": {
+        "tv_by_seed": [
+          0.32286517636699785,
+          0.47394802797479707,
+          0.46698387387109663
+        ],
+        "tv_cross_seed_median": 0.46698387387109663,
+        "js_cross_seed_median": 0.2226297788182366,
+        "wasserstein_cross_seed_median": 0.16279149546736404,
+        "tv_exceeds_control_95th_count": 3
+      },
+      "200": {
+        "tv_by_seed": [
+          0.5836007209054201,
+          0.3751725755866134,
+          0.5853000005809574
+        ],
+        "tv_cross_seed_median": 0.5836007209054201,
+        "js_cross_seed_median": 0.3192442932401367,
+        "wasserstein_cross_seed_median": 0.15336300587805718,
+        "tv_exceeds_control_95th_count": 0
+      },
+      "400": {
+        "tv_by_seed": [
+          0.21529578054410248,
+          0.3153428350552802,
+          0.5169673638976419
+        ],
+        "tv_cross_seed_median": 0.3153428350552802,
+        "js_cross_seed_median": 0.13706910858561125,
+        "wasserstein_cross_seed_median": 0.10076361566801102,
+        "tv_exceeds_control_95th_count": 1
+      }
+    },
+    "median": {
+      "50": {
+        "tv_by_seed": [
+          0.30179404508656893,
+          0.31188605548710635,
+          0.2865668992282186
+        ],
+        "tv_cross_seed_median": 0.30179404508656893,
+        "js_cross_seed_median": 0.09558778526380775,
+        "wasserstein_cross_seed_median": 0.09071047385348141,
+        "tv_exceeds_control_95th_count": 3
+      },
+      "200": {
+        "tv_by_seed": [
+          0.2816104292403109,
+          0.3798622272181126,
+          0.26733265550247143
+        ],
+        "tv_cross_seed_median": 0.2816104292403109,
+        "js_cross_seed_median": 0.092543850854011,
+        "wasserstein_cross_seed_median": 0.0920820565965647,
+        "tv_exceeds_control_95th_count": 3
+      },
+      "400": {
+        "tv_by_seed": [
+          0.32952069799329764,
+          0.3042551328668155,
+          0.2890678428972635
+        ],
+        "tv_cross_seed_median": 0.3042551328668155,
+        "js_cross_seed_median": 0.11690656113305008,
+        "wasserstein_cross_seed_median": 0.10507967653774909,
+        "tv_exceeds_control_95th_count": 2
+      }
+    },
+    "trimmed_mean": {
+      "50": {
+        "tv_by_seed": [
+          0.32052872198173205,
+          0.33143555394302177,
+          0.2738966719649073
+        ],
+        "tv_cross_seed_median": 0.32052872198173205,
+        "js_cross_seed_median": 0.10574716017043274,
+        "wasserstein_cross_seed_median": 0.10264112964341936,
+        "tv_exceeds_control_95th_count": 3
+      },
+      "200": {
+        "tv_by_seed": [
+          0.2833352446753205,
+          0.7170081695187489,
+          0.31160741732844166
+        ],
+        "tv_cross_seed_median": 0.31160741732844166,
+        "js_cross_seed_median": 0.11344641139454077,
+        "wasserstein_cross_seed_median": 0.11465752635232342,
+        "tv_exceeds_control_95th_count": 3
+      },
+      "400": {
+        "tv_by_seed": [
+          0.26204125049009275,
+          0.3290841552291925,
+          0.7602675872931307
+        ],
+        "tv_cross_seed_median": 0.3290841552291925,
+        "js_cross_seed_median": 0.1402758894638053,
+        "wasserstein_cross_seed_median": 0.10540368787011004,
+        "tv_exceeds_control_95th_count": 1
+      }
+    }
+  },
+  "linearity": {
+    "minimum_median_absolute_curve_cosine": 0.9996820695935497,
+    "minimum_median_per_replica_cosine": 0.9998280307116535,
+    "replica_pair_evaluations_below_0_9": 38,
+    "replica_pair_evaluations_total": 384
+  },
+  "response_finiteness": {
+    "last_fifty_mass_minimum": 0.11033190631100366,
+    "last_fifty_mass_median": 0.3113699854596731,
+    "last_fifty_mass_maximum": 0.7038568318183586,
+    "endpoint_to_peak_minimum": 0.12886692285883516,
+    "endpoint_to_peak_median": 0.5143087246501383,
+    "endpoint_to_peak_maximum": 0.8783804813448095,
+    "positive_late_slope_count": 13,
+    "response_count": 18
+  }
+}

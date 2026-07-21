@@ -1,0 +1,98 @@
+{
+  "response_concentration": {
+    "step_0050": {
+      "largest_replica": 6,
+      "largest_replica_l1_share": 0.06949115377839134,
+      "largest_replica_l2_energy_share": 0.18837574396903556
+    },
+    "step_0150": {
+      "largest_replica": 27,
+      "largest_replica_l1_share": 0.28454288771126934,
+      "largest_replica_l2_energy_share": 0.4339043445169372
+    },
+    "step_0200": {
+      "largest_replica": 27,
+      "largest_replica_l1_share": 0.2546712562970572,
+      "largest_replica_l2_energy_share": 0.22224705815155457
+    },
+    "step_0300": {
+      "largest_replica": 12,
+      "largest_replica_l1_share": 0.26948672799546436,
+      "largest_replica_l2_energy_share": 0.35489816968125193
+    },
+    "step_0400": {
+      "largest_replica": 63,
+      "largest_replica_l1_share": 0.24920999161898244,
+      "largest_replica_l2_energy_share": 0.27642765860595075
+    },
+    "step_0500": {
+      "largest_replica": 21,
+      "largest_replica_l1_share": 0.4395570756529868,
+      "largest_replica_l2_energy_share": 0.44588069661514645
+    }
+  },
+  "composition_robustness": {
+    "50": {
+      "mean_absolute": {
+        "js_divergence_bits": 0.1192232803583128,
+        "total_variation": 0.32286517636699785,
+        "wasserstein_fraction_of_horizon": 0.10402770157276557
+      },
+      "median_absolute": {
+        "js_divergence_bits": 0.09558778526380775,
+        "total_variation": 0.30179404508656893,
+        "wasserstein_fraction_of_horizon": 0.089774766281885
+      },
+      "ten_percent_trimmed_mean_absolute": {
+        "js_divergence_bits": 0.10574716017043272,
+        "total_variation": 0.320528721981732,
+        "wasserstein_fraction_of_horizon": 0.10264112964341936
+      }
+    },
+    "200": {
+      "mean_absolute": {
+        "js_divergence_bits": 0.33568141424045644,
+        "total_variation": 0.5836007209054201,
+        "wasserstein_fraction_of_horizon": 0.15336300587805718
+      },
+      "median_absolute": {
+        "js_divergence_bits": 0.092543850854011,
+        "total_variation": 0.2816104292403109,
+        "wasserstein_fraction_of_horizon": 0.0920820565965647
+      },
+      "ten_percent_trimmed_mean_absolute": {
+        "js_divergence_bits": 0.09385974514591425,
+        "total_variation": 0.28333524467532056,
+        "wasserstein_fraction_of_horizon": 0.09415014144813444
+      }
+    },
+    "400": {
+      "mean_absolute": {
+        "js_divergence_bits": 0.05349924007949869,
+        "total_variation": 0.21529578054410248,
+        "wasserstein_fraction_of_horizon": 0.060446815991361834
+      },
+      "median_absolute": {
+        "js_divergence_bits": 0.12549609473954484,
+        "total_variation": 0.32952069799329764,
+        "wasserstein_fraction_of_horizon": 0.10777818810568601
+      },
+      "ten_percent_trimmed_mean_absolute": {
+        "js_divergence_bits": 0.07904472353023227,
+        "total_variation": 0.26204125049009275,
+        "wasserstein_fraction_of_horizon": 0.06455880079604669
+      }
+    }
+  },
+  "linearity_robustness": {
+    "raw_flat_cosine": 0.009796375679627578,
+    "median_absolute_curve_cosine": 0.9999106693892192,
+    "per_replica_cosine_median": 0.9999844106368703,
+    "per_replica_cosine_minimum": 0.006969443931147597,
+    "replicas_below_0_9_cosine": 2,
+    "epsilon_small_top_replica": 27,
+    "epsilon_small_top_replica_energy_share": 0.9963939250305668,
+    "epsilon_large_top_replica": 27,
+    "epsilon_large_top_replica_energy_share": 0.9924214398937191
+  }
+}

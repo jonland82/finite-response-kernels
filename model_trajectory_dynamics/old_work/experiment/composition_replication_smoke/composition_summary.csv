@@ -1,0 +1,2 @@
+start_step,second_step,block_length,js_divergence_bits,total_variation,wasserstein_lags,wasserstein_fraction_of_horizon,js_ci_low,js_ci_high,tv_ci_low,tv_ci_high,wasserstein_ci_low,wasserstein_ci_high
+5,10,5,0.06897446285392295,0.25612527041348354,1.1674331660826733,0.11674331660826734,0.05320076000108237,0.08249949062426735,0.21942345062617297,0.28261513328436766,0.09103284434691061,0.1470748052795868
