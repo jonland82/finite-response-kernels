@@ -43,6 +43,12 @@ MUTED = "#667085"
 GRID = "#D8E2E3"
 WASH = "#F1F6F6"
 COLORS = [TEAL, GOLD, CORAL, PURPLE]
+LABEL_BOX = {
+    "boxstyle": "round,pad=0.18",
+    "facecolor": "white",
+    "edgecolor": "none",
+    "alpha": 0.94,
+}
 
 
 plt.rcParams.update(
@@ -129,10 +135,18 @@ def kernel_atlas() -> None:
     axes[0, 0].annotate(
         "$F_\\infty=1$",
         xy=(25, 1),
-        xytext=(19, 1.34),
+        xytext=(18.5, 1.38),
         color=MUTED,
         fontsize=6.5,
-        arrowprops={"arrowstyle": "-", "color": MUTED, "linewidth": 0.6},
+        bbox=LABEL_BOX,
+        zorder=6,
+        arrowprops={
+            "arrowstyle": "-",
+            "color": MUTED,
+            "linewidth": 0.6,
+            "shrinkA": 2,
+            "shrinkB": 2,
+        },
     )
     save(fig, "kernel_atlas")
 
@@ -166,12 +180,14 @@ def hidden_lag_collision() -> None:
     left.legend(ncols=3, loc="upper center", bbox_to_anchor=(0.5, -0.22), fontsize=6.7)
     left.text(
         0.02,
-        0.95,
+        0.98,
         "$\\sum_j a_j2^{-j}=1$ in every case",
         transform=left.transAxes,
         color=MUTED,
         fontsize=6.6,
         va="top",
+        bbox=LABEL_BOX,
+        zorder=6,
     )
 
     indices = np.arange(39)
@@ -180,14 +196,30 @@ def hidden_lag_collision() -> None:
         values = tree_profile(schema, 38)
         right.plot(indices, values, color=color, linewidth=1.35, marker="o", markersize=2.2, label=label)
     right.axvline(lag - 0.5, color=NAVY, linestyle=(0, (3, 2)), linewidth=0.8)
-    right.text(1.0, 12.15, "exactly identical prefix", color=MUTED, fontsize=6.7)
+    right.text(
+        1.6,
+        12.35,
+        "exactly identical prefix",
+        color=MUTED,
+        fontsize=6.7,
+        bbox=LABEL_BOX,
+        zorder=6,
+    )
     right.annotate(
         "first reveal",
         xy=(lag - 0.5, 7.0),
-        xytext=(lag + 2.0, 10.6),
+        xytext=(lag + 2.35, 10.55),
         fontsize=6.7,
         color=NAVY,
-        arrowprops={"arrowstyle": "->", "color": NAVY, "linewidth": 0.7},
+        bbox=LABEL_BOX,
+        zorder=6,
+        arrowprops={
+            "arrowstyle": "->",
+            "color": NAVY,
+            "linewidth": 0.7,
+            "shrinkA": 2,
+            "shrinkB": 2,
+        },
     )
     right.set_xlim(-0.5, 38.5)
     right.set_ylim(-0.25, 13.6)
@@ -245,13 +277,24 @@ def aws_recovery_results() -> None:
     left.bar(positions + width / 2, forecast_success, width, color=GOLD, label="forecast")
     left.axvline(1.5, color=NAVY, linestyle=(0, (3, 2)), linewidth=0.75)
     left.set_xticks(positions, horizon_labels)
-    left.set_xlabel("observation ratio $T/L$")
+    left.set_xlabel("observation ratio $T/D$")
     left.set_ylabel("success rate (%)")
     left.set_ylim(0, 18)
     left.set_title("Hidden-lag family stays hard", loc="left")
     left.grid(axis="y")
     left.legend(loc="upper left", fontsize=6.8)
-    left.text(0.02, 0.02, "noiseless origin windows", transform=left.transAxes, color=MUTED, fontsize=6.5)
+    left.text(
+        0.98,
+        0.94,
+        "noiseless origin windows",
+        transform=left.transAxes,
+        color=MUTED,
+        fontsize=6.5,
+        ha="right",
+        va="top",
+        bbox=LABEL_BOX,
+        zorder=6,
+    )
 
     noise_positions = np.arange(len(noise_rows))
     right.plot(noise_positions, noise_accuracy, color=TEAL, marker="o", linewidth=1.7, label="modal class")
@@ -267,18 +310,35 @@ def aws_recovery_results() -> None:
     right.annotate(
         "99.8% forecast",
         xy=(3, noise_forecast[-1]),
-        xytext=(2.0, 87),
+        xytext=(2.92, 88),
+        ha="right",
         color=GOLD,
         fontsize=6.6,
-        arrowprops={"arrowstyle": "->", "color": GOLD, "linewidth": 0.7},
+        bbox=LABEL_BOX,
+        zorder=6,
+        arrowprops={
+            "arrowstyle": "->",
+            "color": GOLD,
+            "linewidth": 0.7,
+            "shrinkA": 2,
+            "shrinkB": 2,
+        },
     )
     right.annotate(
         "32.1% class",
         xy=(3, noise_accuracy[-1]),
-        xytext=(1.85, 20),
+        xytext=(2.15, 18),
         color=TEAL,
         fontsize=6.6,
-        arrowprops={"arrowstyle": "->", "color": TEAL, "linewidth": 0.7},
+        bbox=LABEL_BOX,
+        zorder=6,
+        arrowprops={
+            "arrowstyle": "->",
+            "color": TEAL,
+            "linewidth": 0.7,
+            "shrinkA": 2,
+            "shrinkB": 2,
+        },
     )
     save(fig, "aws_recovery_results")
 

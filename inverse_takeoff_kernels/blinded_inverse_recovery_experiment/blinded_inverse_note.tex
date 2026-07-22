@@ -46,7 +46,10 @@
 \newtheoremstyle{cleanprop}
   {0.5ex}{0.5ex}{\itshape}{} {\sffamily\bfseries\color{navy}}{.}{0.45em}{}
 \theoremstyle{cleanprop}
-\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
 \newcommand{\NN}{\mathbb{N}}
 
 \begin{document}
@@ -70,17 +73,18 @@ Finite-horizon limits in recovering recursive redundancy}\par
 Memoization collapses repeated calls in a recursion tree into shared states.
 The velocity takeoff profile records how quickly that redundant work appears
 as input size grows. This note studies the inverse question: can a finite,
-noisy takeoff trace reveal the recurrence that produced it? We give an exact
-finite-horizon obstruction. For every observation length there are distinct
-aperiodic nonnegative-integer recurrences with the same terminal tree speed,
-the same total branching, the same polynomial memoized-state growth, and an
-identical observed takeoff prefix. We then report two blinded AWS sweeps
-containing 1.16 million hidden schemas and 32.67 million recovery trials. A
-generic matrix-pencil baseline succeeds on many visible short-lag recurrences
-but fails sharply on the constructed hidden-lag family. Under noise, accurate
-forecasting often survives after modal identification has collapsed. The
-result is both a negative theorem and a practical warning: predicting a
-recursive response is not the same as identifying its mechanism.
+noisy takeoff trace reveal the recurrence that produced it? Our contributions
+are fivefold. We (i) characterize exactly what a finite observed prefix determines;
+(ii) construct exponentially large fixed-invariant ambiguity classes, obtain a
+minimax lower bound under arbitrary parameter-independent noise, and show that
+finite holdout cannot certify mechanism; (iii) give a triangular exact-recovery
+formula under a known lag bound; (iv) prove that fixed speed and aperiodicity
+still permit arbitrarily slow settling; and (v) test a generic matrix-pencil
+baseline in two blinded AWS sweeps containing 1.16 million hidden schemas and
+32.67 million trials. The baseline succeeds on many visible short-lag
+recurrences but fails sharply on the hidden-lag family. Under noise, accurate
+forecasting often survives after modal identification collapses. Prediction,
+modal explanation, and recursive source identification are distinct claims.
   }}
 \vspace{0.9em}
 \end{@twocolumnfalse}
@@ -90,9 +94,10 @@ recursive response is not the same as identifying its mechanism.
 
 A naive recursive program exposes a tree of calls. Equal labels can appear
 many times; memoization identifies them and leaves a directed acyclic graph
-(DAG) of distinct subproblems. Let $N_n$ be the number of calls in the naive
-tree on input size $n$, and let $M_n$ be the number of distinct reachable
-labels. The logarithmic overlap is
+(DAG) of distinct subproblems. For input size $n\ge0$, let $N_n$ be the number
+of calls in the naive tree and let $M_n$ be the number of distinct reachable
+labels. Throughout, $\log$ denotes the natural logarithm. The logarithmic
+overlap is
 \[
 S_n=\log\frac{N_n}{M_n},
 \]
@@ -105,8 +110,9 @@ where
 u_n=\log N_{n+1}-\log N_n,\qquad
 w_n=\log M_{n+1}-\log M_n.
 \]
-If $N_n$ grows exponentially with speed $\alpha>0$ while $M_n$ is
-polynomial, then $u_n\to\alpha$, $w_n\to0$, and $v_n\to\alpha$. That terminal
+If $N_n$ grows exponentially and
+$\alpha:=\lim_{n\to\infty}u_n>0$ exists while $M_n$ is polynomial, then
+$w_n\to0$ and $v_n\to\alpha$. That terminal
 number says how fast redundancy eventually accumulates, but not how it gets
 there. Two recurrences can have the same cruising speed while one accelerates
 immediately and the other rings for a very long time.
@@ -121,6 +127,13 @@ settling, alternating correction, or damped ringing. Forward analysis starts
 from a recurrence and predicts $F$. Inverse takeoff starts from an observed
 prefix of $F$ and asks what can be recovered.
 
+A lag $j\ge1$ is measured in input steps. An \emph{observation horizon}
+$T\ge1$ means that exactly the $T$ samples $F_0,\ldots,F_{T-1}$ are available.
+Thus ``length $T$'' counts samples rather than the largest displayed index. A
+\emph{forecast horizon} $h\ge1$ refers to the next $h$ samples
+$F_T,\ldots,F_{T+h-1}$. When a maximum admissible lag is assumed, $D\ge1$
+denotes that known bound.
+
 The analogy is system identification, but the object is unusual. The
 ``plant'' is the redundant response of a recursion tree before memoization
 quotients equal states. Classical Prony and matrix-pencil methods can estimate
@@ -128,18 +141,38 @@ damped exponential modes from samples \cite{prony,hua,plonka}. What is new is
 the constrained source class and the distinction between response modes and
 literal recursive branches.
 
+\paragraph{Contributions}
+The note makes five concrete advances. \textbf{First}, an exact difference
+identity and root certificate lead to a complete characterization: a
+profile's first $T$ samples reveal total branching and precisely the coefficients at
+lags below $T$. \textbf{Second}, the unseen tail can contain exponentially many
+aperiodic integer recurrences with the same speed, branch count, DAG-growth
+class, and observed prefix; the resulting source ambiguity survives arbitrary
+parameter-independent noise and any finite holdout placed before the hidden
+lag returns. \textbf{Third}, the negative result has a constructive boundary:
+given a lag bound $D$ and the exact samples through $F_D$, a triangular formula
+recovers every coefficient. \textbf{Fourth}, a fixed-speed family proves that
+aperiodicity does not bound the settling time, explaining the long echo trains
+seen in the kernels. \textbf{Fifth}, 32.67 million blinded recovery trials map
+where a classical spectral estimator works, where it fails, and how highly
+accurate forecasts can coexist with incorrect modal structure.
+
 \section{Finite-lag response and its modes}
 
 Consider the finite-lag schema
 \begin{equation}
-N_n=1+\sum_{j\in J}a_jN_{n-j},\qquad N_m=1\ \text{for }m\le0,
+N_n=1+\sum_{j\in J}a_jN_{n-j},\qquad N_q=1\ \text{for }q\le0,
 \label{eq:recurrence}
 \end{equation}
 where $J\subset\{1,2,\ldots\}$ is finite and
-$a_j\in\mathbb{Z}_{>0}$. Define
+$a_j\in\mathbb{Z}_{>0}$ (the positive integers) is the number of branches at
+lag $j$. The symbol $q$ is only a boundary index. For a complex variable $z$,
+define the recurrence polynomial
 \[
 Q(z)=1-\sum_{j\in J}a_jz^j.
 \]
+We call the schema \emph{aperiodic} when the greatest common divisor of the
+active lag set $J$ is one.
 When $\gcd(J)=1$ and $\sum_j a_j>1$, $Q$ has a unique smallest-modulus
 positive root $\rho\in(0,1)$, and the terminal speed is
 $\alpha=-\log\rho$. Non-dominant singularities $\zeta$ contribute normalized
@@ -163,9 +196,13 @@ exactly fixed.
 
 An observed tail is modeled approximately as
 \begin{equation}
-Y_n:=F_n-1\approx\sum_{r=1}^{m}c_r\theta_r^n.
+Y_n:=F_n-1\approx\sum_{r=1}^{R}c_r\theta_r^n.
 \label{eq:modal}
 \end{equation}
+Here $Y_n$ is the deviation from terminal takeoff, $R$ is the retained mode
+count, $c_r$ is the amplitude of mode $r$, and $\theta_r$ is its normalized
+pole. Complex modes and amplitudes occur in conjugate pairs because $Y_n$ is
+real.
 The approximation matters. Even when $N_n$ has a finite exponential
 expansion, the logarithmic ratio defining $F_n$ introduces higher-order mode
 products. A low-rank spectral fit is therefore a tail model, not an algebraic
@@ -190,60 +227,166 @@ that each transient remains legible.}
 \label{fig:atlas}
 \end{figure*}
 
-\section{An exact finite-horizon obstruction}
+\section{What a finite trace can contain}
 
-The central difficulty is more basic than numerical noise: the recursive
-signal may not yet have returned from its hidden lag.
+The obstruction is more basic than numerical noise: a recursive signal cannot
+reveal a branch whose lag has not returned. The following sequence makes that
+idea exact and also gives its positive converse. Extend every schema by
+$a_j=0$ off its finite support, and write $A=\sum_j a_j$.
 
-\begin{proposition}[Fixed-invariant finite-horizon nonidentifiability]
-Fix an integer observation length $T$. There exist distinct aperiodic
-finite-lag schemas satisfying \eqref{eq:fixedspeed}, having the same total
-branch count and $M_n=O(n)$, whose takeoff profiles agree exactly on
-$F_0,\ldots,F_{T-1}$.
-\end{proposition}
-
+\begin{lemma}[Exact difference response]\label{lem:difference}
+Let $d_n=N_n-N_{n-1}$ for $n\ge1$ and $d_n=0$ for $n\le0$. Then
+\begin{equation}
+d_1=A,\qquad d_n=\sum_j a_jd_{n-j}\quad(n\ge2),
+\label{eq:difference}
+\end{equation}
+and, as a formal power series,
+\[
+G_d(z):=\sum_{n\ge1}d_nz^n=\frac{Az}{Q(z)}.
+\]
+\end{lemma}
 \begin{proof}
-Choose $L\ge T$ and an integer
-$1\le t<2^{L+1}/3$. Set
-\[
-a_L=t,\quad
-a_{L+1}=2^{L+1}-3t,\quad
-a_{L+2}=2t.
-\]
-All three coefficients are positive. Their total is
-$A=2^{L+1}$, independent of $t$, and
-\[
-4a_L+2a_{L+1}+a_{L+2}=2^{L+2},
-\]
-which is \eqref{eq:fixedspeed} after division by $2^{L+2}$. Hence every member
-has $\alpha=\log2$. The consecutive support
-$\{L,L+1,L+2\}$ is aperiodic, and its reachable labels lie in a
-one-dimensional interval, so $M_n=O(n)$.
-
-For $1\le n\le L$, every referenced boundary value in
-\eqref{eq:recurrence} equals one. Therefore
-\[
-N_1=\cdots=N_L=1+A
-\]
-for every $t$. It follows that $F_0,\ldots,F_{L-1}$ are identical. At the next
-step,
-\[
-N_{L+1}=1+A+tA,
-\]
-so different $t$ values separate. They also define distinct polynomials
-$Q_t$; because each has constant term one, their full root multisets cannot
-all coincide. Thus no estimator receiving only the common prefix can recover
-the coefficient vector correctly for every member.
+The boundary convention gives $N_1=1+A$, hence $d_1=A$.
+Subtracting \eqref{eq:recurrence} at $n-1$ from the equation at $n$ gives
+\eqref{eq:difference}; multiplying by $z^n$ and summing gives the quotient.
 \end{proof}
 
-Intuitively, this is like listening for an echo before sound has reached the
-reflecting wall. Unlimited estimator sophistication cannot recover information
-that is absent from the observation window. The proposition concerns distinct
-combined recurrences, not merely different stories that split the same
-coefficients into latent channels. Figure~\ref{fig:collision} shows the
-construction directly: different hidden branch allocations have the same
-fixed-speed invariant and exactly the same visible prefix, then emit different
-echoes when the longest lag begins to return.
+\begin{lemma}[Fixed-speed root certificate]\label{lem:root}
+Suppose $a_j\ge0$, \eqref{eq:fixedspeed} holds, and
+$\gcd\{j:a_j>0\}=1$, where $\gcd$ denotes greatest common divisor. Then
+$\rho=1/2$ is the unique root of $Q$ in
+$|z|\le1/2$. Consequently the terminal speed is $\alpha=\log2$.
+\end{lemma}
+\begin{proof}
+If $Q(z)=0$ and $|z|\le1/2$, then
+\[
+1=\left|\sum_j a_jz^j\right|
+ \le\sum_j a_j|z|^j\le\sum_j a_j2^{-j}=1.
+\]
+Equality forces $|z|=1/2$ and all active phases $z^j/|z|^j$ to equal one.
+Their lag gcd is one, so $z=1/2$.
+\end{proof}
+
+\begin{proposition}[No uniform settling rate]\label{prop:slow}
+For integers $L\ge2$, consider the aperiodic fixed-speed family
+\[
+Q_L(z)=1-(2^L-1)z^L-2z^{L+1},
+\]
+and define
+\[
+r_L:=\max_{\substack{Q_L(\zeta)=0\\ \zeta\ne1/2}}
+\left|\frac{1/2}{\zeta}\right|.
+\]
+Then $r_L\to1$ as $L\to\infty$. Thus fixed terminal speed and aperiodicity do
+not impose a uniform transient length.
+\end{proposition}
+\begin{proof}
+Put $x=2z$. The root equation becomes
+$f_L(x)+g_L(x)=0$, where $f_L=1-x^L$ and
+$g_L=2^{-L}x^L(1-x)$. On a circle of radius
+$C2^{-L}/L^2$ about $\omega_L=e^{2\pi i/L}$, Taylor expansion gives
+$|f_L|\sim C2^{-L}/L$ and $|g_L|\sim2\pi2^{-L}/L$.
+Choosing $C>2\pi$, Rouch\'e's theorem gives a root
+$x_L=\omega_L+O(2^{-L}/L^2)$. Lemma~\ref{lem:root} gives $|x_L|>1$, while
+$|x_L|\to1$; hence the associated normalized radius $|1/x_L|\to1$.
+\end{proof}
+
+\begin{theorem}[Complete finite-prefix characterization]\label{thm:prefix}
+Consider schemas with coefficient sequences $a=(a_j)$ and $b=(b_j)$ and a
+common known terminal speed $\alpha$. Let
+$A_a=\sum_j a_j$ and $A_b=\sum_j b_j$. For every observation horizon $T\ge1$,
+their profiles agree on $F_0,\ldots,F_{T-1}$ if and only if $A_a=A_b$ and
+\[
+a_j=b_j\qquad(1\le j<T).
+\]
+\end{theorem}
+\begin{proof}
+The prefix reconstructs
+\[
+N_n=\exp\!\left(\alpha\sum_{r=0}^{n-1}F_r\right),\qquad 1\le n\le T,
+\]
+and hence $d_1,\ldots,d_T$. Lemma~\ref{lem:difference} gives $A=d_1$ and the
+triangular inversion
+\begin{equation}
+a_k=\frac{d_{k+1}-\sum_{j=1}^{k-1}a_jd_{k+1-j}}{d_1},
+\qquad 1\le k<T.
+\label{eq:triangular}
+\end{equation}
+Thus equality of profiles implies the stated equalities. Conversely,
+\eqref{eq:difference} shows inductively that those equalities force
+$d_1,\ldots,d_T$, and therefore the profile prefixes, to agree.
+\end{proof}
+
+\begin{corollary}[Exact recovery with a lag bound]\label{cor:positive}
+Let the known integer $D\ge1$ be an upper bound on the largest lag, so that
+$a_j=0$ for $j>D$. Then the $D+1$ noiseless samples
+$F_0,\ldots,F_D$, together with $\alpha$, uniquely recover the full recurrence
+by \eqref{eq:triangular}.
+\end{corollary}
+
+\begin{proposition}[Exponential fixed-invariant ambiguity]\label{prop:family}
+Fix an observation horizon $T$ and choose an integer base lag $L\ge T$. There
+are
+\[
+K_L=\left\lfloor\frac{2^{L+1}-1}{3}\right\rfloor
+\]
+distinct aperiodic integer schemas with common speed $\log2$, total branch
+count $2^{L+1}$, and at-most-linear memoized-state growth $M_n=O(n)$, all
+agreeing on
+$F_0,\ldots,F_{T-1}$.
+\end{proposition}
+\begin{proof}
+For $1\le t<2^{L+1}/3$, set
+\[
+a_L=t,\quad a_{L+1}=2^{L+1}-3t,\quad a_{L+2}=2t.
+\]
+The coefficients are positive, sum to $2^{L+1}$, and satisfy
+$4a_L+2a_{L+1}+a_{L+2}=2^{L+2}$, which is
+\eqref{eq:fixedspeed}. Consecutive support gives aperiodicity, so
+Lemma~\ref{lem:root} fixes the speed. Reachable labels are one-dimensional,
+giving $M_n=O(n)$. Theorem~\ref{thm:prefix} gives the common prefix. Distinct
+$t$ first separate at $F_L$ and define distinct $Q_t$.
+\end{proof}
+
+\begin{corollary}[Noisy minimax obstruction]\label{cor:minimax}
+Choose uniformly from the $K_L$ schemas in Proposition~\ref{prop:family} and
+pass the common prefix through any parameter-independent noise channel, meaning
+that the channel law depends on the clean prefix but not on its schema label.
+Every source estimator $\widehat t$ satisfies
+\[
+\Pr(\widehat t=t)\le K_L^{-1},\qquad
+\inf_{\widehat t}\sup_t\Pr_t(\widehat t\ne t)\ge1-K_L^{-1}.
+\]
+Here $t$ indexes the true schema, $\widehat t$ is its estimate, $\Pr$ is the
+joint probability over the uniform source and noise, and $\Pr_t$ conditions on
+schema $t$.
+\end{corollary}
+\begin{proof}
+All $K_L$ observation laws are identical. Under the uniform prior, the
+posterior remains uniform, giving the first bound; some parameter has success
+at most the average, giving the minimax bound.
+\end{proof}
+
+\begin{corollary}[Finite holdout does not certify mechanism]\label{cor:holdout}
+For arbitrary observation horizon $T$ and forecast horizon $h$, distinct
+fixed-invariant schemas can agree on both the observed samples
+$F_0,\ldots,F_{T-1}$ and the forecast targets
+$F_T,\ldots,F_{T+h-1}$ while having different recurrence polynomials and full
+modal spectra.
+\end{corollary}
+\begin{proof}
+Use Proposition~\ref{prop:family} with $L\ge T+h$. The profiles agree through
+$F_{T+h-1}$, while the distinct polynomials $Q_t$, each with constant
+coefficient one, cannot have the same complete root multiset.
+\end{proof}
+
+The picture is now sharp. Without a lag bound, the ambiguity class can grow
+exponentially and survives arbitrary parameter-independent noise. With a lag
+bound, the $D+1$ samples through $F_D$ give a triangular decoder. Intuitively,
+this is listening for an echo before sound reaches the
+wall: unlimited estimator sophistication cannot recover absent information.
+Figure~\ref{fig:collision} displays one such equivalence class and its eventual
+separation.
 
 \begin{figure*}[p]
 \centering
@@ -261,32 +404,46 @@ algebraic, not a consequence of noise or an unsuccessful optimizer.}
 
 The study used five fixed-speed families: immediate binary recursion; the
 near-periodic slow family
-$a_L=2^L-1$, $a_{L+1}=2$; the proposition's finite-horizon family; a two-scale
+$a_L=2^L-1$, $a_{L+1}=2$, where $L$ is its base lag; the exponentially
+ambiguous finite-horizon family;
+a two-scale
 family with one local and one delayed channel; and random dyadic refinements
 that replace one branch at lag $j$ by two branches at lag $j+1$. Every such
 refinement preserves \eqref{eq:fixedspeed}.
 
 For each hidden schema we computed an exact integer call-count sequence and
-formed $F_n$. The estimator received only
+formed $F_n$. Let $\mathcal W$ denote the current set of $T$ observed indices
+and define
+\[
+\operatorname{RMS}_{\mathcal W}(Y)
+:=\left(T^{-1}\sum_{n\in\mathcal W}Y_n^2\right)^{1/2}.
+\]
+The estimator received only
 \[
 \widetilde Y_n=Y_n+\sigma
-\max\{\operatorname{RMS}(Y),10^{-12}\}\,\xi_n,
+\max\{\operatorname{RMS}_{\mathcal W}(Y),10^{-12}\}\,\xi_n,
 \qquad \xi_n\sim\mathcal N(0,1),
 \]
-not the coefficients or true roots. We tested windows beginning at the origin
-and immediately after the maximum lag. Relative noise levels were
-$0,10^{-8},10^{-5},10^{-3}$.
+not the coefficients or true roots. Here $\sigma\ge0$ is the relative noise
+level and the $\xi_n$ are independent standard-normal draws. We tested windows
+beginning at the origin and immediately after the maximum lag $D:=\max J$.
+Relative noise levels were $0,10^{-8},10^{-5},10^{-3}$.
 
 The baseline formed Hankel matrices
 \[
 (H_0)_{ij}=\widetilde Y_{i+j},\qquad
 (H_1)_{ij}=\widetilde Y_{i+j+1},
 \]
-selected an order from one through six by held-out prediction, and recovered
-poles from a truncated-SVD matrix pencil. It then forecast 24 unseen samples.
-We scored the leading-pole radius, qualitative class (monotone, alternating,
-or ringing), and holdout normalized RMSE. ``Forecast success'' means NRMSE
-below $0.1$. Ground truth was used only after fitting.
+where $i,j\ge0$ range over entries whose subscripts lie in the observed
+window. It selected an order from one through six by held-out prediction and
+recovered poles from a matrix pencil truncated by singular-value decomposition
+(SVD). It then forecast 24 unseen samples. We scored the largest recovered
+pole modulus, qualitative class (monotone, alternating, or ringing), and
+holdout normalized root-mean-square error (NRMSE). The NRMSE is the holdout
+RMS prediction error divided by the maximum of the clean-window RMS, holdout
+RMS, and $10^{-12}$. ``Forecast success'' means NRMSE below $0.1$. Ground
+truth was used only after fitting. Leading-radius error is the absolute
+difference between the largest recovered and true normalized pole moduli.
 
 Two independent seeded sweeps were run. Table~\ref{tab:runs} reports launcher
 wall time, which slightly overstates billable instance time. At the verified
@@ -312,7 +469,8 @@ Total & 1,164,742 & 32,668,224 & 32.8 min \\
 
 The broad run used lengths $24,48,96$ and lags through 18. The horizon sweep
 used lengths $8,16,32,64$ and lags through 32, permitting explicit bins in
-$T/L$. Each schema contributed every window, regime, and noise condition; the
+$T/D$, where $T$ is the window length and $D$ is that schema's maximum lag.
+Each schema contributed every window, regime, and noise condition; the
 schema generator itself was stochastic rather than an exhaustive uniform
 census.
 
@@ -337,11 +495,11 @@ remaining reliable after modal identification degrades.
 
 \paragraph{Sub-lag observations are blind.}
 Table~\ref{tab:horizon} isolates noiseless finite-horizon traces beginning at
-the origin. Modal-class accuracy was zero throughout $T/L<1$. This empirical
-zero is consistent with the proposition, although the theorem itself proves
-coefficient nonidentifiability rather than a particular classifier's error.
+the origin. Modal-class accuracy was zero throughout $T/D<1$. This empirical
+zero is consistent with Corollary~\ref{cor:minimax}, although the exact result
+concerns source recovery rather than a particular modal classifier's error.
 There is no rapid recovery immediately after the lag: the generic six-mode
-baseline remained poor even for $T/L\ge2$. These schemas can have degree 34
+baseline remained poor even for $T/D\ge2$. These schemas can have degree 34
 and crowded near-periodic modes, so the post-lag failure is an empirical
 limitation of the baseline, not a second impossibility theorem.
 
@@ -352,7 +510,7 @@ limitation of the baseline, not a second impossibility theorem.
 \small
 \begin{tabular}{lrrr}
 \toprule
-$T/L$ & Trials & Class acc. & Forecast succ. \\
+$T/D$ & Trials & Class acc. & Forecast succ. \\
 \midrule
 $<0.5$ & 101,309 & 0.0\% & 4.9\% \\
 $[0.5,1)$ & 132,303 & 0.0\% & 0.0\% \\
@@ -380,12 +538,13 @@ identification are three different evidentiary levels.
 
 \section{What the experiment establishes}
 
-The exact contribution is modest but sharp. Without a lag bound, finite-prefix
-source recovery is impossible even after terminal speed, total branching, DAG
-growth class, and aperiodicity are fixed. The experiment then shows where a
-standard spectral tool works and where it does not. Massive replication makes
-the family contrast stable; it does not turn the classical matrix-pencil
-algorithm into a novel method.
+The exact results characterize every finite-prefix equivalence class, exhibit
+exponentially many indistinguishable fixed-invariant sources, extend the
+obstruction to arbitrary parameter-independent noise, and give a constructive
+decoder once a lag bound is known. The experiment then shows where a standard
+spectral tool works and where it does not. Massive replication makes the family
+contrast stable; it does not turn the classical matrix-pencil algorithm into a
+novel method.
 
 Several limitations matter. The schemas are synthetic and one-dimensional;
 real program traces may contain input-dependent branching and measurement
@@ -405,20 +564,31 @@ together with a declared lag bound and sparsity. A constraint-aware decoder can
 enumerate or optimize over feasible dyadic recurrences, forward-simulate their
 takeoff curves, and compare them on held-out samples. The academically useful
 test is whether those constraints shift the recovery boundary as a function of
-$T/L$, noise, pole separation, and modal radius. Real recursive traces should
+$T/D$, noise, pole separation, and modal radius. Real recursive traces should
 then test whether the recovered equivalence classes remain stable outside the
 synthetic model.
 
 \section{Conclusion}
 
-Recursive redundancy casts a modal shadow, but a short shadow does not uniquely
-reveal the object that cast it. Before the longest lag returns, distinct
-fixed-speed recurrences can be exactly observationally identical. Afterward,
-generic modal recovery may work well on ordinary short-lag families yet remain
-fragile on nearly periodic ones. Most strikingly, excellent forecasts can
-coexist with incorrect modes. Inverse takeoff should therefore report what the
-data support in order: response prediction first, modal structure second, and
-literal recursive mechanism only under explicit identifying constraints.
+The mathematical boundary is now explicit. A finite trace discloses its total
+branching and all coefficients below the observation horizon---no more and no
+less. Beyond that horizon, exponentially many fixed-speed, aperiodic sources
+can remain observationally identical; adding parameter-independent noise or a
+finite pre-return holdout cannot manufacture the missing information. On the
+positive side, a declared lag bound and the $D+1$ exact samples through $F_D$
+recover the entire recurrence by triangular inversion. Separately, common
+terminal speed does not control transient duration: near-periodic kernels can
+settle arbitrarily slowly.
+
+The computation reinforces rather than replaces those results. Across 1.16
+million hidden schemas and 32.67 million blinded trials, a classical
+matrix-pencil estimator performed well on many visible short-lag responses but
+failed selectively on the constructed hidden-lag family. With relative noise
+$10^{-3}$, 24-step forecast success remained 99.8\% while modal-class accuracy
+fell to 32.1\%. The central lesson is therefore a hierarchy of evidence:
+forecasting a response, identifying its modes, and recovering its recursive
+source are progressively stronger achievements. Claims about mechanism should
+stop exactly where the available horizon and structural assumptions stop.
 
 \newpage
 \begin{thebibliography}{9}
