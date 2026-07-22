@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Finite Response Kernels | Jonathan R. Landers</title>
-  <meta name="description" content="Research manuscripts on finite-response kernels, takeoff kernels, recursive redundancy, and inverse takeoff identification.">
+  <meta name="description" content="Research manuscripts on finite-response kernels, language-model grokking, takeoff kernels, recursive redundancy, and inverse takeoff identification.">
   <style>
     :root {
       color-scheme: light;
@@ -346,7 +346,7 @@
 
     .paper-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
     }
 
@@ -405,6 +405,12 @@
       --band-a: #f4eee6;
       --band-b: #5b6470;
       --band-c: #225c50;
+    }
+
+    .band-grokking {
+      --band-a: #eef0f7;
+      --band-b: #5479a8;
+      --band-c: #9b3f24;
     }
 
     .tag {
@@ -684,11 +690,12 @@
           <span class="hero-line">Kernels</span>
         </h1>
         <p class="hero-copy">
-          Three manuscripts on the shape of response: causal mediation kernels,
-          velocity takeoff in recursive redundancy, and the inverse problem of
-          reading hidden recurrence modes from observed takeoff curves.
+          Four manuscripts on the shape of response, now including a resolved
+          finite-response analysis of delayed generalization in language-model
+          grokking.
         </p>
         <div class="hero-actions">
+          <a class="button" href="model_trajectory_dynamics/takeoff_as_finite_response.pdf">New: Grokking PDF</a>
           <a class="button" href="entropy_of_finite_response/entropy_of_finite_response.pdf">Entropy PDF</a>
           <a class="button" href="velocity_takeoff_revised/velocity_takeoff_revised.pdf">Takeoff PDF</a>
           <a class="button" href="inverse_takeoff_kernels/inverse_takeoff_kernels.pdf">Inverse PDF</a>
@@ -806,6 +813,24 @@
         </div>
 
         <div class="paper-grid">
+          <article class="paper-card">
+            <figure class="band-grokking" role="img" aria-label="Abstract two-stage language-model response gradient band."></figure>
+            <span class="tag">New · Model trajectories</span>
+            <h3>Finite-Response Structure in Language-Model Grokking</h3>
+            <p>
+              Treats delayed generalization in a small causal Transformer as a
+              resolved response rather than an instantaneous changepoint.
+              Across six modular-addition seeds, held-out checkpoints reject a
+              single unimodal kernel and favor an early component followed by
+              a sharper second lobe. Apparent takeoff is the completion of a
+              longer, two-stage generalization process.
+            </p>
+            <div class="links">
+              <a href="model_trajectory_dynamics/takeoff_as_finite_response.pdf">PDF</a>
+              <a href="model_trajectory_dynamics/takeoff_as_finite_response.tex">LaTeX</a>
+            </div>
+          </article>
+
           <article class="paper-card">
             <figure class="band-entropy" role="img" aria-label="Abstract finite-response gradient band."></figure>
             <span class="tag">Physical response</span>
@@ -1048,6 +1073,12 @@
         </div>
 
         <ul class="artifact-list">
+          <li>
+            <a href="model_trajectory_dynamics/takeoff_as_finite_response.pdf">
+              <strong>Finite-Response Structure in Language-Model Grokking</strong>
+              <span>New PDF manuscript</span>
+            </a>
+          </li>
           <li>
             <a href="entropy_of_finite_response/entropy_of_finite_response.pdf">
               <strong>Entropy of Finite Response</strong>

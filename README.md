@@ -6,8 +6,8 @@
 
 This repository presents a small research program on finite-response kernels:
 a cohesive set of manuscripts and computational notes about takeoff kernels,
-mediated response, and the information carried by the finite shape of response
-rather than only its limiting rate.
+mediated response, language-model grokking, and the information carried by the
+finite shape of response rather than only its limiting rate.
 
 A related side exploration looks at smoothness in classical motion, tracing how
 discontinuities, impulsive jerk, and ballistic or diffusive mediation sit as a
@@ -21,6 +21,11 @@ the recursion tree into a DAG; and an observed takeoff curve can be read
 backward as a system-identification problem. In each case, the kernel is the
 object that records how the response turns on, spreads, settles, or decomposes
 into modes.
+
+The newest paper applies this viewpoint to delayed generalization in a small
+causal Transformer. Across six modular-addition runs, the apparent late
+"takeoff" resolves into a two-stage response: roughly 30 percent of the fitted
+gain arrives early and 70 percent in a later, sharper component.
 
 ## Formal Thread
 
@@ -53,6 +58,7 @@ $$\text{observed takeoff}\longrightarrow\text{modal decomposition}\longrightarro
 
 - Core manuscripts
 
+  - [`model_trajectory_dynamics/takeoff_as_finite_response.pdf`](model_trajectory_dynamics/takeoff_as_finite_response.pdf) studies delayed generalization as a resolved finite response. Six independent modular-addition runs reject a single unimodal response kernel and support an early component followed by a sharper second lobe.
   - [`entropy_of_finite_response/`](entropy_of_finite_response/) develops passive causal kernels as finite-response mediators, including closure under convolution and mixing, moment growth, entropy power, and the geometry between instantaneous and spreading response.
   - [`velocity_takeoff_revised/`](velocity_takeoff_revised/) introduces velocity takeoff kernels for recursive redundancy and shows how systems with the same limiting overlap velocity can have different finite takeoff shapes.
   - [`inverse_takeoff_kernels/`](inverse_takeoff_kernels/) asks what hidden recurrence structure can be recovered from an observed takeoff curve, separating identifiable modal structure from underdetermined mechanisms.
@@ -75,6 +81,8 @@ $$\text{observed takeoff}\longrightarrow\text{modal decomposition}\longrightarro
 - `velocity_takeoff_revised/velocity_takeoff_revised.html`
 - `inverse_takeoff_kernels/inverse_takeoff_kernels.tex`
 - `inverse_takeoff_kernels/inverse_takeoff_kernels.pdf`
+- `model_trajectory_dynamics/takeoff_as_finite_response.tex`
+- `model_trajectory_dynamics/takeoff_as_finite_response.pdf`
 - `self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/response_spectrum_of_recursive_self_improvement.tex`
 - `self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement/response_spectrum_of_recursive_self_improvement.pdf`
 - `classical_motion/smoothness_hierarchy_classical_motion.html`
@@ -98,6 +106,10 @@ Pop-Location
 
 Push-Location inverse_takeoff_kernels
 pdflatex -interaction=nonstopmode -halt-on-error inverse_takeoff_kernels.tex
+Pop-Location
+
+Push-Location model_trajectory_dynamics
+pdflatex -interaction=nonstopmode -halt-on-error takeoff_as_finite_response.tex
 Pop-Location
 
 Push-Location self_improvement_takeoff_kernels/response_spectrum_of_recursive_self_improvement
