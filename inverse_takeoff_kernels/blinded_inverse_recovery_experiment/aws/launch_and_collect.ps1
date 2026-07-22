@@ -1,4 +1,6 @@
 param(
+    [ValidateSet("baseline", "constraint")]
+    [string]$Experiment = "baseline",
     [string]$Region = "us-east-1",
     [string]$InstanceType = "c7i.8xlarge",
     [string]$SubnetId = "subnet-1d8c3c7b",
@@ -14,7 +16,8 @@ $ErrorActionPreference = "Stop"
 $env:PYTHONUTF8 = "1"
 $experimentRoot = Split-Path -Parent $PSScriptRoot
 $presignPath = Join-Path $PSScriptRoot "presign_put.py"
-$runId = "inverse-takeoff-" + (Get-Date).ToUniversalTime().ToString("yyyyMMddTHHmmssZ")
+$experimentScript = if ($Experiment -eq "constraint") { "run_constraint_comparison.py" } else { "run_experiment.py" }
+$runId = "inverse-$Experiment-" + (Get-Date).ToUniversalTime().ToString("yyyyMMddTHHmmssZ")
 $runRoot = Join-Path $experimentRoot "runs\$runId"
 New-Item -ItemType Directory -Path $runRoot -Force | Out-Null
 
@@ -25,7 +28,7 @@ if ($maximumInstanceCost -ge ($BudgetCeiling - 0.50)) {
 
 $account = aws sts get-caller-identity --query Account --output text
 if ($LASTEXITCODE -ne 0) { throw "AWS identity lookup failed" }
-$bucket = "inverse-takeoff-$account-" + $runId.Replace("inverse-takeoff-", "").ToLowerInvariant()
+$bucket = "inverse-takeoff-$account-" + (Get-Date).ToUniversalTime().ToString("yyyyMMddHHmmss")
 $sourceKey = "source/$runId.tar.gz"
 $resultKey = "results/$runId.tar.gz"
 $sourceArchive = Join-Path $runRoot "source.tar.gz"
@@ -53,7 +56,7 @@ try {
     $bucketCreated = $true
     aws s3api put-public-access-block --bucket $bucket --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true | Out-Null
 
-    tar -czf $sourceArchive -C $experimentRoot run_experiment.py requirements.txt README.md
+    tar -czf $sourceArchive -C $experimentRoot run_experiment.py run_constraint_comparison.py requirements.txt README.md
     if ($LASTEXITCODE -ne 0) { throw "Source packaging failed" }
     aws s3api put-object --bucket $bucket --key $sourceKey --body $sourceArchive --content-type application/gzip --region $Region | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "Source upload failed" }
@@ -88,7 +91,7 @@ else
   export OPENBLAS_NUM_THREADS=1
   export OMP_NUM_THREADS=1
   export MKL_NUM_THREADS=1
-  timeout --signal=INT 1800 "$PYTHON_BIN" /opt/inverse-takeoff/run_experiment.py \
+  timeout --signal=INT 1800 "$PYTHON_BIN" /opt/inverse-takeoff/__EXPERIMENT_SCRIPT__ \
     --output-dir /opt/inverse-takeoff/results \
     --workers __WORKERS__ \
     --worker-seconds __WORKER_SECONDS__ \
@@ -115,6 +118,7 @@ exit $RUN_EXIT
     $userData = $userData.Replace("__REGION__", $Region)
     $userData = $userData.Replace("__WORKERS__", [string]$Workers)
     $userData = $userData.Replace("__WORKER_SECONDS__", [string]$WorkerSeconds)
+    $userData = $userData.Replace("__EXPERIMENT_SCRIPT__", $experimentScript)
     [IO.File]::WriteAllText($userDataPath, $userData, [Text.UTF8Encoding]::new($false))
     if ([Text.Encoding]::UTF8.GetByteCount($userData) -gt 16384) { throw "EC2 user data exceeds 16 KiB" }
 
@@ -140,7 +144,8 @@ exit $RUN_EXIT
     Write-Output "Launched $instanceId at $($launchUtc.ToString('o')); instance ceiling USD $($maximumInstanceCost.ToString('0.0000'))"
 
     $state = [ordered]@{
-        run_id = $runId; account = $account; region = $Region; instance_id = $instanceId
+        run_id = $runId; experiment = $Experiment; experiment_script = $experimentScript
+        account = $account; region = $Region; instance_id = $instanceId
         instance_type = $InstanceType; ami_id = $AmiId; subnet_id = $SubnetId
         security_group_id = $securityGroupId; temporary_bucket = $bucket
         source_key = $sourceKey; result_key = $resultKey; launch_utc = $launchUtc.ToString("o")

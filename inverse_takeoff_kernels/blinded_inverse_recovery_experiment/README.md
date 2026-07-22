@@ -17,8 +17,30 @@ Y_n = F_n-1,
 F_n = \frac{\log N_{n+1}-\log N_n}{\alpha}.
 \]
 
-The first cloud run is deliberately limited to modal recovery. Literal source
-reconstruction with mixed-integer constraints is a later stage.
+The first cloud run measured modal recovery. The follow-up
+`run_constraint_comparison.py` performs literal source reconstruction and
+tests the sharp known-lag boundary. For maximum lag (D), the prefix with
+(T=D-2) transitions can still have multiple compatible integer recurrences;
+the prefix with (T=D-1) transitions identifies all coefficients once the
+terminal speed is known. It compares:
+
+1. a mixed-integer decoder enforcing nonnegativity, integrality, and
+   \(\sum_j a_j2^{-j}=1\);
+2. the same linear inverse equations with continuous nonnegative fitting and
+   coefficient rounding; and
+3. the order-six matrix pencil used in the original blinded benchmark.
+
+Run a local comparison with:
+
+```powershell
+python run_constraint_comparison.py --output-dir constraint_run --workers 8 --worker-seconds 60
+```
+
+The capped AWS launcher selects it with:
+
+```powershell
+.\aws\launch_and_collect.ps1 -Experiment constraint -WorkerSeconds 720
+```
 
 ## Academic novelty
 
@@ -78,9 +100,10 @@ with noiseless data, known terminal speed, and known total branching. It is
 stronger than nonidentifiability of a latent split `a = b + c`, because these
 are genuinely different combined recurrences.
 
-The positive empirical question is whether recovery exhibits a reproducible
-phase transition once the observation horizon passes the hidden lag. Candidate
-scaling variables are
+With a known maximum lag `D` and terminal speed, the exact boundary is sharper:
+`T=D-1` samples recover the full recurrence, while `T=D-2` samples fail
+uniformly. The constraint sweep reproduced that transition across 38,796
+schemas. Further robustness questions use scaling variables such as
 
 \[
 \frac{T}{L},
@@ -92,14 +115,14 @@ T(1-\lambda_\star),
 \text{minimum pole separation}.
 \]
 
-A publishable version should combine:
+A publishable version now combines:
 
 1. the finite-horizon impossibility theorem;
-2. a positive identifiability result under bounded lag and pole separation;
+2. the sharp `D-1`-sample identifiability theorem under a bounded lag;
 3. a constraint-aware decoder using nonnegative integer, sparse, fixed-speed
    recurrence structure;
 4. the blinded phase diagram produced here; and
-5. validation on real recursive traces.
+5. with validation on real recursive traces remaining future work.
 
 The novelty claim must remain scoped carefully: the generic spectral estimator
 is classical; the recursive-redundancy observable, fixed-invariant comparison,
@@ -154,10 +177,13 @@ safety controls.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File `
-  inverse_takeoff_kernels/blinded_inverse_recovery_experiment/aws/launch_and_collect.ps1
+  inverse_takeoff_kernels/blinded_inverse_recovery_experiment/aws/launch_and_collect.ps1 `
+  -Experiment constraint -WorkerSeconds 720
 ```
 
 The launcher places collected artifacts under `runs/<run-id>/` and removes the
 temporary AWS resources after collection.
 
 Completed-run findings and interpretation are recorded in [RESULTS.md](RESULTS.md).
+The constraint run completed in 13.4 minutes wall time for an estimated `$0.32`,
+then verified the instance, temporary bucket, and security group were gone.

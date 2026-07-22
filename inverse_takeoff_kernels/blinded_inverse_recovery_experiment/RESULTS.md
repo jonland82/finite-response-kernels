@@ -1,6 +1,6 @@
 # AWS experiment results
 
-Two blinded inverse-recovery sweeps were completed on 2026-07-22. Both used a
+Three blinded inverse-recovery sweeps were completed on 2026-07-22. All used a
 single `c7i.8xlarge` On-Demand instance with 32 worker processes, a no-ingress
 security group, temporary private S3 storage, and instance-initiated
 termination.
@@ -11,7 +11,8 @@ termination.
 |---|---:|---:|---:|---:|---:|
 | `inverse-takeoff-20260722T203012Z` | Broad modal baseline | 575,440 | 13,810,560 | 18.6 min | $0.444 |
 | `inverse-takeoff-20260722T205043Z` | Horizon-ratio confirmation | 589,302 | 18,857,664 | 14.2 min | $0.338 |
-| **Combined** |  | **1,164,742** | **32,668,224** | **32.8 min** | **$0.782** |
+| `inverse-constraint-20260722T232031Z` | Sharp constraint boundary | 38,796 | 2,327,760 | 13.4 min | $0.320 |
+| **Combined** |  | **1,203,538** | **34,995,984** | **46.2 min** | **$1.102** |
 
 The compute estimate uses the AWS price returned immediately before launch,
 `$1.428/hour`. Temporary S3, EBS, request, and public-IPv4 charges are small but
@@ -19,7 +20,7 @@ not included because finalized billing was not yet available. The combined run
 remained far below the requested `$5` ceiling, and each run was far below the
 45-minute runtime ceiling.
 
-Both processes exited with code zero. Both instances terminated, and both
+All processes exited with code zero. All instances terminated, and all
 temporary buckets and security groups were removed after result collection.
 
 ## Principal findings
@@ -75,9 +76,34 @@ modal explanation has become unreliable. This empirically reinforces the
 paper's reporting hierarchy: a good response fit must not be presented as a
 recovered recursive mechanism.
 
+### 4. Structural constraints attain the sharp boundary
+
+The third run compared a dyadic mixed-integer decoder, a continuous
+nonnegative fit followed by rounding, and the six-mode matrix pencil on
+maximum lags `D = 8, 12, 16, 20`. The decisive noiseless source-recovery rates
+were:
+
+| Samples | Integer + dyadic | Continuous + rounding |
+|---:|---:|---:|
+| `T = D-2` | 45.0%* | 0.15% |
+| `T = D-1` | 100.0% | 2.35% |
+| `T = D` | 100.0% | 90.4% |
+
+`*` At `T=D-2`, the aggregate mixes uniquely determined boundary cases with
+multi-schema version sets; matching the generator there is not a uniform
+identification guarantee. Overall, 74.1% of schemas had more than one
+compatible tail, with median version count 43 and maximum 174,763. At
+`T=D-1`, the theorem guarantees uniqueness and the integer decoder recovered
+all 38,796 noiseless sources.
+
+At the sharp boundary, exact integer recovery was 99.98%, 70.1%, and 38.6%
+under relative noise `1e-8`, `1e-5`, and `1e-3`. Its 16-step forecast success
+at `1e-3` remained 94.2%, versus 49.8% for continuous rounding and 19.7% for
+the pencil.
+
 ## Interpretation and next claim
 
-The experiment supports three distinct statements:
+The experiment supports four distinct statements:
 
 1. **Theorem-level obstruction:** without a lag bound, a finite prefix cannot
    identify the recurrence, even at fixed terminal speed and branch count.
@@ -86,21 +112,26 @@ The experiment supports three distinct statements:
    family.
 3. **Methodological warning:** forecast accuracy and modal/source accuracy can
    diverge dramatically under noise.
+4. **Sharp positive boundary:** with known maximum lag `D` and terminal speed,
+   `D-1` exact samples recover the source; `D-2` fail uniformly, and the
+   constraint-aware decoder realizes that transition computationally.
 
-The next algorithmic step should use the known constraint
+The third sweep uses the known constraint
 
 \[
 \sum_j a_j2^{-j}=1,
 \qquad a_j\in\mathbb{Z}_{\ge0},
 \]
 
-together with a lag bound to enumerate or optimize over plausible recurrences.
-The publishable comparison is then generic matrix pencil versus a
-constraint-aware decoder as a function of `T/L`, noise, and modal separation.
+together with a lag bound to optimize over plausible recurrences. It confirms
+that generic matrix-pencil, unconstrained source fitting, and constrained
+source identification answer genuinely different questions.
 
 ## Artifacts
 
 - Broad run: `runs/inverse-takeoff-20260722T203012Z/results/`
 - Horizon run: `runs/inverse-takeoff-20260722T205043Z/results/`
+- Constraint run: `runs/inverse-constraint-20260722T232031Z/results/`
 - Each run contains `run_metadata.json`, `summary.json`, `summary.csv`, 32
-  compressed raw shards, `hard_cases.csv`, and the captured instance log.
+  compressed raw shards, and the captured instance log; the modal runs also
+  contain `hard_cases.csv`.

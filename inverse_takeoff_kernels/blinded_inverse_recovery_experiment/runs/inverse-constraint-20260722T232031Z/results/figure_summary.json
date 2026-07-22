@@ -1,0 +1,512 @@
+{
+  "results": "C:\\finite-response-kernels\\inverse_takeoff_kernels\\blinded_inverse_recovery_experiment\\runs\\inverse-constraint-20260722T232031Z\\results",
+  "rates": {
+    "exact|constraint_integer|-2|0": {
+      "successes": 17455,
+      "count": 38796,
+      "rate": 0.44991751726982165
+    },
+    "exact|constraint_integer|-2|1e-08": {
+      "successes": 15934,
+      "count": 38796,
+      "rate": 0.41071244458191564
+    },
+    "exact|constraint_integer|-2|1e-05": {
+      "successes": 13006,
+      "count": 38796,
+      "rate": 0.3352407464687081
+    },
+    "exact|constraint_integer|-2|0.001": {
+      "successes": 8577,
+      "count": 38796,
+      "rate": 0.22107949273120941
+    },
+    "exact|constraint_integer|-1|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "exact|constraint_integer|-1|1e-08": {
+      "successes": 38788,
+      "count": 38796,
+      "rate": 0.9997937931745541
+    },
+    "exact|constraint_integer|-1|1e-05": {
+      "successes": 27182,
+      "count": 38796,
+      "rate": 0.7006392411588823
+    },
+    "exact|constraint_integer|-1|0.001": {
+      "successes": 14959,
+      "count": 38796,
+      "rate": 0.3855809877306939
+    },
+    "exact|constraint_integer|0|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "exact|constraint_integer|0|1e-08": {
+      "successes": 38792,
+      "count": 38796,
+      "rate": 0.999896896587277
+    },
+    "exact|constraint_integer|0|1e-05": {
+      "successes": 28515,
+      "count": 38796,
+      "rate": 0.7349984534488092
+    },
+    "exact|constraint_integer|0|0.001": {
+      "successes": 18628,
+      "count": 38796,
+      "rate": 0.48015259305082997
+    },
+    "exact|constraint_integer|2|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "exact|constraint_integer|2|1e-08": {
+      "successes": 38794,
+      "count": 38796,
+      "rate": 0.9999484482936385
+    },
+    "exact|constraint_integer|2|1e-05": {
+      "successes": 30717,
+      "count": 38796,
+      "rate": 0.7917568821527993
+    },
+    "exact|constraint_integer|2|0.001": {
+      "successes": 19528,
+      "count": 38796,
+      "rate": 0.5033508609134962
+    },
+    "exact|constraint_integer|long|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "exact|constraint_integer|long|1e-08": {
+      "successes": 38795,
+      "count": 38796,
+      "rate": 0.9999742241468192
+    },
+    "exact|constraint_integer|long|1e-05": {
+      "successes": 31767,
+      "count": 38796,
+      "rate": 0.8188215279925766
+    },
+    "exact|constraint_integer|long|0.001": {
+      "successes": 19993,
+      "count": 38796,
+      "rate": 0.5153366326425405
+    },
+    "exact|continuous_round|-2|0": {
+      "successes": 60,
+      "count": 38796,
+      "rate": 0.001546551190844417
+    },
+    "exact|continuous_round|-2|1e-08": {
+      "successes": 58,
+      "count": 38796,
+      "rate": 0.0014949994844829363
+    },
+    "exact|continuous_round|-2|1e-05": {
+      "successes": 40,
+      "count": 38796,
+      "rate": 0.0010310341272296113
+    },
+    "exact|continuous_round|-2|0.001": {
+      "successes": 10,
+      "count": 38796,
+      "rate": 0.0002577585318074028
+    },
+    "exact|continuous_round|-1|0": {
+      "successes": 910,
+      "count": 38796,
+      "rate": 0.023456026394473656
+    },
+    "exact|continuous_round|-1|1e-08": {
+      "successes": 938,
+      "count": 38796,
+      "rate": 0.024177750283534385
+    },
+    "exact|continuous_round|-1|1e-05": {
+      "successes": 653,
+      "count": 38796,
+      "rate": 0.016831632127023405
+    },
+    "exact|continuous_round|-1|0.001": {
+      "successes": 216,
+      "count": 38796,
+      "rate": 0.005567584287039901
+    },
+    "exact|continuous_round|0|0": {
+      "successes": 35061,
+      "count": 38796,
+      "rate": 0.903727188369935
+    },
+    "exact|continuous_round|0|1e-08": {
+      "successes": 35026,
+      "count": 38796,
+      "rate": 0.9028250335086091
+    },
+    "exact|continuous_round|0|1e-05": {
+      "successes": 22878,
+      "count": 38796,
+      "rate": 0.5896999690689761
+    },
+    "exact|continuous_round|0|0.001": {
+      "successes": 7930,
+      "count": 38796,
+      "rate": 0.20440251572327045
+    },
+    "exact|continuous_round|2|0": {
+      "successes": 31764,
+      "count": 38796,
+      "rate": 0.8187442004330343
+    },
+    "exact|continuous_round|2|1e-08": {
+      "successes": 31749,
+      "count": 38796,
+      "rate": 0.8183575626353232
+    },
+    "exact|continuous_round|2|1e-05": {
+      "successes": 22563,
+      "count": 38796,
+      "rate": 0.581580575317043
+    },
+    "exact|continuous_round|2|0.001": {
+      "successes": 8738,
+      "count": 38796,
+      "rate": 0.22522940509330858
+    },
+    "exact|continuous_round|long|0": {
+      "successes": 31521,
+      "count": 38796,
+      "rate": 0.8124806681101144
+    },
+    "exact|continuous_round|long|1e-08": {
+      "successes": 31521,
+      "count": 38796,
+      "rate": 0.8124806681101144
+    },
+    "exact|continuous_round|long|1e-05": {
+      "successes": 23304,
+      "count": 38796,
+      "rate": 0.6006804825239715
+    },
+    "exact|continuous_round|long|0.001": {
+      "successes": 10049,
+      "count": 38796,
+      "rate": 0.2590215486132591
+    },
+    "forecast|constraint_integer|-2|0": {
+      "successes": 24547,
+      "count": 38796,
+      "rate": 0.6327198680276317
+    },
+    "forecast|constraint_integer|-2|1e-08": {
+      "successes": 23755,
+      "count": 38796,
+      "rate": 0.6123053923084855
+    },
+    "forecast|constraint_integer|-2|1e-05": {
+      "successes": 23747,
+      "count": 38796,
+      "rate": 0.6120991854830395
+    },
+    "forecast|constraint_integer|-2|0.001": {
+      "successes": 20594,
+      "count": 38796,
+      "rate": 0.5308279204041654
+    },
+    "forecast|constraint_integer|-1|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|-1|1e-08": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|-1|1e-05": {
+      "successes": 38624,
+      "count": 38796,
+      "rate": 0.9955665532529127
+    },
+    "forecast|constraint_integer|-1|0.001": {
+      "successes": 36537,
+      "count": 38796,
+      "rate": 0.9417723476647077
+    },
+    "forecast|constraint_integer|0|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|0|1e-08": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|0|1e-05": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|0|0.001": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|2|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|2|1e-08": {
+      "successes": 38795,
+      "count": 38796,
+      "rate": 0.9999742241468192
+    },
+    "forecast|constraint_integer|2|1e-05": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|2|0.001": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|long|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|long|1e-08": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|long|1e-05": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|constraint_integer|long|0.001": {
+      "successes": 38795,
+      "count": 38796,
+      "rate": 0.9999742241468192
+    },
+    "forecast|continuous_round|-2|0": {
+      "successes": 12020,
+      "count": 38796,
+      "rate": 0.3098257552324982
+    },
+    "forecast|continuous_round|-2|1e-08": {
+      "successes": 12020,
+      "count": 38796,
+      "rate": 0.3098257552324982
+    },
+    "forecast|continuous_round|-2|1e-05": {
+      "successes": 12020,
+      "count": 38796,
+      "rate": 0.3098257552324982
+    },
+    "forecast|continuous_round|-2|0.001": {
+      "successes": 12023,
+      "count": 38796,
+      "rate": 0.30990308279204043
+    },
+    "forecast|continuous_round|-1|0": {
+      "successes": 19325,
+      "count": 38796,
+      "rate": 0.49811836271780596
+    },
+    "forecast|continuous_round|-1|1e-08": {
+      "successes": 19322,
+      "count": 38796,
+      "rate": 0.49804103515826376
+    },
+    "forecast|continuous_round|-1|1e-05": {
+      "successes": 19322,
+      "count": 38796,
+      "rate": 0.49804103515826376
+    },
+    "forecast|continuous_round|-1|0.001": {
+      "successes": 19321,
+      "count": 38796,
+      "rate": 0.498015259305083
+    },
+    "forecast|continuous_round|0|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|0|1e-08": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|0|1e-05": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|0|0.001": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|2|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|2|1e-08": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|2|1e-05": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|2|0.001": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|long|0": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|long|1e-08": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|long|1e-05": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|continuous_round|long|0.001": {
+      "successes": 38796,
+      "count": 38796,
+      "rate": 1.0
+    },
+    "forecast|matrix_pencil_6|-2|0": {
+      "successes": 7396,
+      "count": 38796,
+      "rate": 0.19063821012475513
+    },
+    "forecast|matrix_pencil_6|-2|1e-08": {
+      "successes": 7396,
+      "count": 38796,
+      "rate": 0.19063821012475513
+    },
+    "forecast|matrix_pencil_6|-2|1e-05": {
+      "successes": 7396,
+      "count": 38796,
+      "rate": 0.19063821012475513
+    },
+    "forecast|matrix_pencil_6|-2|0.001": {
+      "successes": 7399,
+      "count": 38796,
+      "rate": 0.19071553768429736
+    },
+    "forecast|matrix_pencil_6|-1|0": {
+      "successes": 7653,
+      "count": 38796,
+      "rate": 0.1972626043922054
+    },
+    "forecast|matrix_pencil_6|-1|1e-08": {
+      "successes": 7653,
+      "count": 38796,
+      "rate": 0.1972626043922054
+    },
+    "forecast|matrix_pencil_6|-1|1e-05": {
+      "successes": 7653,
+      "count": 38796,
+      "rate": 0.1972626043922054
+    },
+    "forecast|matrix_pencil_6|-1|0.001": {
+      "successes": 7653,
+      "count": 38796,
+      "rate": 0.1972626043922054
+    },
+    "forecast|matrix_pencil_6|0|0": {
+      "successes": 7931,
+      "count": 38796,
+      "rate": 0.20442829157645118
+    },
+    "forecast|matrix_pencil_6|0|1e-08": {
+      "successes": 7931,
+      "count": 38796,
+      "rate": 0.20442829157645118
+    },
+    "forecast|matrix_pencil_6|0|1e-05": {
+      "successes": 7931,
+      "count": 38796,
+      "rate": 0.20442829157645118
+    },
+    "forecast|matrix_pencil_6|0|0.001": {
+      "successes": 7933,
+      "count": 38796,
+      "rate": 0.20447984328281266
+    },
+    "forecast|matrix_pencil_6|2|0": {
+      "successes": 8501,
+      "count": 38796,
+      "rate": 0.21912052788947314
+    },
+    "forecast|matrix_pencil_6|2|1e-08": {
+      "successes": 8501,
+      "count": 38796,
+      "rate": 0.21912052788947314
+    },
+    "forecast|matrix_pencil_6|2|1e-05": {
+      "successes": 8501,
+      "count": 38796,
+      "rate": 0.21912052788947314
+    },
+    "forecast|matrix_pencil_6|2|0.001": {
+      "successes": 8502,
+      "count": 38796,
+      "rate": 0.21914630374265387
+    },
+    "forecast|matrix_pencil_6|long|0": {
+      "successes": 9425,
+      "count": 38796,
+      "rate": 0.24293741622847717
+    },
+    "forecast|matrix_pencil_6|long|1e-08": {
+      "successes": 9425,
+      "count": 38796,
+      "rate": 0.24293741622847717
+    },
+    "forecast|matrix_pencil_6|long|1e-05": {
+      "successes": 9425,
+      "count": 38796,
+      "rate": 0.24293741622847717
+    },
+    "forecast|matrix_pencil_6|long|0.001": {
+      "successes": 9425,
+      "count": 38796,
+      "rate": 0.24293741622847717
+    }
+  },
+  "version_space_at_d_minus_2": {
+    "schemas": 38796,
+    "multiple_source_schemas": 28739,
+    "multiple_source_rate": 0.740772244561295,
+    "median_version_count": 43.0,
+    "maximum_version_count": 174763
+  }
+}

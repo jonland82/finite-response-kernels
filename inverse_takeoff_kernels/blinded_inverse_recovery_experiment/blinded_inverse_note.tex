@@ -77,11 +77,12 @@ noisy takeoff trace reveal the recurrence that produced it? Our contributions
 are fivefold. We (i) characterize exactly what a finite observed prefix determines;
 (ii) construct exponentially large fixed-invariant ambiguity classes, obtain a
 minimax lower bound under arbitrary parameter-independent noise, and show that
-finite holdout cannot certify mechanism; (iii) give a triangular exact-recovery
-formula under a known lag bound; (iv) prove that fixed speed and aperiodicity
+finite holdout cannot certify mechanism; (iii) prove that for known maximum
+lag $D$, exactly $D-1$ samples suffice uniformly, whereas $D-2$ do not, and give a
+constructive decoder; (iv) prove that fixed speed and aperiodicity
 still permit arbitrarily slow settling; and (v) test a generic matrix-pencil
-baseline in two blinded AWS sweeps containing 1.16 million hidden schemas and
-32.67 million trials. The baseline succeeds on many visible short-lag
+baseline and constraint-aware source decoder in three blinded AWS sweeps
+containing 1.20 million hidden schemas and 35.0 million trials. The baseline succeeds on many visible short-lag
 recurrences but fails sharply on the hidden-lag family. Under noise, accurate
 forecasting often survives after modal identification collapses. Prediction,
 modal explanation, and recursive source identification are distinct claims.
@@ -149,13 +150,15 @@ lags below $T$. \textbf{Second}, the unseen tail can contain exponentially many
 aperiodic integer recurrences with the same speed, branch count, DAG-growth
 class, and observed prefix; the resulting source ambiguity survives arbitrary
 parameter-independent noise and any finite holdout placed before the hidden
-lag returns. \textbf{Third}, the negative result has a constructive boundary:
-given a lag bound $D$ and the exact samples through $F_D$, a triangular formula
-recovers every coefficient. \textbf{Fourth}, a fixed-speed family proves that
+lag returns. \textbf{Third}, the negative result has a sharp constructive
+boundary: given a lag bound $D$, the $D-1$ exact samples through $F_{D-2}$
+recover every coefficient, while $D-2$ samples are insufficient in general.
+\textbf{Fourth}, a fixed-speed family proves that
 aperiodicity does not bound the settling time, explaining the long echo trains
-seen in the kernels. \textbf{Fifth}, 32.67 million blinded recovery trials map
-where a classical spectral estimator works, where it fails, and how highly
-accurate forecasts can coexist with incorrect modal structure.
+seen in the kernels. \textbf{Fifth}, 35.0 million blinded trials map where a
+classical spectral estimator works, where it fails, and show a
+constraint-aware decoder attaining the exact boundary while accurate forecasts
+can coexist with a wrong source.
 
 \section{Finite-lag response and its modes}
 
@@ -317,12 +320,30 @@ Thus equality of profiles implies the stated equalities. Conversely,
 $d_1,\ldots,d_T$, and therefore the profile prefixes, to agree.
 \end{proof}
 
-\begin{corollary}[Exact recovery with a lag bound]\label{cor:positive}
-Let the known integer $D\ge1$ be an upper bound on the largest lag, so that
-$a_j=0$ for $j>D$. Then the $D+1$ noiseless samples
-$F_0,\ldots,F_D$, together with $\alpha$, uniquely recover the full recurrence
-by \eqref{eq:triangular}.
-\end{corollary}
+\begin{theorem}[Sharp recovery boundary with a lag bound]\label{cor:positive}
+Let the known integer $D\ge3$ be an upper bound on the largest lag, so that
+$a_j=0$ for $j>D$, and let the terminal speed $\alpha>0$ be known. The
+$T=D-1$ noiseless samples $F_0,\ldots,F_{D-2}$ always give exact recovery.
+For the fixed speed $\alpha=\log2$, no smaller $T$ works uniformly; hence the
+sample threshold is sharp.
+\end{theorem}
+\begin{proof}
+Put $\rho=e^{-\alpha}\in(0,1)$. Theorem~\ref{thm:prefix} recovers
+$A=\sum_j a_j$ and $a_1,\ldots,a_{D-2}$. Define the remaining branch count
+and root mass
+\[
+S=A-\sum_{j=1}^{D-2}a_j,\qquad
+R=1-\sum_{j=1}^{D-2}a_j\rho^j.
+\]
+Then $x=a_{D-1}$ and $y=a_D$ are the unique solution of
+$x+y=S$ and $\rho^{D-1}x+\rho^D y=R$; explicitly,
+\[
+x=\frac{R-\rho^D S}{\rho^{D-1}(1-\rho)},\qquad y=S-x.
+\]
+Thus $T=D-1$ suffices. For necessity, set $L=D-2$ in
+Proposition~\ref{prop:family}: its distinct schemas all have maximum lag $D$
+and agree through $F_{D-3}$, the prefix of length $D-2$.
+\end{proof}
 
 \begin{proposition}[Exponential fixed-invariant ambiguity]\label{prop:family}
 Fix an observation horizon $T$ and choose an integer base lag $L\ge T$. There
@@ -382,7 +403,9 @@ coefficient one, cannot have the same complete root multiset.
 
 The picture is now sharp. Without a lag bound, the ambiguity class can grow
 exponentially and survives arbitrary parameter-independent noise. With a lag
-bound, the $D+1$ samples through $F_D$ give a triangular decoder. Intuitively,
+bound, the sharp threshold is $D-1$ samples: triangular inversion recovers the
+visible coefficients and the branch-count and root equations recover the last
+two. Intuitively,
 this is listening for an echo before sound reaches the
 wall: unlimited estimator sophistication cannot recover absent information.
 Figure~\ref{fig:collision} displays one such equivalence class and its eventual
@@ -445,10 +468,15 @@ RMS, and $10^{-12}$. ``Forecast success'' means NRMSE below $0.1$. Ground
 truth was used only after fitting. Leading-radius error is the absolute
 difference between the largest recovered and true normalized pole moduli.
 
-Two independent seeded sweeps were run. Table~\ref{tab:runs} reports launcher
-wall time, which slightly overstates billable instance time. At the verified
-rate of \$1.428/hour, estimated compute was \$0.782 total. Both instances
-terminated and all temporary cloud resources were removed.
+Three independent seeded sweeps were run. The third compared the six-mode
+pencil with two literal source estimators: a nonnegative continuous fit followed
+by rounding, and an integer fit enforcing \eqref{eq:fixedspeed}. Both source
+fits used the difference equations in Lemma~\ref{lem:difference}. It tested
+$D\in\{8,12,16,20\}$ at $T\in\{D-2,D-1,D,D+2,2D+2\}$ with a 16-sample
+holdout. Table~\ref{tab:runs} reports compute time. At the verified rate of
+\$1.428/hour, estimated EC2 compute was \$1.10 total; the new run cost about
+\$0.32 and took 13.4 minutes wall time. All instances terminated and all
+temporary cloud resources were removed.
 
 \begin{table}[t]
 \centering
@@ -461,8 +489,9 @@ Run & Schemas & Trials & Time \\
 \midrule
 Broad baseline & 575,440 & 13,810,560 & 18.6 min \\
 Horizon sweep & 589,302 & 18,857,664 & 14.2 min \\
+Constraint boundary & 38,796 & 2,327,760 & 12.2 min \\
 \midrule
-Total & 1,164,742 & 32,668,224 & 32.8 min \\
+Total & 1,203,538 & 34,995,984 & 45.0 min \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -536,6 +565,35 @@ while assigning the wrong modal geometry. This is the most practically
 important empirical warning: predictive fit, modal identification, and source
 identification are three different evidentiary levels.
 
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/constraint_boundary_results.pdf}
+\caption{\textbf{The structural constraints locate the sharp boundary.}
+Left: in 38,796 noiseless schemas, the integer dyadic decoder jumps to 100\%
+exact source recovery at the theorem's $T=D-1$ threshold; unconstrained
+fit-and-round reaches only 2.3\% there. Center: exact recovery at the boundary
+under noise. Right: 16-step forecast success; the constrained source remains
+useful after exact coefficient recovery degrades. The $T=D-2$ aggregate is
+not a uniform guarantee because the benchmark includes observationally
+equivalent source classes.}
+\label{fig:constraint-results}
+\end{figure*}
+
+\paragraph{Structural information closes the noiseless gap.}
+Figure~\ref{fig:constraint-results} tests the positive side of
+Theorem~\ref{cor:positive}. At $T=D-2$, the integer optimizer matched the
+generating member in 45.0\% of trials. That aggregate mixes uniquely determined
+boundary cases with arbitrary selection inside multi-schema version sets: 74.1\%
+of schemas had more than one compatible tail, the median version count was 43,
+and the maximum was 174,763. One sample later it recovered all 38,796 noiseless sources;
+continuous fit-and-round recovered 2.3\%, while the generic pencil does not
+output literal coefficients. Under relative noise $10^{-8},10^{-5},10^{-3}$,
+the constrained exact-source rates were 99.98\%, 70.1\%, and 38.6\%.
+Its corresponding forecast-success rates were 100\%, 99.6\%, and 94.2\%,
+compared at $10^{-3}$ with 49.8\% for continuous rounding and 19.7\% for the
+pencil. Thus the algebraic threshold is exact in the noiseless model and
+becomes a graded statistical boundary under perturbation.
+
 \section{What the experiment establishes}
 
 The exact results characterize every finite-prefix equivalence class, exhibit
@@ -555,18 +613,16 @@ takeoff profile is only asymptotically a finite exponential sum, and very small
 late corrections approach floating-point resolution. Finally, millions of
 trials do not remove bias from the chosen schema distribution.
 
-The next positive result should exploit information the baseline ignores:
+The constraint comparison exploits information the baseline ignores:
 \[
 a_j\in\mathbb Z_{\ge0},\qquad
 \sum_j a_j2^{-j}=1,
 \]
-together with a declared lag bound and sparsity. A constraint-aware decoder can
-enumerate or optimize over feasible dyadic recurrences, forward-simulate their
-takeoff curves, and compare them on held-out samples. The academically useful
-test is whether those constraints shift the recovery boundary as a function of
-$T/D$, noise, pole separation, and modal radius. Real recursive traces should
-then test whether the recovered equivalence classes remain stable outside the
-synthetic model.
+together with a declared lag bound. Its sharp noiseless transition confirms
+that the theorem is algorithmically attainable, while its noisy decline shows
+that identifiability does not imply good conditioning. Real recursive traces
+should ultimately test whether recovered equivalence classes remain stable
+outside the synthetic model.
 
 \section{Conclusion}
 
@@ -575,17 +631,20 @@ branching and all coefficients below the observation horizon---no more and no
 less. Beyond that horizon, exponentially many fixed-speed, aperiodic sources
 can remain observationally identical; adding parameter-independent noise or a
 finite pre-return holdout cannot manufacture the missing information. On the
-positive side, a declared lag bound and the $D+1$ exact samples through $F_D$
-recover the entire recurrence by triangular inversion. Separately, common
+positive side, a declared lag bound and the $D-1$ exact samples through
+$F_{D-2}$ recover the entire recurrence, and the construction proves that one
+fewer sample fails uniformly. Separately, common
 terminal speed does not control transient duration: near-periodic kernels can
 settle arbitrarily slowly.
 
-The computation reinforces rather than replaces those results. Across 1.16
-million hidden schemas and 32.67 million blinded trials, a classical
+The computation reinforces rather than replaces those results. Across 1.20
+million hidden schemas and 35.0 million blinded trials, a classical
 matrix-pencil estimator performed well on many visible short-lag responses but
 failed selectively on the constructed hidden-lag family. With relative noise
 $10^{-3}$, 24-step forecast success remained 99.8\% while modal-class accuracy
-fell to 32.1\%. The central lesson is therefore a hierarchy of evidence:
+fell to 32.1\%. At the sharp $D-1$ boundary, the constrained decoder recovered
+100\% of noiseless sources and retained 94.2\% forecast success at relative
+noise $10^{-3}$. The central lesson is therefore a hierarchy of evidence:
 forecasting a response, identifying its modes, and recovering its recursive
 source are progressively stronger achievements. Claims about mechanism should
 stop exactly where the available horizon and structural assumptions stop.

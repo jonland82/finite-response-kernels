@@ -3,6 +3,7 @@ smoke/
 throughput_smoke/
 horizon_smoke/
 horizon_smoke_2/
+constraint_smoke/
 runs/*/results.tar.gz
 runs/*/results/raw/
 runs/*/results/instance_console.log

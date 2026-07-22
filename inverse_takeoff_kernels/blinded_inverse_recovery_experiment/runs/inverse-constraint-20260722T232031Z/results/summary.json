@@ -1,0 +1,423 @@
+{
+  "schemas": 38796,
+  "rows": 2327760,
+  "groups": 36,
+  "workers": [
+    {
+      "worker": 0,
+      "schemas": 1204,
+      "rows": 72240,
+      "elapsed_seconds": 720.278033301,
+      "families": {
+        "finite_horizon": 277,
+        "slow": 309,
+        "random_split": 320,
+        "two_scale": 298
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_000.csv.gz"
+    },
+    {
+      "worker": 1,
+      "schemas": 1205,
+      "rows": 72300,
+      "elapsed_seconds": 720.245578144,
+      "families": {
+        "random_split": 327,
+        "slow": 290,
+        "finite_horizon": 288,
+        "two_scale": 300
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_001.csv.gz"
+    },
+    {
+      "worker": 2,
+      "schemas": 1202,
+      "rows": 72120,
+      "elapsed_seconds": 720.870715519,
+      "families": {
+        "two_scale": 300,
+        "finite_horizon": 288,
+        "slow": 302,
+        "random_split": 312
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_002.csv.gz"
+    },
+    {
+      "worker": 3,
+      "schemas": 1172,
+      "rows": 70320,
+      "elapsed_seconds": 720.0138714029999,
+      "families": {
+        "slow": 261,
+        "two_scale": 285,
+        "finite_horizon": 311,
+        "random_split": 315
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_003.csv.gz"
+    },
+    {
+      "worker": 4,
+      "schemas": 1217,
+      "rows": 73020,
+      "elapsed_seconds": 720.1682517309999,
+      "families": {
+        "random_split": 290,
+        "slow": 277,
+        "finite_horizon": 329,
+        "two_scale": 321
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_004.csv.gz"
+    },
+    {
+      "worker": 5,
+      "schemas": 1206,
+      "rows": 72360,
+      "elapsed_seconds": 720.174089571,
+      "families": {
+        "slow": 313,
+        "two_scale": 320,
+        "finite_horizon": 272,
+        "random_split": 301
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_005.csv.gz"
+    },
+    {
+      "worker": 6,
+      "schemas": 1217,
+      "rows": 73020,
+      "elapsed_seconds": 720.9297745,
+      "families": {
+        "two_scale": 301,
+        "finite_horizon": 297,
+        "slow": 330,
+        "random_split": 289
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_006.csv.gz"
+    },
+    {
+      "worker": 7,
+      "schemas": 1219,
+      "rows": 73140,
+      "elapsed_seconds": 720.0509954409999,
+      "families": {
+        "slow": 311,
+        "two_scale": 294,
+        "finite_horizon": 327,
+        "random_split": 287
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_007.csv.gz"
+    },
+    {
+      "worker": 8,
+      "schemas": 1236,
+      "rows": 74160,
+      "elapsed_seconds": 720.108231778,
+      "families": {
+        "slow": 331,
+        "two_scale": 290,
+        "random_split": 305,
+        "finite_horizon": 310
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_008.csv.gz"
+    },
+    {
+      "worker": 9,
+      "schemas": 1229,
+      "rows": 73740,
+      "elapsed_seconds": 721.083203443,
+      "families": {
+        "slow": 339,
+        "random_split": 290,
+        "two_scale": 284,
+        "finite_horizon": 316
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_009.csv.gz"
+    },
+    {
+      "worker": 10,
+      "schemas": 1240,
+      "rows": 74400,
+      "elapsed_seconds": 720.179052458,
+      "families": {
+        "two_scale": 311,
+        "random_split": 311,
+        "slow": 328,
+        "finite_horizon": 290
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_010.csv.gz"
+    },
+    {
+      "worker": 11,
+      "schemas": 1200,
+      "rows": 72000,
+      "elapsed_seconds": 720.035550012,
+      "families": {
+        "random_split": 302,
+        "slow": 302,
+        "finite_horizon": 324,
+        "two_scale": 272
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_011.csv.gz"
+    },
+    {
+      "worker": 12,
+      "schemas": 1194,
+      "rows": 71640,
+      "elapsed_seconds": 720.199940042,
+      "families": {
+        "random_split": 305,
+        "finite_horizon": 265,
+        "two_scale": 329,
+        "slow": 295
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_012.csv.gz"
+    },
+    {
+      "worker": 13,
+      "schemas": 1214,
+      "rows": 72840,
+      "elapsed_seconds": 720.0568033850001,
+      "families": {
+        "two_scale": 311,
+        "finite_horizon": 326,
+        "slow": 279,
+        "random_split": 298
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_013.csv.gz"
+    },
+    {
+      "worker": 14,
+      "schemas": 1213,
+      "rows": 72780,
+      "elapsed_seconds": 720.037238698,
+      "families": {
+        "slow": 315,
+        "two_scale": 268,
+        "finite_horizon": 319,
+        "random_split": 311
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_014.csv.gz"
+    },
+    {
+      "worker": 15,
+      "schemas": 1214,
+      "rows": 72840,
+      "elapsed_seconds": 720.1444604960001,
+      "families": {
+        "two_scale": 307,
+        "slow": 294,
+        "random_split": 287,
+        "finite_horizon": 326
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_015.csv.gz"
+    },
+    {
+      "worker": 16,
+      "schemas": 1200,
+      "rows": 72000,
+      "elapsed_seconds": 720.259503616,
+      "families": {
+        "finite_horizon": 300,
+        "random_split": 301,
+        "two_scale": 304,
+        "slow": 295
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_016.csv.gz"
+    },
+    {
+      "worker": 17,
+      "schemas": 1213,
+      "rows": 72780,
+      "elapsed_seconds": 720.1117343750001,
+      "families": {
+        "two_scale": 344,
+        "random_split": 304,
+        "finite_horizon": 267,
+        "slow": 298
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_017.csv.gz"
+    },
+    {
+      "worker": 18,
+      "schemas": 1225,
+      "rows": 73500,
+      "elapsed_seconds": 720.197001517,
+      "families": {
+        "slow": 296,
+        "finite_horizon": 323,
+        "two_scale": 310,
+        "random_split": 296
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_018.csv.gz"
+    },
+    {
+      "worker": 19,
+      "schemas": 1206,
+      "rows": 72360,
+      "elapsed_seconds": 720.0460080610001,
+      "families": {
+        "finite_horizon": 306,
+        "two_scale": 316,
+        "random_split": 276,
+        "slow": 308
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_019.csv.gz"
+    },
+    {
+      "worker": 20,
+      "schemas": 1224,
+      "rows": 73440,
+      "elapsed_seconds": 720.3119208779999,
+      "families": {
+        "slow": 283,
+        "two_scale": 327,
+        "random_split": 303,
+        "finite_horizon": 311
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_020.csv.gz"
+    },
+    {
+      "worker": 21,
+      "schemas": 1205,
+      "rows": 72300,
+      "elapsed_seconds": 720.453141933,
+      "families": {
+        "finite_horizon": 297,
+        "two_scale": 310,
+        "slow": 297,
+        "random_split": 301
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_021.csv.gz"
+    },
+    {
+      "worker": 22,
+      "schemas": 1229,
+      "rows": 73740,
+      "elapsed_seconds": 720.0868120140001,
+      "families": {
+        "random_split": 302,
+        "finite_horizon": 299,
+        "two_scale": 306,
+        "slow": 322
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_022.csv.gz"
+    },
+    {
+      "worker": 23,
+      "schemas": 1216,
+      "rows": 72960,
+      "elapsed_seconds": 720.005150945,
+      "families": {
+        "random_split": 339,
+        "finite_horizon": 305,
+        "two_scale": 275,
+        "slow": 297
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_023.csv.gz"
+    },
+    {
+      "worker": 24,
+      "schemas": 1211,
+      "rows": 72660,
+      "elapsed_seconds": 720.155749275,
+      "families": {
+        "finite_horizon": 296,
+        "two_scale": 307,
+        "slow": 292,
+        "random_split": 316
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_024.csv.gz"
+    },
+    {
+      "worker": 25,
+      "schemas": 1240,
+      "rows": 74400,
+      "elapsed_seconds": 720.127876568,
+      "families": {
+        "finite_horizon": 307,
+        "two_scale": 317,
+        "slow": 321,
+        "random_split": 295
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_025.csv.gz"
+    },
+    {
+      "worker": 26,
+      "schemas": 1176,
+      "rows": 70560,
+      "elapsed_seconds": 720.0224623949999,
+      "families": {
+        "slow": 304,
+        "two_scale": 267,
+        "random_split": 306,
+        "finite_horizon": 299
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_026.csv.gz"
+    },
+    {
+      "worker": 27,
+      "schemas": 1201,
+      "rows": 72060,
+      "elapsed_seconds": 720.294225761,
+      "families": {
+        "finite_horizon": 315,
+        "two_scale": 311,
+        "slow": 306,
+        "random_split": 269
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_027.csv.gz"
+    },
+    {
+      "worker": 28,
+      "schemas": 1215,
+      "rows": 72900,
+      "elapsed_seconds": 720.111630894,
+      "families": {
+        "random_split": 294,
+        "finite_horizon": 314,
+        "slow": 287,
+        "two_scale": 320
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_028.csv.gz"
+    },
+    {
+      "worker": 29,
+      "schemas": 1206,
+      "rows": 72360,
+      "elapsed_seconds": 720.089290809,
+      "families": {
+        "finite_horizon": 314,
+        "random_split": 313,
+        "slow": 286,
+        "two_scale": 293
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_029.csv.gz"
+    },
+    {
+      "worker": 30,
+      "schemas": 1236,
+      "rows": 74160,
+      "elapsed_seconds": 720.5175110179999,
+      "families": {
+        "two_scale": 305,
+        "finite_horizon": 336,
+        "random_split": 320,
+        "slow": 275
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_030.csv.gz"
+    },
+    {
+      "worker": 31,
+      "schemas": 1211,
+      "rows": 72660,
+      "elapsed_seconds": 720.100146302,
+      "families": {
+        "finite_horizon": 308,
+        "slow": 302,
+        "random_split": 311,
+        "two_scale": 290
+      },
+      "path": "/opt/inverse-takeoff/results/raw/worker_031.csv.gz"
+    }
+  ]
+}

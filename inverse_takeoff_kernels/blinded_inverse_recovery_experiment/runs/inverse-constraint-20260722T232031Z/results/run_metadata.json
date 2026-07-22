@@ -1,0 +1,54 @@
+{
+  "started_utc": "2026-07-22T23:21:59Z",
+  "config": {
+    "output_dir": "/opt/inverse-takeoff/results",
+    "workers": 32,
+    "max_schemas_per_worker": 100000,
+    "worker_seconds": 720.0,
+    "seed": 20260722,
+    "max_lags": [
+      8,
+      12,
+      16,
+      20
+    ],
+    "offsets": [
+      -2,
+      -1,
+      0,
+      2
+    ],
+    "noise_levels": [
+      0.0,
+      1e-08,
+      1e-05,
+      0.001
+    ],
+    "holdout": 16,
+    "milp_seconds": 0.2
+  },
+  "python": "3.11.15",
+  "platform": "Linux-6.1.176-221.367.amzn2023.x86_64-x86_64-with-glibc2.34",
+  "numpy": "2.1.3",
+  "scipy": "1.15.3",
+  "aws_instance_id": "i-048701769d4028a97",
+  "aws_region": "us-east-1",
+  "sharp_boundary_validation": {
+    "degree": 11,
+    "ambiguous_sample_count": 9,
+    "identifying_sample_count": 10,
+    "ambiguous_prefix_equal": true,
+    "version_counts": [
+      342,
+      342,
+      342
+    ],
+    "boundary_decodes_exactly": true
+  },
+  "completed_utc": "2026-07-22T23:34:13Z",
+  "summary": {
+    "schemas": 38796,
+    "rows": 2327760,
+    "groups": 36
+  }
+}
