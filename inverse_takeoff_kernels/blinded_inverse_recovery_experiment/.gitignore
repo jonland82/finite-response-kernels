@@ -1,0 +1,14 @@
+__pycache__/
+smoke/
+throughput_smoke/
+horizon_smoke/
+horizon_smoke_2/
+runs/*/results.tar.gz
+runs/*/results/raw/
+runs/*/results/instance_console.log
+runs/*/ec2_console_output.txt
+*.aux
+*.log
+*.out
+note_preview-*.png
+*review*.png

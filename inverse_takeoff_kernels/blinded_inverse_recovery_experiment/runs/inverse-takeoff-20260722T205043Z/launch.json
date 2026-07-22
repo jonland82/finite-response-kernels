@@ -1,0 +1,20 @@
+{
+    "run_id":  "inverse-takeoff-20260722T205043Z",
+    "account":  "222259001580",
+    "region":  "us-east-1",
+    "instance_id":  "i-0ec161208a2154d80",
+    "instance_type":  "c7i.8xlarge",
+    "ami_id":  "ami-0f303bae6b670e0ed",
+    "subnet_id":  "subnet-1d8c3c7b",
+    "security_group_id":  "sg-07a0c2bfeb818088a",
+    "temporary_bucket":  "inverse-takeoff-222259001580-20260722t205043z",
+    "source_key":  "source/inverse-takeoff-20260722T205043Z.tar.gz",
+    "result_key":  "results/inverse-takeoff-20260722T205043Z.tar.gz",
+    "launch_utc":  "2026-07-22T20:50:59.3272931Z",
+    "hard_stop_minutes":  42,
+    "verified_hourly_rate_usd":  1.428,
+    "maximum_instance_cost_usd":  0.99959999999999993,
+    "budget_ceiling_usd":  5,
+    "workers":  32,
+    "worker_seconds":  600
+}
